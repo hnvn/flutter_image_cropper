@@ -1,0 +1,35 @@
+PODS:
+  - Flutter (1.0.0)
+  - image_cropper (0.0.1):
+    - Flutter
+    - TOCropViewController (~> 2.3.6)
+  - image_picker (0.0.1):
+    - Flutter
+  - TOCropViewController (2.3.6)
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
+  - image_picker (from `.symlinks/plugins/image_picker/ios`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - TOCropViewController
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  image_cropper:
+    :path: ".symlinks/plugins/image_cropper/ios"
+  image_picker:
+    :path: ".symlinks/plugins/image_picker/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  image_cropper: d62a37a42a69ab3d547110664db3177ed3e50003
+  image_picker: ee00aab0487cedc80a304085219503cc6d0f2e22
+  TOCropViewController: 6d972f2c609372312648f96758e13a7f689efbc0
+
+PODFILE CHECKSUM: 1e5af4103afd21ca5ead147d7b81d06f494f51a2
+
+COCOAPODS: 1.5.0
