@@ -2,9 +2,11 @@
 
 A Flutter plugin supports cropping images
 
+[![pub package](https://img.shields.io/pub/v/image_cropper.svg)](https://pub.dartlang.org/packages/image_cropper)
+
 <p>
-	<img src="./screenshots/android.gif?raw=true" width="250" height="443"  />
-	<img src="./screenshots/ios.gif?raw=true" width="250" height="443" />
+	<img src="https://github.com/hnvn/flutter_image_cropper/blob/master/screenshots/android.gif?raw=true" width="250" height="443"  />
+	<img src="https://github.com/hnvn/flutter_image_cropper/blob/master/screenshots/ios.gif?raw=true" width="250" height="443" />
 </p>
 
 ## Installation
