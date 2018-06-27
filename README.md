@@ -20,6 +20,20 @@ A Flutter plugin supports cropping images
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 ````
 
+## Example
+
+````dart
+Future<Null> _cropImage(File imageFile) async {
+    File croppedFile = await ImageCropper.cropImage(
+      sourcePath: imageFile.path,
+      ratioX: 1.0,
+      ratioY: 1.0,
+      maxWidth: 512,
+      maxHeight: 512,
+    );
+}
+````
+
 ## Credits
 This plugin is based on two native libraries:
 

@@ -89,6 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<Null> _cropImage() async {
     File croppedFile = await ImageCropper.cropImage(
       sourcePath: imageFile.path,
+      ratioX: 1.0,
+      ratioY: 1.0,
+      maxWidth: 512,
+      maxHeight: 512,
     );
     if (croppedFile != null) {
       imageFile = croppedFile;
