@@ -1,10 +1,27 @@
-# image_cropper
+# Image Cropper
 
 A Flutter plugin supports cropping images
 
-## Getting Started
+<p>
+	<img src="./screenshots/android.gif?raw=true" width="250" height="443"  />
+	<img src="./screenshots/ios.gif?raw=true" width="250" height="443" />
+</p>
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+## Installation
 
-For help on editing plugin code, view the [documentation](https://flutter.io/developing-packages/#edit-plugin-package).
+### Android
+
+- Add UCropActivity into your AndroidManifest.xml
+
+````xml
+<activity
+    android:name="com.yalantis.ucrop.UCropActivity"
+    android:screenOrientation="portrait"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+````
+
+## Credits
+This plugin is based on two native libraries:
+
+- Android: [uCrop](https://github.com/Yalantis/uCrop) created by [Yalantis](https://github.com/Yalantis)
+- iOS: [TOCropViewController](https://github.com/TimOliver/TOCropViewController) created by [Tim Oliver](https://twitter.com/TimOliverAU)
