@@ -1,6 +1,6 @@
 # Image Cropper
 
-A Flutter plugin supports cropping images
+A Flutter plugin for Android and iOS supports cropping images
 
 [![pub package](https://img.shields.io/pub/v/image_cropper.svg)](https://pub.dartlang.org/packages/image_cropper)
 
