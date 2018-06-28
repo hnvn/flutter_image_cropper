@@ -22,6 +22,9 @@ A Flutter plugin supports cropping images
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 ````
 
+### iOS
+- No configuration required
+
 ## Example
 
 ````dart
