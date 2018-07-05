@@ -3,7 +3,9 @@ package vn.hunghd.flutter.plugins.imagecropper;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
+import android.support.annotation.ColorInt;
 
 import com.yalantis.ucrop.UCrop;
 
@@ -33,6 +35,8 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Integer maxHeight = call.argument("max_height");
         Double ratioX = call.argument("ratio_x");
         Double ratioY = call.argument("ratio_y");
+        String title = call.argument("toolbar_title");
+        Long color = call.argument("toolbar_color");
         methodCall = call;
         pendingResult = result;
 
@@ -43,7 +47,15 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Uri destinationUri = Uri.fromFile(outputFile);
         UCrop.Options options = new UCrop.Options();
         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
-        options.setCompressionQuality(100);
+        options.setCompressionQuality(90);
+        if (title != null) {
+            options.setToolbarTitle(title);
+        }
+        if (color != null) {
+            int intColor = color.intValue();
+            options.setToolbarColor(intColor);
+            options.setStatusBarColor(darkenColor(intColor));
+        }
         UCrop cropper = UCrop.of(sourceUri, destinationUri).withOptions(options);
         if (maxWidth != null && maxHeight != null) {
             cropper.withMaxResultSize(maxWidth, maxHeight);
@@ -88,5 +100,13 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
     private void clearMethodCallAndResult() {
         methodCall = null;
         pendingResult = null;
+    }
+
+    @ColorInt
+    private int darkenColor(@ColorInt int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.8f;
+        return Color.HSVToColor(hsv);
     }
 }

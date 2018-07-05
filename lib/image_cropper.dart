@@ -8,12 +8,17 @@ class ImageCropper {
   static const MethodChannel _channel =
       const MethodChannel('plugins.hunghd.vn/image_cropper');
 
+  /// Loads the image from [sourcePath], represents it on an UI that lets users
+  /// crop, rotate the image. If the [ratioX] and [ratioY] are set, it will force
+  /// users to crop the image in fixed aspect ratio.
   static Future<File> cropImage({
       @required String sourcePath,
       double ratioX,
       double ratioY,
       int maxWidth,
-      int maxHeight
+      int maxHeight,
+      String toolbarTitle,  // for only Android
+      int toolbarColor,     // for only Android
   }) async {
     assert(sourcePath != null);
 
@@ -33,6 +38,8 @@ class ImageCropper {
           'max_height': maxHeight,
           'ratio_x': ratioX,
           'ratio_y': ratioY,
+          'toolbar_title': toolbarTitle,
+          'toolbar_color': toolbarColor
           }
         );
     return resultPath == null ? null : new File(resultPath);

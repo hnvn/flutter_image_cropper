@@ -91,8 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
       sourcePath: imageFile.path,
       ratioX: 1.0,
       ratioY: 1.0,
-      maxWidth: 512,
-      maxHeight: 512,
+      toolbarTitle: 'Cropper',
+      toolbarColor: 0xff6002ee
     );
     if (croppedFile != null) {
       imageFile = croppedFile;
