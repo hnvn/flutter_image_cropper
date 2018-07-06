@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ratioX: 1.0,
       ratioY: 1.0,
       toolbarTitle: 'Cropper',
-      toolbarColor: 0xff6002ee
+      toolbarColor: Colors.blue
     );
     if (croppedFile != null) {
       imageFile = croppedFile;

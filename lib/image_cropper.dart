@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 
@@ -18,7 +19,7 @@ class ImageCropper {
       int maxWidth,
       int maxHeight,
       String toolbarTitle,  // for only Android
-      int toolbarColor,     // for only Android
+      Color toolbarColor,     // for only Android
   }) async {
     assert(sourcePath != null);
 
@@ -39,7 +40,7 @@ class ImageCropper {
           'ratio_x': ratioX,
           'ratio_y': ratioY,
           'toolbar_title': toolbarTitle,
-          'toolbar_color': toolbarColor
+          'toolbar_color': toolbarColor?.value
           }
         );
     return resultPath == null ? null : new File(resultPath);
