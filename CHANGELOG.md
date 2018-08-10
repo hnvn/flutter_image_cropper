@@ -14,3 +14,8 @@
 ## 0.0.4
 
 * refactor: change `toolbarColor` type of `int` to `Color`
+
+## 0.0.5
+
+* re-config to support Dart2
+* fix bug: lock ratio aspect

@@ -44,6 +44,8 @@
           cropViewController.customAspectRatio = CGSizeMake([ratioX floatValue], [ratioY floatValue]);
           cropViewController.resetAspectRatioEnabled = NO;
           cropViewController.aspectRatioPickerButtonHidden = YES;
+          cropViewController.aspectRatioLockDimensionSwapEnabled = YES;
+          cropViewController.aspectRatioLockEnabled = YES;
       }
       [_viewController presentViewController:cropViewController animated:YES completion:nil];
   } else {
