@@ -2,10 +2,10 @@ PODS:
   - Flutter (1.0.0)
   - image_cropper (0.0.1):
     - Flutter
-    - TOCropViewController (~> 2.3.7)
+    - TOCropViewController (~> 2.3.8)
   - image_picker (0.0.1):
     - Flutter
-  - TOCropViewController (2.3.7)
+  - TOCropViewController (2.3.8)
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
@@ -26,9 +26,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
-  image_cropper: fb249aad4943e038ca910ff20237b5ffb3f22897
+  image_cropper: 046482c5501fc775e17f792d5af4b46c19bb774e
   image_picker: ee00aab0487cedc80a304085219503cc6d0f2e22
-  TOCropViewController: c7ae3481a3f52e52a6897383a6aba17d47381ab6
+  TOCropViewController: 0a075f02c253e88095143bbac7b013fc6fba5090
 
 PODFILE CHECKSUM: 1e5af4103afd21ca5ead147d7b81d06f494f51a2
 

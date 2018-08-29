@@ -18,4 +18,8 @@
 ## 0.0.5
 
 * re-config to support Dart2
-* fix bug: lock ratio aspect
+* fix bug: lock aspect ratio
+
+## 0.0.6
+
+* upgrade `TOCropViewController` dependency to v2.3.8
