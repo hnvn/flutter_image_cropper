@@ -20,6 +20,7 @@ class ImageCropper {
       int maxHeight,
       String toolbarTitle,  // for only Android
       Color toolbarColor,     // for only Android
+      Color statusBarColor,     // for only Android
   }) async {
     assert(sourcePath != null);
 
@@ -40,7 +41,8 @@ class ImageCropper {
           'ratio_x': ratioX,
           'ratio_y': ratioY,
           'toolbar_title': toolbarTitle,
-          'toolbar_color': toolbarColor?.value
+          'toolbar_color': toolbarColor?.value,
+          'status_bar_color': statusBarColor?.value,
           }
         );
     return resultPath == null ? null : new File(resultPath);
