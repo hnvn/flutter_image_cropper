@@ -38,6 +38,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         String title = call.argument("toolbar_title");
         Long toolbarColor = call.argument("toolbar_color");
         Long statusBarColor = call.argument("status_bar_color");
+        Long activeWidgetColor = call.argument("active_widget_color");
         methodCall = call;
         pendingResult = result;
 
@@ -60,6 +61,9 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
             } else {
                 options.setStatusBarColor(statusBarColor.intValue());
             }
+        }
+        if (activeWidgetColor != null) {
+            options.setActiveWidgetColor(activeWidgetColor.intValue());
         }
         UCrop cropper = UCrop.of(sourceUri, destinationUri).withOptions(options);
         if (maxWidth != null && maxHeight != null) {

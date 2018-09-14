@@ -21,6 +21,7 @@ class ImageCropper {
       String toolbarTitle,  // for only Android
       Color toolbarColor,     // for only Android
       Color statusBarColor,     // for only Android
+      Color activeWidgetColor,     // for only Android
   }) async {
     assert(sourcePath != null);
 
@@ -43,6 +44,7 @@ class ImageCropper {
           'toolbar_title': toolbarTitle,
           'toolbar_color': toolbarColor?.value,
           'status_bar_color': statusBarColor?.value,
+          'active_widget_color': activeWidgetColor?.value,
           }
         );
     return resultPath == null ? null : new File(resultPath);
