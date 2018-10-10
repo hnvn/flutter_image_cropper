@@ -13,13 +13,14 @@ class ImageCropper {
   /// crop, rotate the image. If the [ratioX] and [ratioY] are set, it will force
   /// users to crop the image in fixed aspect ratio.
   static Future<File> cropImage({
-      @required String sourcePath,
-      double ratioX,
-      double ratioY,
-      int maxWidth,
-      int maxHeight,
-      String toolbarTitle,  // for only Android
-      Color toolbarColor,     // for only Android
+    @required String sourcePath,
+    double ratioX,
+    double ratioY,
+    int maxWidth,
+    int maxHeight,
+    String toolbarTitle, // for only Android
+    Color toolbarColor, // for only Android
+    bool circleShape,
   }) async {
     assert(sourcePath != null);
 
@@ -31,18 +32,17 @@ class ImageCropper {
       throw new ArgumentError.value(maxHeight, 'maxHeight cannot be negative');
     }
 
-    final String resultPath = await _channel.invokeMethod(
-        'cropImage',
-        <String, dynamic> {
-          'source_path': sourcePath,
-          'max_width': maxWidth,
-          'max_height': maxHeight,
-          'ratio_x': ratioX,
-          'ratio_y': ratioY,
-          'toolbar_title': toolbarTitle,
-          'toolbar_color': toolbarColor?.value
-          }
-        );
+    final String resultPath =
+        await _channel.invokeMethod('cropImage', <String, dynamic>{
+      'source_path': sourcePath,
+      'max_width': maxWidth,
+      'max_height': maxHeight,
+      'ratio_x': ratioX,
+      'ratio_y': ratioY,
+      'toolbar_title': toolbarTitle,
+      'toolbar_color': toolbarColor?.value,
+      'circle_shape': circleShape
+    });
     return resultPath == null ? null : new File(resultPath);
   }
 }
