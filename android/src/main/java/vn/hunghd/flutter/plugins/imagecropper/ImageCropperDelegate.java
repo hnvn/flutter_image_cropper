@@ -37,6 +37,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Double ratioY = call.argument("ratio_y");
         String title = call.argument("toolbar_title");
         Long color = call.argument("toolbar_color");
+        Boolean circleShape = call.argument("circle_shape");
         methodCall = call;
         pendingResult = result;
 
@@ -47,6 +48,9 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Uri destinationUri = Uri.fromFile(outputFile);
         UCrop.Options options = new UCrop.Options();
         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
+        if (circleShape) {
+            options.setCircleDimmedLayer(true);
+        }
         options.setCompressionQuality(90);
         if (title != null) {
             options.setToolbarTitle(title);
