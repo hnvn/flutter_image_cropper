@@ -20,7 +20,7 @@ class ImageCropper {
     int maxHeight,
     String toolbarTitle, // for only Android
     Color toolbarColor, // for only Android
-    bool circleShape,
+    bool circleShape: false,
   }) async {
     assert(sourcePath != null);
 
