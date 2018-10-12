@@ -1,3 +1,7 @@
+## 0.0.8
+
+* set default value for `circleShape`
+
 ## 0.0.7
 
 * support circular cropping
