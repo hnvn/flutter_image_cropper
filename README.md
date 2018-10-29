@@ -13,7 +13,7 @@ A Flutter plugin for Android and iOS supports cropping images
 
 ### Android
 
-- Add UCropActivity into your AndroidManifest.xml
+- Add UCropActivity into your AndroidManifest.xml **after** the Main Activity
 
 ````xml
 <activity
