@@ -89,8 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<Null> _cropImage() async {
     File croppedFile = await ImageCropper.cropImage(
       sourcePath: imageFile.path,
-      ratioX: 1.0,
-      ratioY: 1.0,
       toolbarTitle: 'Cropper',
       toolbarColor: Colors.blue,
     );
@@ -100,6 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
         state = AppState.cropped;
       });
     }
+  }
+
+  Future<Null> _saveImage() async {
+
   }
 
   void _clearImage() {
