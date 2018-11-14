@@ -1,3 +1,7 @@
+## [0.0.9] - 2018-11-14
+
+* clarify code document
+
 ## [0.0.8] - 2018-10-12
 
 * set default value for `circleShape`

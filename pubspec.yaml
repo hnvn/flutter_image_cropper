@@ -1,6 +1,6 @@
 name: image_cropper
 description: A Flutter plugin for Android and iOS supports cropping images
-version: 0.0.8
+version: 0.0.9
 author: hunghd <hunghd.yb@gmail.com>
 homepage: https://github.com/hnvn/flutter_image_cropper
 
