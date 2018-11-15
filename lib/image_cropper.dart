@@ -2,6 +2,8 @@
 /// * author: hunghd
 /// * email: hunghd.yb@gmail.com
 ///
+/// * contributors: Jay Graves (skabber)
+///
 /// A plugin provides capability of manipulating an image including rotating
 /// and cropping.
 ///
