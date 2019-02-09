@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.annotation.ColorInt;
 
 import com.yalantis.ucrop.UCrop;
 
@@ -106,8 +105,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         pendingResult = null;
     }
 
-    @ColorInt
-    private int darkenColor(@ColorInt int color) {
+    private int darkenColor(int color) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
         hsv[2] *= 0.8f;

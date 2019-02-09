@@ -1,3 +1,8 @@
+## [1.0.0] - 2018-02-09
+
+* Android: remove deprecated support libraries
+* Android: target version to 28
+
 ## [0.0.9] - 2018-11-14
 
 * clarify code document
