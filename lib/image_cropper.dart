@@ -1,5 +1,5 @@
 ///
-/// * author: hunghd
+/// * author: Hung Duy Ha (hunghd)
 /// * email: hunghd.yb@gmail.com
 ///
 /// * contributors: Jay Graves (skabber)
