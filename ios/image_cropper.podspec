@@ -15,7 +15,7 @@ A Flutter plugin supports cropping images
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'TOCropViewController', '~> 2.3.8'
+  s.dependency 'TOCropViewController', '~> 2.4.0'
   s.static_framework = true
   
   s.ios.deployment_target = '8.0'
