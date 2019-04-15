@@ -34,9 +34,13 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Integer maxHeight = call.argument("max_height");
         Double ratioX = call.argument("ratio_x");
         Double ratioY = call.argument("ratio_y");
-        String title = call.argument("toolbar_title");
-        Long color = call.argument("toolbar_color");
         Boolean circleShape = call.argument("circle_shape");
+        String title = call.argument("toolbar_title");
+        Long toolbarColor = call.argument("toolbar_color");
+        Long statusBarColor = call.argument("statusbar_color");
+        Long toolbarWidgetColor = call.argument("toolbar_widget_color");
+        Long actionBackgroundColor = call.argument("action_background_color");
+        Long actionActiveColor = call.argument("action_active_color");
         methodCall = call;
         pendingResult = result;
 
@@ -54,10 +58,28 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         if (title != null) {
             options.setToolbarTitle(title);
         }
-        if (color != null) {
-            int intColor = color.intValue();
+        if (toolbarColor != null) {
+            int intColor = toolbarColor.intValue();
             options.setToolbarColor(intColor);
+        }
+        if (statusBarColor != null) {
+            int intColor = statusBarColor.intValue();
+            options.setStatusBarColor(intColor);
+        } else if (toolbarColor != null) {
+            int intColor = toolbarColor.intValue();
             options.setStatusBarColor(darkenColor(intColor));
+        }
+        if (toolbarWidgetColor != null) {
+            int intColor = toolbarWidgetColor.intValue();
+            options.setToolbarWidgetColor(intColor);
+        }
+        if (actionBackgroundColor != null) {
+            int intColor = actionBackgroundColor.intValue();
+            options.setRootViewBackgroundColor(intColor);
+        }
+        if (actionActiveColor != null) {
+            int intColor = actionActiveColor.intValue();
+            options.setActiveControlsWidgetColor(intColor);
         }
         UCrop cropper = UCrop.of(sourceUri, destinationUri).withOptions(options);
         if (maxWidth != null && maxHeight != null) {
