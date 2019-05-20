@@ -88,7 +88,7 @@ class ImageCropper {
       'toolbar_widget_color': toolbarWidgetColor?.value,
       'action_background_color': backgroundColor?.value,
       'bottom_widget_color': controlWidgetColor?.value,
-      'bottom_widget_visibility': controlWidgetVisibility,
+      'bottom_widget_visibility': !controlWidgetVisibility,
     });
     return resultPath == null ? null : new File(resultPath);
   }
