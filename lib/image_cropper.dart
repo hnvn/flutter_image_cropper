@@ -55,12 +55,14 @@ class ImageCropper {
     int maxWidth,
     int maxHeight,
     bool circleShape: false,
+    bool controlWidgetVisibility: true,
     // customization for Android
     String toolbarTitle,
     Color toolbarColor,
     Color statusBarColor,
     Color toolbarWidgetColor,
     Color backgroundColor,
+    Color controlWidgetColor,
   }) async {
     assert(sourcePath != null);
 
@@ -85,6 +87,8 @@ class ImageCropper {
       'statusbar_color': statusBarColor?.value,
       'toolbar_widget_color': toolbarWidgetColor?.value,
       'action_background_color': backgroundColor?.value,
+      'bottom_widget_color': controlWidgetColor?.value,
+      'bottom_widget_visibility': controlWidgetVisibility,
     });
     return resultPath == null ? null : new File(resultPath);
   }
