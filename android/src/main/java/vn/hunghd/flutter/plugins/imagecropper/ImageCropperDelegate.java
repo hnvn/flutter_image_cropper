@@ -41,6 +41,8 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Long toolbarWidgetColor = call.argument("toolbar_widget_color");
         Long actionBackgroundColor = call.argument("action_background_color");
         Long actionActiveColor = call.argument("action_active_color");
+        Long bottomWidgetColor = call.argument("bottom_widget_color");
+        Boolean bottomWidgetVisibility = call.argument("bottom_widget_visibility");
         methodCall = call;
         pendingResult = result;
 
@@ -51,7 +53,9 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Uri destinationUri = Uri.fromFile(outputFile);
         UCrop.Options options = new UCrop.Options();
         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
-        if (circleShape) {
+        if (circleShape!=null) {
+            options.setCircleDimmedLayer(circleShape);
+        }else {
             options.setCircleDimmedLayer(true);
         }
         options.setCompressionQuality(90);
@@ -81,6 +85,16 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
             int intColor = actionActiveColor.intValue();
             options.setActiveControlsWidgetColor(intColor);
         }
+        if (bottomWidgetColor != null) {
+            int intColor = bottomWidgetColor.intValue();
+            options.setBottomWidgetBackground(intColor);
+        }
+        if (bottomWidgetVisibility != null) {
+            options.setHideBottomControls(bottomWidgetVisibility);
+        }else {
+            options.setHideBottomControls(false);
+        }
+
         UCrop cropper = UCrop.of(sourceUri, destinationUri).withOptions(options);
         if (maxWidth != null && maxHeight != null) {
             cropper.withMaxResultSize(maxWidth, maxHeight);
@@ -88,6 +102,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         if (ratioX != null && ratioY != null) {
             cropper.withAspectRatio(ratioX.floatValue(), ratioY.floatValue());
         }
+
         cropper.start(activity);
     }
 
