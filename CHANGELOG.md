@@ -1,4 +1,14 @@
-## [1.0.0] - 2018-02-09
+## [1.0.2] - 2019-05-25
+
+* iOS: upgrade native library
+* Android: fix bug #40
+
+## [1.0.1] - 2019-04-15
+
+* Android: migrate to AndroidX
+* upgrade native libraries
+
+## [1.0.0] - 2019-02-09
 
 * Android: remove deprecated support libraries
 * Android: target version to 28
