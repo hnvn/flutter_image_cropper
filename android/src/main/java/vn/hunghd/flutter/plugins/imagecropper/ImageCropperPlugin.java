@@ -9,8 +9,14 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 /** ImageCropperPlugin */
 public class ImageCropperPlugin implements MethodCallHandler {
+  static
+  {
+    AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+  }
   private static final String CHANNEL = "plugins.hunghd.vn/image_cropper";
 
   private final Registrar registrar;
