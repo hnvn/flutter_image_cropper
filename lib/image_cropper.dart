@@ -60,6 +60,7 @@ class ImageCropper {
     Color toolbarColor,
     Color statusBarColor,
     Color toolbarWidgetColor,
+    bool enableFreeRange
   }) async {
     assert(sourcePath != null);
 
@@ -83,6 +84,7 @@ class ImageCropper {
       'toolbar_color': toolbarColor?.value,
       'statusbar_color': statusBarColor?.value,
       'toolbar_widget_color': toolbarWidgetColor?.value,
+      'enable_free_range': enableFreeRange
     });
     return resultPath == null ? null : new File(resultPath);
   }

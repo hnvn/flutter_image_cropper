@@ -41,6 +41,8 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Long toolbarWidgetColor = call.argument("toolbar_widget_color");
         Long actionBackgroundColor = call.argument("action_background_color");
         Long actionActiveColor = call.argument("action_active_color");
+        Boolean enableFreeRange = call.argument("enable_free_range");
+
         methodCall = call;
         pendingResult = result;
 
@@ -80,6 +82,9 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         if (actionActiveColor != null) {
             int intColor = actionActiveColor.intValue();
             options.setActiveControlsWidgetColor(intColor);
+        }
+        if (enableFreeRange) {
+            options.setFreeStyleCropEnabled(enableFreeRange);
         }
         UCrop cropper = UCrop.of(sourceUri, destinationUri).withOptions(options);
         if (maxWidth != null && maxHeight != null) {
