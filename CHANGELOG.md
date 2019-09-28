@@ -1,3 +1,8 @@
+## [1.1.0] - 2019-09-29
+
+* iOS: upgrade native library (TOCropViewController v2.5.1)
+* Android: upgrade native library (uCrop v2.2.4)
+
 ## [1.0.2] - 2019-05-25
 
 * iOS: upgrade native library

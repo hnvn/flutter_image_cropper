@@ -37,15 +37,26 @@
       NSNumber *ratioX = call.arguments[@"ratio_x"];
       NSNumber *ratioY = call.arguments[@"ratio_y"];
       Boolean circleShape = [call.arguments[@"circle_shape"] boolValue];
+      NSArray *aspectRatioPresets = call.arguments[@"aspect_ratio_presets"];
       
       UIImage *image = [UIImage imageWithContentsOfFile:sourcePath];
       TOCropViewController *cropViewController;
+      cropViewController.delegate = self;
+      
       if (circleShape) {
         cropViewController = [[TOCropViewController alloc] initWithCroppingStyle:TOCropViewCroppingStyleCircular image:image];
       } else {
         cropViewController = [[TOCropViewController alloc] initWithImage:image];
       }
-      cropViewController.delegate = self;
+      
+      NSMutableArray *allowedAspectRatios = [NSMutableArray new];
+      for (NSString *preset in aspectRatioPresets) {
+          if (preset) {
+              [allowedAspectRatios addObject:@([self parseAspectRatioPresetFromName:preset])];
+          }
+      }
+      cropViewController.allowedAspectRatios = allowedAspectRatios;
+      
       if (ratioX != (id)[NSNull null] && ratioY != (id)[NSNull null]) {
           cropViewController.customAspectRatio = CGSizeMake([ratioX floatValue], [ratioY floatValue]);
           cropViewController.resetAspectRatioEnabled = NO;
@@ -57,6 +68,28 @@
   } else {
       result(FlutterMethodNotImplemented);
   }
+}
+
+- (TOCropViewControllerAspectRatioPreset)parseAspectRatioPresetFromName:(NSString*)name {
+    if ([@"square" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPresetSquare;
+    } else if ([@"original" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPresetOriginal;
+    } else if ([@"3x2" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset3x2;
+    } else if ([@"4x3" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset4x3;
+    } else if ([@"5x3" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset5x3;
+    } else if ([@"5x4" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset5x4;
+    } else if ([@"7x5" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset7x5;
+    } else if ([@"16x9" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset16x9;
+    } else {
+        return TOCropViewControllerAspectRatioPresetOriginal;
+    }
 }
 
 # pragma TOCropViewControllerDelegate
