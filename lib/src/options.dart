@@ -100,7 +100,55 @@ class AndroidUiSettings {
       };
 }
 
-class IOSUiSettings {}
+class IOSUiSettings {
+  final double minimumAspectRatio;
+
+  final bool showActivitySheetOnDone;
+  final bool showCancelConfirmationDialog;
+  final bool rotateClockwiseButtonHidden;
+  final bool hidesNavigationBar;
+  final bool rotateButtonsHidden;
+  final bool resetButtonHidden;
+  final bool aspectRatioPickerButtonHidden;
+  final bool resetAspectRatioEnabled;
+  final bool aspectRatioLockDimensionSwapEnabled;
+  final bool aspectRatioLockEnabled;
+
+  final String doneButtonTitle;
+  final String cancelButtonTitle;
+
+  const IOSUiSettings({
+    this.minimumAspectRatio,
+    this.showActivitySheetOnDone,
+    this.showCancelConfirmationDialog,
+    this.rotateClockwiseButtonHidden,
+    this.hidesNavigationBar,
+    this.rotateButtonsHidden,
+    this.resetButtonHidden,
+    this.aspectRatioPickerButtonHidden,
+    this.resetAspectRatioEnabled,
+    this.aspectRatioLockDimensionSwapEnabled,
+    this.aspectRatioLockEnabled,
+    this.doneButtonTitle,
+    this.cancelButtonTitle
+  });
+
+  Map<String, dynamic> toMap() => {
+    'ios.minimum_aspect_ratio': this.minimumAspectRatio,
+    'ios.show_activity_sheet_on_done': this.showActivitySheetOnDone,
+    'ios.show_cancel_confirmation_dialog': this.showCancelConfirmationDialog,
+    'ios.rotate_clockwise_button_hidden': this.rotateClockwiseButtonHidden,
+    'ios.hides_navigation_bar': this.hidesNavigationBar,
+    'ios.rotate_button_hidden': this.rotateButtonsHidden,
+    'ios.reset_button_hidden': this.resetButtonHidden,
+    'ios.aspect_ratio_picker_button_hidden': this.aspectRatioPickerButtonHidden,
+    'ios.reset_aspect_ratio_enabled': this.resetAspectRatioEnabled,
+    'ios.aspect_ratio_lock_dimension_swap_enabled': this.aspectRatioLockDimensionSwapEnabled,
+    'ios.aspect_ratio_lock_enabled': this.aspectRatioLockEnabled,
+    'ios.done_button_title': this.doneButtonTitle,
+    'ios.cancel_button_title': this.cancelButtonTitle,
+  };
+}
 
 String aspectRatioPresetName(CropAspectRatioPreset preset) {
   switch (preset) {

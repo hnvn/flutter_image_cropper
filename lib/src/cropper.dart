@@ -79,7 +79,9 @@ class ImageCropper {
       'ratio_y': aspectRatio?.ratioY,
       'aspect_ratio_presets': aspectRatioPresets.map<String>(aspectRatioPresetName).toList(),
       'crop_style': cropStyleName(cropStyle),
-    }..addAll(androidUiSettings?.toMap() ?? {});
+    }
+      ..addAll(androidUiSettings?.toMap() ?? {})
+      ..addAll(iosUiSettings?.toMap() ?? {});
 
     final String resultPath =
         await _channel.invokeMethod('cropImage', arguments);

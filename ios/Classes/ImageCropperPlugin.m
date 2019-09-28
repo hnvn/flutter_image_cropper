@@ -36,18 +36,19 @@
       NSString *sourcePath = call.arguments[@"source_path"];
       NSNumber *ratioX = call.arguments[@"ratio_x"];
       NSNumber *ratioY = call.arguments[@"ratio_y"];
-      Boolean circleShape = [call.arguments[@"circle_shape"] boolValue];
+      NSString *cropStyle = call.arguments[@"crop_style"];
       NSArray *aspectRatioPresets = call.arguments[@"aspect_ratio_presets"];
       
       UIImage *image = [UIImage imageWithContentsOfFile:sourcePath];
       TOCropViewController *cropViewController;
-      cropViewController.delegate = self;
       
-      if (circleShape) {
+      if ([@"circle" isEqualToString:cropStyle]) {
         cropViewController = [[TOCropViewController alloc] initWithCroppingStyle:TOCropViewCroppingStyleCircular image:image];
       } else {
         cropViewController = [[TOCropViewController alloc] initWithImage:image];
       }
+      
+      cropViewController.delegate = self;
       
       NSMutableArray *allowedAspectRatios = [NSMutableArray new];
       for (NSString *preset in aspectRatioPresets) {
@@ -57,6 +58,8 @@
       }
       cropViewController.allowedAspectRatios = allowedAspectRatios;
       
+      [self setupUiCustomizedOptions:call.arguments forViewController:cropViewController];
+      
       if (ratioX != (id)[NSNull null] && ratioY != (id)[NSNull null]) {
           cropViewController.customAspectRatio = CGSizeMake([ratioX floatValue], [ratioY floatValue]);
           cropViewController.resetAspectRatioEnabled = NO;
@@ -64,10 +67,67 @@
           cropViewController.aspectRatioLockDimensionSwapEnabled = YES;
           cropViewController.aspectRatioLockEnabled = YES;
       }
+      
       [_viewController presentViewController:cropViewController animated:YES completion:nil];
   } else {
       result(FlutterMethodNotImplemented);
   }
+}
+
+- (void)setupUiCustomizedOptions:(id)options forViewController:(TOCropViewController*)controller {
+    NSNumber *minimumAspectRatio = options[@"ios.minimum_aspect_ratio"];
+    NSNumber *showActivitySheetOnDone = options[@"ios.show_activity_sheet_on_done"];
+    NSNumber *showCancelConfirmationDialog = options[@"ios.show_cancel_confirmation_dialog"];
+    NSNumber *rotateClockwiseButtonHidden = options[@"ios.rotate_clockwise_button_hidden"];
+    NSNumber *hidesNavigationBar = options[@"ios.hides_navigation_bar"];
+    NSNumber *rotateButtonHidden = options[@"ios.rotate_button_hidden"];
+    NSNumber *resetButtonHidden = options[@"ios.reset_button_hidden"];
+    NSNumber *aspectRatioPickerButtonHidden = options[@"ios.aspect_ratio_picker_button_hidden"];
+    NSNumber *resetAspectRatioEnabled = options[@"ios.reset_aspect_ratio_enabled"];
+    NSNumber *aspectRatioLockDimensionSwapEnabled = options[@"ios.aspect_ratio_lock_dimension_swap_enabled"];
+    NSNumber *aspectRatioLockEnabled = options[@"ios.aspect_ratio_lock_enabled"];
+    NSString *doneButtonTitle = options[@"ios.done_button_title"];
+    NSString *cancelButtonTitle = options[@"ios.cancel_button_title"];
+    
+    if (minimumAspectRatio && [minimumAspectRatio isKindOfClass:[NSNumber class]]) {
+        controller.minimumAspectRatio = minimumAspectRatio.floatValue;
+    }
+    if (showActivitySheetOnDone && [showActivitySheetOnDone isKindOfClass:[NSNumber class]]) {
+        controller.showActivitySheetOnDone = showActivitySheetOnDone.boolValue;
+    }
+    if (showCancelConfirmationDialog && [showCancelConfirmationDialog isKindOfClass:[NSNumber class]]) {
+        controller.showCancelConfirmationDialog = showCancelConfirmationDialog.boolValue;
+    }
+    if (rotateClockwiseButtonHidden && [rotateClockwiseButtonHidden isKindOfClass:[NSNumber class]]) {
+        controller.rotateClockwiseButtonHidden = rotateClockwiseButtonHidden.boolValue;
+    }
+    if (hidesNavigationBar && [hidesNavigationBar isKindOfClass:[NSNumber class]]) {
+        controller.hidesNavigationBar = hidesNavigationBar.boolValue;
+    }
+    if (rotateButtonHidden && [rotateButtonHidden isKindOfClass:[NSNumber class]]) {
+        controller.rotateButtonsHidden = rotateButtonHidden.boolValue;
+    }
+    if (resetButtonHidden && [resetButtonHidden isKindOfClass:[NSNumber class]]) {
+        controller.resetButtonHidden = resetButtonHidden.boolValue;
+    }
+    if (aspectRatioPickerButtonHidden && [aspectRatioPickerButtonHidden isKindOfClass:[NSNumber class]]) {
+        controller.aspectRatioPickerButtonHidden = aspectRatioPickerButtonHidden.boolValue;
+    }
+    if (resetAspectRatioEnabled && [resetAspectRatioEnabled isKindOfClass:[NSNumber class]]) {
+        controller.resetAspectRatioEnabled = resetAspectRatioEnabled.boolValue;
+    }
+    if (aspectRatioLockDimensionSwapEnabled && [aspectRatioLockDimensionSwapEnabled isKindOfClass:[NSNumber class]]) {
+        controller.aspectRatioLockDimensionSwapEnabled = aspectRatioLockDimensionSwapEnabled.boolValue;
+    }
+    if (aspectRatioLockEnabled && [aspectRatioLockEnabled isKindOfClass:[NSNumber class]]) {
+        controller.aspectRatioLockEnabled = aspectRatioLockEnabled.boolValue;
+    }
+    if (doneButtonTitle && [doneButtonTitle isKindOfClass:[NSString class]]) {
+        controller.doneButtonTitle = doneButtonTitle;
+    }
+    if (cancelButtonTitle && [cancelButtonTitle isKindOfClass:[NSString class]]) {
+        controller.cancelButtonTitle = cancelButtonTitle;
+    }
 }
 
 - (TOCropViewControllerAspectRatioPreset)parseAspectRatioPresetFromName:(NSString*)name {
