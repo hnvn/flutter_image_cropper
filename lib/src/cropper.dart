@@ -24,21 +24,28 @@ class ImageCropper {
   ///
   /// **parameters:**
   ///
-  /// * sourcePath: absolute path of an image file
+  /// * sourcePath: absolute path of an image file.
+  ///
+  /// * maxWidth: maximum cropped image width.
+  ///
+  /// * maxHeight: maximum cropped image height.
   ///
   /// * aspectRatio: controls the aspect ratio of crop bounds. If this values is set,
   /// the cropper is locked and user can't change the aspect ratio of crop bounds.
   ///
-  /// * maxWidth: maximum cropped image width
-  ///
-  /// * maxHeight: maximum cropped image height
+  /// * aspectRatioPresets: controls the list of aspect ratios in the crop menu view.
+  /// In Android, you can set the initialized aspect ratio when starting the cropper
+  /// by setting the value of [AndroidUiSettings.initAspectRatio]. Default is a list of
+  /// [CropAspectRatioPreset.original], [CropAspectRatioPreset.square],
+  /// [CropAspectRatioPreset.ratio3x2], [CropAspectRatioPreset.ratio4x3] and
+  /// [CropAspectRatioPreset.ratio16x9].
   ///
   /// * cropStyle: controls the style of crop bounds, it can be rectangle or
-  /// circle style (default is rectangle)
+  /// circle style (default is [CropStyle.rectangle]).
   ///
-  /// * androidUiSettings: controls UI customization on Android. See [AndroidUiSettings]
+  /// * androidUiSettings: controls UI customization on Android. See [AndroidUiSettings].
   ///
-  /// * iosUiSettings: controls UI customization on iOS. See [IOSUiSettings]
+  /// * iosUiSettings: controls UI customization on iOS. See [IOSUiSettings].
   ///
   ///
   /// **return:**
@@ -61,7 +68,7 @@ class ImageCropper {
       CropAspectRatioPreset.ratio4x3,
       CropAspectRatioPreset.ratio16x9
     ],
-    CropStyle cropStyle,
+    CropStyle cropStyle = CropStyle.rectangle,
     AndroidUiSettings androidUiSettings,
     IOSUiSettings iosUiSettings,
   }) async {
