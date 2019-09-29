@@ -26,6 +26,11 @@ enum CropAspectRatioPreset {
 ///
 enum CropStyle { rectangle, circle }
 
+///
+/// Supported image compression formats
+///
+enum ImageCompressFormat { jpg, png }
+
 class CropAspectRatio {
   final double ratioX;
   final double ratioY;
@@ -149,7 +154,8 @@ class AndroidUiSettings {
         'android.show_crop_grid': this.showCropGrid,
         'android.lock_aspect_ratio': this.lockAspectRatio,
         'android.hide_bottom_controls': this.hideBottomControls,
-        'android.init_aspect_ratio': aspectRatioPresetName(this.initAspectRatio),
+        'android.init_aspect_ratio':
+            aspectRatioPresetName(this.initAspectRatio),
       };
 }
 
@@ -230,37 +236,39 @@ class IOSUiSettings {
   /// Setting this will override the Default which is a localized string for "Cancel".
   final String cancelButtonTitle;
 
-  const IOSUiSettings({
-    this.minimumAspectRatio,
-    this.showActivitySheetOnDone,
-    this.showCancelConfirmationDialog,
-    this.rotateClockwiseButtonHidden,
-    this.hidesNavigationBar,
-    this.rotateButtonsHidden,
-    this.resetButtonHidden,
-    this.aspectRatioPickerButtonHidden,
-    this.resetAspectRatioEnabled,
-    this.aspectRatioLockDimensionSwapEnabled,
-    this.aspectRatioLockEnabled,
-    this.doneButtonTitle,
-    this.cancelButtonTitle
-  });
+  const IOSUiSettings(
+      {this.minimumAspectRatio,
+      this.showActivitySheetOnDone,
+      this.showCancelConfirmationDialog,
+      this.rotateClockwiseButtonHidden,
+      this.hidesNavigationBar,
+      this.rotateButtonsHidden,
+      this.resetButtonHidden,
+      this.aspectRatioPickerButtonHidden,
+      this.resetAspectRatioEnabled,
+      this.aspectRatioLockDimensionSwapEnabled,
+      this.aspectRatioLockEnabled,
+      this.doneButtonTitle,
+      this.cancelButtonTitle});
 
   Map<String, dynamic> toMap() => {
-    'ios.minimum_aspect_ratio': this.minimumAspectRatio,
-    'ios.show_activity_sheet_on_done': this.showActivitySheetOnDone,
-    'ios.show_cancel_confirmation_dialog': this.showCancelConfirmationDialog,
-    'ios.rotate_clockwise_button_hidden': this.rotateClockwiseButtonHidden,
-    'ios.hides_navigation_bar': this.hidesNavigationBar,
-    'ios.rotate_button_hidden': this.rotateButtonsHidden,
-    'ios.reset_button_hidden': this.resetButtonHidden,
-    'ios.aspect_ratio_picker_button_hidden': this.aspectRatioPickerButtonHidden,
-    'ios.reset_aspect_ratio_enabled': this.resetAspectRatioEnabled,
-    'ios.aspect_ratio_lock_dimension_swap_enabled': this.aspectRatioLockDimensionSwapEnabled,
-    'ios.aspect_ratio_lock_enabled': this.aspectRatioLockEnabled,
-    'ios.done_button_title': this.doneButtonTitle,
-    'ios.cancel_button_title': this.cancelButtonTitle,
-  };
+        'ios.minimum_aspect_ratio': this.minimumAspectRatio,
+        'ios.show_activity_sheet_on_done': this.showActivitySheetOnDone,
+        'ios.show_cancel_confirmation_dialog':
+            this.showCancelConfirmationDialog,
+        'ios.rotate_clockwise_button_hidden': this.rotateClockwiseButtonHidden,
+        'ios.hides_navigation_bar': this.hidesNavigationBar,
+        'ios.rotate_button_hidden': this.rotateButtonsHidden,
+        'ios.reset_button_hidden': this.resetButtonHidden,
+        'ios.aspect_ratio_picker_button_hidden':
+            this.aspectRatioPickerButtonHidden,
+        'ios.reset_aspect_ratio_enabled': this.resetAspectRatioEnabled,
+        'ios.aspect_ratio_lock_dimension_swap_enabled':
+            this.aspectRatioLockDimensionSwapEnabled,
+        'ios.aspect_ratio_lock_enabled': this.aspectRatioLockEnabled,
+        'ios.done_button_title': this.doneButtonTitle,
+        'ios.cancel_button_title': this.cancelButtonTitle,
+      };
 }
 
 String aspectRatioPresetName(CropAspectRatioPreset preset) {
@@ -282,7 +290,7 @@ String aspectRatioPresetName(CropAspectRatioPreset preset) {
     case CropAspectRatioPreset.ratio16x9:
       return '16x9';
     default:
-      return null;
+      return 'original';
   }
 }
 
@@ -293,6 +301,17 @@ String cropStyleName(CropStyle style) {
     case CropStyle.circle:
       return 'circle';
     default:
-      return null;
+      return 'rectangle';
+  }
+}
+
+String compressFormatName(ImageCompressFormat format) {
+  switch (format) {
+    case ImageCompressFormat.jpg:
+      return 'jpg';
+    case ImageCompressFormat.png:
+      return 'png';
+    default:
+      return 'jpg';
   }
 }

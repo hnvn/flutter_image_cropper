@@ -24,7 +24,7 @@ class ImageCropper {
   ///
   /// **parameters:**
   ///
-  /// * sourcePath: absolute path of an image file.
+  /// * sourcePath: the absolute path of an image file.
   ///
   /// * maxWidth: maximum cropped image width.
   ///
@@ -43,6 +43,10 @@ class ImageCropper {
   /// * cropStyle: controls the style of crop bounds, it can be rectangle or
   /// circle style (default is [CropStyle.rectangle]).
   ///
+  /// * compressFormat: the format of result image, png or jpg (default is [ImageCompressFormat.jpg])
+  ///
+  /// * compressQuality: the value [0 - 100] to control the quality of image compression
+  ///
   /// * androidUiSettings: controls UI customization on Android. See [AndroidUiSettings].
   ///
   /// * iosUiSettings: controls UI customization on iOS. See [IOSUiSettings].
@@ -52,9 +56,9 @@ class ImageCropper {
   ///
   /// A result file of the cropped image.
   ///
-  /// Note: The result file is saved in NSTemporaryDirectory on iOS and Cache directory
+  /// Note: The result file is saved in NSTemporaryDirectory on iOS and application Cache directory
   /// on Android, so it can be lost later, you are responsible for storing it somewhere
-  /// permanent.
+  /// permanent (if needed).
   ///
   static Future<File> cropImage({
     @required String sourcePath,
@@ -69,6 +73,8 @@ class ImageCropper {
       CropAspectRatioPreset.ratio16x9
     ],
     CropStyle cropStyle = CropStyle.rectangle,
+    ImageCompressFormat compressFormat = ImageCompressFormat.jpg,
+    int compressQuality = 90,
     AndroidUiSettings androidUiSettings,
     IOSUiSettings iosUiSettings,
   }) async {
@@ -76,6 +82,7 @@ class ImageCropper {
     assert(await File(sourcePath).exists());
     assert(maxWidth == null || maxWidth > 0);
     assert(maxHeight == null || maxHeight > 0);
+    assert(compressQuality >= 0 && compressQuality <= 100);
 
     final arguments = <String, dynamic>{
       'source_path': sourcePath,
@@ -85,6 +92,8 @@ class ImageCropper {
       'ratio_y': aspectRatio?.ratioY,
       'aspect_ratio_presets': aspectRatioPresets.map<String>(aspectRatioPresetName).toList(),
       'crop_style': cropStyleName(cropStyle),
+      'compress_format': compressFormatName(compressFormat),
+      'compress_quality': compressQuality,
     }
       ..addAll(androidUiSettings?.toMap() ?? {})
       ..addAll(iosUiSettings?.toMap() ?? {});

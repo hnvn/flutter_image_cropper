@@ -11,6 +11,8 @@
     FlutterResult _result;
     NSDictionary *_arguments;
     UIViewController *_viewController;
+    float _compressQuality;
+    NSString *_compressFormat;
 }
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
@@ -38,6 +40,8 @@
       NSNumber *ratioY = call.arguments[@"ratio_y"];
       NSString *cropStyle = call.arguments[@"crop_style"];
       NSArray *aspectRatioPresets = call.arguments[@"aspect_ratio_presets"];
+      NSNumber *compressQuality = call.arguments[@"compress_quality"];
+      NSString *compressFormat = call.arguments[@"compress_format"];
       
       UIImage *image = [UIImage imageWithContentsOfFile:sourcePath];
       TOCropViewController *cropViewController;
@@ -49,6 +53,17 @@
       }
       
       cropViewController.delegate = self;
+      
+      if (compressQuality && [compressQuality isKindOfClass:[NSNumber class]]) {
+          _compressQuality = compressQuality.intValue * 1.0f / 100;
+      } else {
+          _compressQuality = 0.9f;
+      }
+      if (compressFormat && [compressFormat isKindOfClass:[NSString class]]) {
+          _compressFormat = compressFormat;
+      } else {
+          _compressFormat = @"jpg";
+      }
       
       NSMutableArray *allowedAspectRatios = [NSMutableArray new];
       for (NSString *preset in aspectRatioPresets) {
@@ -165,9 +180,19 @@
         image = [self scaledImage:image maxWidth:maxWidth maxHeight:maxHeight];
     }
     
-    NSData *data = UIImageJPEGRepresentation(image, 1.0);
     NSString *guid = [[NSProcessInfo processInfo] globallyUniqueString];
-    NSString *tmpFile = [NSString stringWithFormat:@"image_cropper_%@.jpg", guid];
+    
+    NSData *data;
+    NSString *tmpFile;
+    
+    if ([@"png" isEqualToString:_compressFormat]) {
+        data = UIImagePNGRepresentation(image);
+        tmpFile = [NSString stringWithFormat:@"image_cropper_%@.png", guid];
+    } else {
+        data = UIImageJPEGRepresentation(image, _compressQuality);
+        tmpFile = [NSString stringWithFormat:@"image_cropper_%@.jpg", guid];
+    }
+    
     NSString *tmpDirectory = NSTemporaryDirectory();
     NSString *tmpPath = [tmpDirectory stringByAppendingPathComponent:tmpFile];
     

@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ImageCropper',
+      theme: ThemeData.light().copyWith(primaryColor: Colors.deepOrange),
       home: MyHomePage(
         title: 'ImageCropper',
       ),
@@ -54,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: imageFile != null ? Image.file(imageFile) : Container(),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepOrange,
         onPressed: () {
           if (state == AppState.free)
             _pickImage();
@@ -113,9 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
           toolbarWidgetColor: Colors.white,
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false),
-      iosUiSettings: IOSUiSettings(
-        rotateButtonsHidden: true,
-      )
     );
     if (croppedFile != null) {
       imageFile = croppedFile;
