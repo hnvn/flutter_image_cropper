@@ -1,16 +1,6 @@
-///
-/// * author: Hung Duy Ha (hunghd)
-/// * email: hunghd.yb@gmail.com
-///
-/// * contributors: Jay Graves (skabber)
-///
-/// A plugin provides capability of manipulating an image including rotating
-/// and cropping.
-///
-/// Note that: this plugin is based on different native libraries depending on
-/// Android or iOS platform, so it shows different UI look and feel between
-/// those platforms.
-///
+// Copyright 2013, the Dart project authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 import 'dart:async';
 import 'dart:io';
@@ -29,26 +19,35 @@ class ImageCropper {
       const MethodChannel('plugins.hunghd.vn/image_cropper');
 
   ///
-  /// Launch a UI that lets user manipulate a given image.
+  /// Launch cropper UI for an image.
+  ///
   ///
   /// **parameters:**
   ///
-  /// * `sourcePath`: absolute path of an image file
-  /// * `ratioX`, `ratioY`: `ratioX` is horizontal aspect ratio and `ratioY` is
-  /// vertical aspect ratio. The proportion of `ratioX` over `ratioY` is used
-  /// as an aspect ratio for crop bounds and the capability of changing this
-  /// ratio on UI is disabled in this case
-  /// * `maxWidth`: maximum cropped image width
-  /// * `maxHeight`: maximum cropped image height
-  /// * `toolbarTitle`: title of ActionBar of Activity in Android
-  /// * `toolbarColor`: color of ActionBar of Activity in Android
-  /// * `circleShape`: a parameter that controls the shape of crop frame, `true`
-  /// value makes crop frame a circle shape, rectangle shape in otherwise. The
-  /// default value is `false`
+  /// * sourcePath: absolute path of an image file
+  ///
+  /// * aspectRatio: controls the aspect ratio of crop bounds. If this values is set,
+  /// the cropper is locked and user can't change the aspect ratio of crop bounds.
+  ///
+  /// * maxWidth: maximum cropped image width
+  ///
+  /// * maxHeight: maximum cropped image height
+  ///
+  /// * cropStyle: controls the style of crop bounds, it can be rectangle or
+  /// circle style (default is rectangle)
+  ///
+  /// * androidUiSettings: controls UI customization on Android. See [AndroidUiSettings]
+  ///
+  /// * iosUiSettings: controls UI customization on iOS. See [IOSUiSettings]
+  ///
   ///
   /// **return:**
   ///
-  /// A result file of the cropped image
+  /// A result file of the cropped image.
+  ///
+  /// Note: The result file is saved in NSTemporaryDirectory on iOS and Cache directory
+  /// on Android, so it can be lost later, you are responsible for storing it somewhere
+  /// permanent.
   ///
   static Future<File> cropImage({
     @required String sourcePath,
