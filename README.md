@@ -27,7 +27,7 @@ This project aims to provide an ultimate and flexible image cropping experience.
   <img src="https://github.com/hnvn/flutter_image_cropper/blob/master/screenshots/ios_demo.gif?raw=true" width="200" />
 </p>
 
-## Installation
+## How to install
 
 ### Android
 
