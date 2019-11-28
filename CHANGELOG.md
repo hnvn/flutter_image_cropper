@@ -1,3 +1,10 @@
+## [1.1.0] - 2019-09-29
+
+* **BIG UPDATES**: supports UI customization on both of Android and iOS, supports more image compress format and quality.
+* **BREAKING CHANGE**: `ratioX` and `ratioY` are replaced by `aspectRatio`, `circleShape` is replaced by `cropStyle`, removed `toolbarTitle` and `toolbarColor` (these properties are moved into `AndroidUiSettings`)
+* iOS: upgrade native library (TOCropViewController v2.5.1)
+* Android: upgrade native library (uCrop v2.2.4)
+
 ## [1.0.2] - 2019-05-25
 
 * iOS: upgrade native library

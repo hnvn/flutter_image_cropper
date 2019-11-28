@@ -11,6 +11,8 @@
     FlutterResult _result;
     NSDictionary *_arguments;
     UIViewController *_viewController;
+    float _compressQuality;
+    NSString *_compressFormat;
 }
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
@@ -36,16 +38,43 @@
       NSString *sourcePath = call.arguments[@"source_path"];
       NSNumber *ratioX = call.arguments[@"ratio_x"];
       NSNumber *ratioY = call.arguments[@"ratio_y"];
-      Boolean circleShape = [call.arguments[@"circle_shape"] boolValue];
+      NSString *cropStyle = call.arguments[@"crop_style"];
+      NSArray *aspectRatioPresets = call.arguments[@"aspect_ratio_presets"];
+      NSNumber *compressQuality = call.arguments[@"compress_quality"];
+      NSString *compressFormat = call.arguments[@"compress_format"];
       
       UIImage *image = [UIImage imageWithContentsOfFile:sourcePath];
       TOCropViewController *cropViewController;
-      if (circleShape) {
+      
+      if ([@"circle" isEqualToString:cropStyle]) {
         cropViewController = [[TOCropViewController alloc] initWithCroppingStyle:TOCropViewCroppingStyleCircular image:image];
       } else {
         cropViewController = [[TOCropViewController alloc] initWithImage:image];
       }
+      
       cropViewController.delegate = self;
+      
+      if (compressQuality && [compressQuality isKindOfClass:[NSNumber class]]) {
+          _compressQuality = compressQuality.intValue * 1.0f / 100;
+      } else {
+          _compressQuality = 0.9f;
+      }
+      if (compressFormat && [compressFormat isKindOfClass:[NSString class]]) {
+          _compressFormat = compressFormat;
+      } else {
+          _compressFormat = @"jpg";
+      }
+      
+      NSMutableArray *allowedAspectRatios = [NSMutableArray new];
+      for (NSString *preset in aspectRatioPresets) {
+          if (preset) {
+              [allowedAspectRatios addObject:@([self parseAspectRatioPresetFromName:preset])];
+          }
+      }
+      cropViewController.allowedAspectRatios = allowedAspectRatios;
+      
+      [self setupUiCustomizedOptions:call.arguments forViewController:cropViewController];
+      
       if (ratioX != (id)[NSNull null] && ratioY != (id)[NSNull null]) {
           cropViewController.customAspectRatio = CGSizeMake([ratioX floatValue], [ratioY floatValue]);
           cropViewController.resetAspectRatioEnabled = NO;
@@ -53,10 +82,89 @@
           cropViewController.aspectRatioLockDimensionSwapEnabled = YES;
           cropViewController.aspectRatioLockEnabled = YES;
       }
+      
       [_viewController presentViewController:cropViewController animated:YES completion:nil];
   } else {
       result(FlutterMethodNotImplemented);
   }
+}
+
+- (void)setupUiCustomizedOptions:(id)options forViewController:(TOCropViewController*)controller {
+    NSNumber *minimumAspectRatio = options[@"ios.minimum_aspect_ratio"];
+    NSNumber *showActivitySheetOnDone = options[@"ios.show_activity_sheet_on_done"];
+    NSNumber *showCancelConfirmationDialog = options[@"ios.show_cancel_confirmation_dialog"];
+    NSNumber *rotateClockwiseButtonHidden = options[@"ios.rotate_clockwise_button_hidden"];
+    NSNumber *hidesNavigationBar = options[@"ios.hides_navigation_bar"];
+    NSNumber *rotateButtonHidden = options[@"ios.rotate_button_hidden"];
+    NSNumber *resetButtonHidden = options[@"ios.reset_button_hidden"];
+    NSNumber *aspectRatioPickerButtonHidden = options[@"ios.aspect_ratio_picker_button_hidden"];
+    NSNumber *resetAspectRatioEnabled = options[@"ios.reset_aspect_ratio_enabled"];
+    NSNumber *aspectRatioLockDimensionSwapEnabled = options[@"ios.aspect_ratio_lock_dimension_swap_enabled"];
+    NSNumber *aspectRatioLockEnabled = options[@"ios.aspect_ratio_lock_enabled"];
+    NSString *doneButtonTitle = options[@"ios.done_button_title"];
+    NSString *cancelButtonTitle = options[@"ios.cancel_button_title"];
+    
+    if (minimumAspectRatio && [minimumAspectRatio isKindOfClass:[NSNumber class]]) {
+        controller.minimumAspectRatio = minimumAspectRatio.floatValue;
+    }
+    if (showActivitySheetOnDone && [showActivitySheetOnDone isKindOfClass:[NSNumber class]]) {
+        controller.showActivitySheetOnDone = showActivitySheetOnDone.boolValue;
+    }
+    if (showCancelConfirmationDialog && [showCancelConfirmationDialog isKindOfClass:[NSNumber class]]) {
+        controller.showCancelConfirmationDialog = showCancelConfirmationDialog.boolValue;
+    }
+    if (rotateClockwiseButtonHidden && [rotateClockwiseButtonHidden isKindOfClass:[NSNumber class]]) {
+        controller.rotateClockwiseButtonHidden = rotateClockwiseButtonHidden.boolValue;
+    }
+    if (hidesNavigationBar && [hidesNavigationBar isKindOfClass:[NSNumber class]]) {
+        controller.hidesNavigationBar = hidesNavigationBar.boolValue;
+    }
+    if (rotateButtonHidden && [rotateButtonHidden isKindOfClass:[NSNumber class]]) {
+        controller.rotateButtonsHidden = rotateButtonHidden.boolValue;
+    }
+    if (resetButtonHidden && [resetButtonHidden isKindOfClass:[NSNumber class]]) {
+        controller.resetButtonHidden = resetButtonHidden.boolValue;
+    }
+    if (aspectRatioPickerButtonHidden && [aspectRatioPickerButtonHidden isKindOfClass:[NSNumber class]]) {
+        controller.aspectRatioPickerButtonHidden = aspectRatioPickerButtonHidden.boolValue;
+    }
+    if (resetAspectRatioEnabled && [resetAspectRatioEnabled isKindOfClass:[NSNumber class]]) {
+        controller.resetAspectRatioEnabled = resetAspectRatioEnabled.boolValue;
+    }
+    if (aspectRatioLockDimensionSwapEnabled && [aspectRatioLockDimensionSwapEnabled isKindOfClass:[NSNumber class]]) {
+        controller.aspectRatioLockDimensionSwapEnabled = aspectRatioLockDimensionSwapEnabled.boolValue;
+    }
+    if (aspectRatioLockEnabled && [aspectRatioLockEnabled isKindOfClass:[NSNumber class]]) {
+        controller.aspectRatioLockEnabled = aspectRatioLockEnabled.boolValue;
+    }
+    if (doneButtonTitle && [doneButtonTitle isKindOfClass:[NSString class]]) {
+        controller.doneButtonTitle = doneButtonTitle;
+    }
+    if (cancelButtonTitle && [cancelButtonTitle isKindOfClass:[NSString class]]) {
+        controller.cancelButtonTitle = cancelButtonTitle;
+    }
+}
+
+- (TOCropViewControllerAspectRatioPreset)parseAspectRatioPresetFromName:(NSString*)name {
+    if ([@"square" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPresetSquare;
+    } else if ([@"original" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPresetOriginal;
+    } else if ([@"3x2" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset3x2;
+    } else if ([@"4x3" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset4x3;
+    } else if ([@"5x3" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset5x3;
+    } else if ([@"5x4" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset5x4;
+    } else if ([@"7x5" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset7x5;
+    } else if ([@"16x9" isEqualToString:name]) {
+        return TOCropViewControllerAspectRatioPreset16x9;
+    } else {
+        return TOCropViewControllerAspectRatioPresetOriginal;
+    }
 }
 
 # pragma TOCropViewControllerDelegate
@@ -72,9 +180,19 @@
         image = [self scaledImage:image maxWidth:maxWidth maxHeight:maxHeight];
     }
     
-    NSData *data = UIImageJPEGRepresentation(image, 1.0);
     NSString *guid = [[NSProcessInfo processInfo] globallyUniqueString];
-    NSString *tmpFile = [NSString stringWithFormat:@"image_cropper_%@.jpg", guid];
+    
+    NSData *data;
+    NSString *tmpFile;
+    
+    if ([@"png" isEqualToString:_compressFormat]) {
+        data = UIImagePNGRepresentation(image);
+        tmpFile = [NSString stringWithFormat:@"image_cropper_%@.png", guid];
+    } else {
+        data = UIImageJPEGRepresentation(image, _compressQuality);
+        tmpFile = [NSString stringWithFormat:@"image_cropper_%@.jpg", guid];
+    }
+    
     NSString *tmpDirectory = NSTemporaryDirectory();
     NSString *tmpPath = [tmpDirectory stringByAppendingPathComponent:tmpFile];
     

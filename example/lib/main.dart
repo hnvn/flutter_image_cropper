@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ImageCropper',
+      theme: ThemeData.light().copyWith(primaryColor: Colors.deepOrange),
       home: MyHomePage(
         title: 'ImageCropper',
       ),
@@ -54,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: imageFile != null ? Image.file(imageFile) : Container(),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepOrange,
         onPressed: () {
           if (state == AppState.free)
             _pickImage();
@@ -89,9 +91,30 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<Null> _cropImage() async {
     File croppedFile = await ImageCropper.cropImage(
       sourcePath: imageFile.path,
-      toolbarTitle: 'Cropper',
-      toolbarColor: Colors.blue,
-      toolbarWidgetColor: Colors.white,
+      aspectRatioPresets: Platform.isAndroid
+          ? [
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio16x9
+            ]
+          : [
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio5x3,
+              CropAspectRatioPreset.ratio5x4,
+              CropAspectRatioPreset.ratio7x5,
+              CropAspectRatioPreset.ratio16x9
+            ],
+      androidUiSettings: AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          toolbarColor: Colors.deepOrange,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false),
     );
     if (croppedFile != null) {
       imageFile = croppedFile;
@@ -99,10 +122,6 @@ class _MyHomePageState extends State<MyHomePage> {
         state = AppState.cropped;
       });
     }
-  }
-
-  Future<Null> _saveImage() async {
-
   }
 
   void _clearImage() {
