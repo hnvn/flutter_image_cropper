@@ -1,3 +1,8 @@
+## [1.1.1] - 2019-11-30
+
+* Android: upgrade gradle version
+* iOS: remove `static_framework` Pod configuration, upgrade `TOCropViewController` to 2.5.2
+
 ## [1.1.0] - 2019-09-29
 
 * **BIG UPDATES**: supports UI customization on both of Android and iOS, supports more image compress format and quality.

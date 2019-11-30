@@ -90,7 +90,8 @@ class ImageCropper {
       'max_height': maxHeight,
       'ratio_x': aspectRatio?.ratioX,
       'ratio_y': aspectRatio?.ratioY,
-      'aspect_ratio_presets': aspectRatioPresets.map<String>(aspectRatioPresetName).toList(),
+      'aspect_ratio_presets':
+          aspectRatioPresets.map<String>(aspectRatioPresetName).toList(),
       'crop_style': cropStyleName(cropStyle),
       'compress_format': compressFormatName(compressFormat),
       'compress_quality': compressQuality,
