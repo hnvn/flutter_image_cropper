@@ -2,6 +2,10 @@ package vn.hunghd.flutter.plugins.imagecropper;
 
 import com.yalantis.ucrop.UCrop;
 
+import android.app.Activity;
+import android.app.Application;
+import android.os.Bundle;
+
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -21,12 +25,14 @@ public class ImageCropperPlugin implements MethodCallHandler {
 
   private final Registrar registrar;
   private final ImageCropperDelegate delegate;
+  private Application.ActivityLifecycleCallbacks activityLifecycleCallbacks;
 
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel = new MethodChannel(registrar.messenger(), CHANNEL);
 
-    final ImageCropperDelegate delegate = new ImageCropperDelegate(registrar.activity());
+    final ImageCropperCache cache = new ImageCropperCache(registrar.activity());
+    final ImageCropperDelegate delegate = new ImageCropperDelegate(registrar.activity(), cache);
     registrar.addActivityResultListener(delegate);
 
     channel.setMethodCallHandler(new ImageCropperPlugin(registrar, delegate));
@@ -43,8 +49,52 @@ public class ImageCropperPlugin implements MethodCallHandler {
     }
   }
 
-  ImageCropperPlugin(Registrar registrar, ImageCropperDelegate delegate) {
+  ImageCropperPlugin(final Registrar registrar, final ImageCropperDelegate delegate) {
     this.registrar = registrar;
     this.delegate = delegate;
+
+    this.activityLifecycleCallbacks =
+            new Application.ActivityLifecycleCallbacks() {
+              @Override
+              public void onActivityCreated(Activity activity, Bundle savedInstanceState) {}
+
+              @Override
+              public void onActivityStarted(Activity activity) {}
+
+              @Override
+              public void onActivityResumed(Activity activity) {}
+
+              @Override
+              public void onActivityPaused(Activity activity) {}
+
+              @Override
+              public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+                if (activity == registrar.activity()) {
+                  delegate.saveStateBeforeResult();
+                }
+              }
+
+              @Override
+              public void onActivityDestroyed(Activity activity) {
+                if (activity == registrar.activity()
+                        && registrar.activity().getApplicationContext() != null) {
+                  ((Application) registrar.activity().getApplicationContext())
+                          .unregisterActivityLifecycleCallbacks(
+                                  this); // Use getApplicationContext() to avoid casting failures
+                }
+              }
+
+              @Override
+              public void onActivityStopped(Activity activity) {}
+            };
+
+    if (this.registrar != null
+            && this.registrar.context() != null
+            && this.registrar.context().getApplicationContext() != null) {
+      ((Application) this.registrar.context().getApplicationContext())
+              .registerActivityLifecycleCallbacks(
+                      this
+                              .activityLifecycleCallbacks); // Use getApplicationContext() to avoid casting failures.
+    }
   }
 }

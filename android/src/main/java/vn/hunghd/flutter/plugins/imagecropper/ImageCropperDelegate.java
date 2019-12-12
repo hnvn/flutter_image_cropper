@@ -24,10 +24,13 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
     private final Activity activity;
     private MethodChannel.Result pendingResult;
     private FileUtils fileUtils;
+    private final ImageCropperCache cache;
+    private Uri pendingCameraMediaUri;
 
-    public ImageCropperDelegate(Activity activity) {
+    public ImageCropperDelegate(Activity activity, ImageCropperCache cache) {
         this.activity = activity;
         fileUtils = new FileUtils();
+        this.cache = cache;
     }
 
     public void startCrop(MethodCall call, MethodChannel.Result result) {
@@ -91,6 +94,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         if (requestCode == UCrop.REQUEST_CROP) {
             if (resultCode == RESULT_OK) {
                 final Uri resultUri = UCrop.getOutput(data);
+                pendingCameraMediaUri = resultUri;
                 finishWithSuccess(fileUtils.getPathFromUri(activity, resultUri));
                 return true;
             } else if (resultCode == UCrop.RESULT_ERROR) {
@@ -106,14 +110,42 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         return false;
     }
 
+//    private void finishWithSuccess(String imagePath) {
+//        pendingResult.success(imagePath);
+//        clearMethodCallAndResult();
+//    }
+//
+//    private void finishWithError(String errorCode, String errorMessage, Throwable throwable) {
+//        pendingResult.error(errorCode, errorMessage, throwable);
+//        clearMethodCallAndResult();
+//    }
+
+
     private void finishWithSuccess(String imagePath) {
+        if (pendingResult == null) {
+            cache.saveResult(imagePath, null, null);
+            return;
+        }
         pendingResult.success(imagePath);
         clearMethodCallAndResult();
     }
 
     private void finishWithError(String errorCode, String errorMessage, Throwable throwable) {
+        if (pendingResult == null) {
+            cache.saveResult(null, errorCode, errorMessage);
+            return;
+        }
         pendingResult.error(errorCode, errorMessage, throwable);
         clearMethodCallAndResult();
+    }
+
+    void saveStateBeforeResult() {
+
+        cache.saveTypeWithMethodCallName("");
+        //cache.saveDimensionWithMethodCall(methodCall);
+        if (pendingCameraMediaUri != null) {
+            cache.savePendingCameraMediaUriPath(pendingCameraMediaUri);
+        }
     }
 
     private UCrop.Options setupUiCustomizedOptions(UCrop.Options options, MethodCall call) {
