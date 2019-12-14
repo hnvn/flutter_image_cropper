@@ -13,6 +13,7 @@ import com.yalantis.ucrop.view.CropImageView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -25,7 +26,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
     private MethodChannel.Result pendingResult;
     private FileUtils fileUtils;
     private final ImageCropperCache cache;
-    private Uri pendingCameraMediaUri;
+//    private Uri pendingCameraMediaUri;
 
     public ImageCropperDelegate(Activity activity, ImageCropperCache cache) {
         this.activity = activity;
@@ -94,7 +95,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         if (requestCode == UCrop.REQUEST_CROP) {
             if (resultCode == RESULT_OK) {
                 final Uri resultUri = UCrop.getOutput(data);
-                pendingCameraMediaUri = resultUri;
+                //pendingCameraMediaUri = resultUri;
                 finishWithSuccess(fileUtils.getPathFromUri(activity, resultUri));
                 return true;
             } else if (resultCode == UCrop.RESULT_ERROR) {
@@ -139,14 +140,11 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         clearMethodCallAndResult();
     }
 
-    void saveStateBeforeResult() {
-
-        cache.saveTypeWithMethodCallName("");
-        //cache.saveDimensionWithMethodCall(methodCall);
-        if (pendingCameraMediaUri != null) {
-            cache.savePendingCameraMediaUriPath(pendingCameraMediaUri);
-        }
-    }
+//    void saveStateBeforeResult() {
+//        if (pendingCameraMediaUri != null) {
+//            //cache.savePendingCameraMediaUriPath(pendingCameraMediaUri);
+//        }
+//    }
 
     private UCrop.Options setupUiCustomizedOptions(UCrop.Options options, MethodCall call) {
         String title = call.argument("android.toolbar_title");
@@ -258,5 +256,17 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
             return new AspectRatio(activity.getString(R.string.ucrop_label_original).toUpperCase(),
                     CropImageView.SOURCE_IMAGE_ASPECT_RATIO, 1.0f);
         }
+    }
+
+
+    void retrieveLostImage(MethodChannel.Result result) {
+        Map<String, Object> resultMap = cache.getCacheMap();
+
+        if (resultMap.isEmpty()) {
+            result.success(null);
+        } else {
+            result.success(resultMap);
+        }
+        cache.clear();
     }
 }

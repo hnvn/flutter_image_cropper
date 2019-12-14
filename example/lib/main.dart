@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -52,7 +52,17 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: imageFile != null ? Image.file(imageFile) : Container(),
+        child: Platform.isAndroid
+            ? FutureBuilder<void>(
+                future: retrieveLostData(),
+                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return imageFile != null ? Image.file(imageFile) : Text("No image");
+                  }
+                  return Text("No image");
+                },
+              )
+            : imageFile != null ? Image.file(imageFile) : Text("No image"),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepOrange,
@@ -92,13 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
     File croppedFile = await ImageCropper.cropImage(
       sourcePath: imageFile.path,
       aspectRatioPresets: Platform.isAndroid
-          ? [
-              CropAspectRatioPreset.square,
-              CropAspectRatioPreset.ratio3x2,
-              CropAspectRatioPreset.original,
-              CropAspectRatioPreset.ratio4x3,
-              CropAspectRatioPreset.ratio16x9
-            ]
+          ? [CropAspectRatioPreset.square, CropAspectRatioPreset.ratio3x2, CropAspectRatioPreset.original, CropAspectRatioPreset.ratio4x3, CropAspectRatioPreset.ratio16x9]
           : [
               CropAspectRatioPreset.original,
               CropAspectRatioPreset.square,
@@ -110,11 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
               CropAspectRatioPreset.ratio16x9
             ],
       androidUiSettings: AndroidUiSettings(
-          toolbarTitle: 'Cropper',
-          toolbarColor: Colors.deepOrange,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false),
+          toolbarTitle: 'Cropper', toolbarColor: Colors.deepOrange, toolbarWidgetColor: Colors.white, initAspectRatio: CropAspectRatioPreset.original, lockAspectRatio: false),
     );
     if (croppedFile != null) {
       imageFile = croppedFile;
@@ -129,5 +129,16 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       state = AppState.free;
     });
+  }
+
+  Future<void> retrieveLostData() async {
+    final File croppedFile = await ImageCropper.retrieveLostData();
+
+    if (croppedFile != null) {
+      imageFile = croppedFile;
+      setState(() {
+        state = AppState.cropped;
+      });
+    }
   }
 }

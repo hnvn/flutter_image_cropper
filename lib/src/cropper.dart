@@ -4,10 +4,10 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'package:meta/meta.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 
 import 'options.dart';
 
@@ -15,8 +15,7 @@ import 'options.dart';
 /// A convenient class wraps all api functions of **ImageCropper** plugin
 ///
 class ImageCropper {
-  static const MethodChannel _channel =
-      const MethodChannel('plugins.hunghd.vn/image_cropper');
+  static const MethodChannel _channel = const MethodChannel('plugins.hunghd.vn/image_cropper');
 
   ///
   /// Launch cropper UI for an image.
@@ -90,8 +89,7 @@ class ImageCropper {
       'max_height': maxHeight,
       'ratio_x': aspectRatio?.ratioX,
       'ratio_y': aspectRatio?.ratioY,
-      'aspect_ratio_presets':
-          aspectRatioPresets.map<String>(aspectRatioPresetName).toList(),
+      'aspect_ratio_presets': aspectRatioPresets.map<String>(aspectRatioPresetName).toList(),
       'crop_style': cropStyleName(cropStyle),
       'compress_format': compressFormatName(compressFormat),
       'compress_quality': compressQuality,
@@ -99,8 +97,25 @@ class ImageCropper {
       ..addAll(androidUiSettings?.toMap() ?? {})
       ..addAll(iosUiSettings?.toMap() ?? {});
 
-    final String resultPath =
-        await _channel.invokeMethod('cropImage', arguments);
+    final String resultPath = await _channel.invokeMethod('cropImage', arguments);
     return resultPath == null ? null : new File(resultPath);
+  }
+
+
+  /// The response object of [ImageCropper.retrieveLostData].
+  ///
+  /// Only applies to Android.
+  /// See also:
+  /// * [ImageCropper.retrieveLostData] for more details on retrieving lost data.
+  static Future<File> retrieveLostData() async {
+    final Map<String, dynamic> result = await _channel.invokeMapMethod<String, dynamic>('retrieve');
+    if (result == null) {
+      return null;
+    }
+    assert(result.containsKey('path'));
+
+    final String path = result['path'];
+
+    return path == null ? null : File(path);
   }
 }
