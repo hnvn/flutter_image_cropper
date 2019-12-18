@@ -1,12 +1,9 @@
 package vn.hunghd.flutter.plugins.imagecropper;
 
-import com.yalantis.ucrop.UCrop;
-
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -24,6 +21,12 @@ public class ImageCropperPlugin implements MethodCallHandler {
 
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
+    if (registrar.activity() == null) {
+      // If a background flutter view tries to register the plugin, there will be no activity from the registrar,
+      // we stop the registering process immediately because the ImageCropper requires an activity.
+      return;
+    }
+
     final MethodChannel channel = new MethodChannel(registrar.messenger(), CHANNEL);
 
     final ImageCropperDelegate delegate = new ImageCropperDelegate(registrar.activity());

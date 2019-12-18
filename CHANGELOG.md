@@ -1,3 +1,7 @@
+## [1.1.2] - 2019-12-18
+
+* Android: fix bug crashing on Flutter v1.12.13
+
 ## [1.1.1] - 2019-11-30
 
 * Android: upgrade gradle version
