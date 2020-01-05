@@ -97,7 +97,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
                 final Throwable cropError = UCrop.getError(data);
                 finishWithError("crop_error", cropError.getLocalizedMessage(), cropError);
                 return true;
-            } else {
+            } else if (pendingResult != null) {
                 pendingResult.success(null);
                 clearMethodCallAndResult();
                 return true;
@@ -107,13 +107,17 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
     }
 
     private void finishWithSuccess(String imagePath) {
-        pendingResult.success(imagePath);
-        clearMethodCallAndResult();
+        if (pendingResult != null) {
+            pendingResult.success(imagePath);
+            clearMethodCallAndResult();
+        }
     }
 
     private void finishWithError(String errorCode, String errorMessage, Throwable throwable) {
-        pendingResult.error(errorCode, errorMessage, throwable);
-        clearMethodCallAndResult();
+        if (pendingResult != null) {
+            pendingResult.error(errorCode, errorMessage, throwable);
+            clearMethodCallAndResult();
+        }
     }
 
     private UCrop.Options setupUiCustomizedOptions(UCrop.Options options, MethodCall call) {
