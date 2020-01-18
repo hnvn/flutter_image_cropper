@@ -101,6 +101,7 @@
     NSNumber *resetAspectRatioEnabled = options[@"ios.reset_aspect_ratio_enabled"];
     NSNumber *aspectRatioLockDimensionSwapEnabled = options[@"ios.aspect_ratio_lock_dimension_swap_enabled"];
     NSNumber *aspectRatioLockEnabled = options[@"ios.aspect_ratio_lock_enabled"];
+    NSString *title = options[@"ios.title"];
     NSString *doneButtonTitle = options[@"ios.done_button_title"];
     NSString *cancelButtonTitle = options[@"ios.cancel_button_title"];
     
@@ -136,6 +137,9 @@
     }
     if (aspectRatioLockEnabled && [aspectRatioLockEnabled isKindOfClass:[NSNumber class]]) {
         controller.aspectRatioLockEnabled = aspectRatioLockEnabled.boolValue;
+    }
+    if (title && [title isKindOfClass:[NSString class]]) {
+        controller.title = title;
     }
     if (doneButtonTitle && [doneButtonTitle isKindOfClass:[NSString class]]) {
         controller.doneButtonTitle = doneButtonTitle;

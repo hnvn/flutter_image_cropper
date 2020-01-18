@@ -228,6 +228,9 @@ class IOSUiSettings {
   /// (default is false)
   final bool aspectRatioLockEnabled;
 
+  /// Title text that appears at the top of the view controller.
+  final String title;
+
   /// Title for the 'Done' button.
   /// Setting this will override the Default which is a localized string for "Done".
   final String doneButtonTitle;
@@ -248,6 +251,7 @@ class IOSUiSettings {
       this.resetAspectRatioEnabled,
       this.aspectRatioLockDimensionSwapEnabled,
       this.aspectRatioLockEnabled,
+      this.title,
       this.doneButtonTitle,
       this.cancelButtonTitle});
 
@@ -266,6 +270,7 @@ class IOSUiSettings {
         'ios.aspect_ratio_lock_dimension_swap_enabled':
             this.aspectRatioLockDimensionSwapEnabled,
         'ios.aspect_ratio_lock_enabled': this.aspectRatioLockEnabled,
+        'ios.title': this.title,
         'ios.done_button_title': this.doneButtonTitle,
         'ios.cancel_button_title': this.cancelButtonTitle,
       };
