@@ -91,6 +91,10 @@
 
 - (void)setupUiCustomizedOptions:(id)options forViewController:(TOCropViewController*)controller {
     NSNumber *minimumAspectRatio = options[@"ios.minimum_aspect_ratio"];
+    NSNumber *rectX = options[@"ios.rect_x"];
+    NSNumber *rectY = options[@"ios.rect_y"];
+    NSNumber *rectWidth = options[@"ios.rect_width"];
+    NSNumber *rectHeight = options[@"ios.rect_height"];
     NSNumber *showActivitySheetOnDone = options[@"ios.show_activity_sheet_on_done"];
     NSNumber *showCancelConfirmationDialog = options[@"ios.show_cancel_confirmation_dialog"];
     NSNumber *rotateClockwiseButtonHidden = options[@"ios.rotate_clockwise_button_hidden"];
@@ -106,6 +110,12 @@
     
     if (minimumAspectRatio && [minimumAspectRatio isKindOfClass:[NSNumber class]]) {
         controller.minimumAspectRatio = minimumAspectRatio.floatValue;
+    }
+    if (rectX && [rectX isKindOfClass:[NSNumber class]]
+        && rectY && [rectY isKindOfClass:[NSNumber class]]
+        && rectWidth && [rectWidth isKindOfClass:[NSNumber class]]
+        && rectHeight && [rectHeight isKindOfClass:[NSNumber class]]) {
+        controller.imageCropFrame = CGRectMake(rectX.floatValue, rectY.floatValue, rectWidth.floatValue, rectHeight.floatValue);
     }
     if (showActivitySheetOnDone && [showActivitySheetOnDone isKindOfClass:[NSNumber class]]) {
         controller.showActivitySheetOnDone = showActivitySheetOnDone.boolValue;
