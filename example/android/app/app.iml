@@ -152,5 +152,7 @@
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-viewmodel:2.1.0@aar" level="project" />
     <orderEntry type="module" module-name="image_cropper" />
     <orderEntry type="module" module-name="image_picker" />
+    <orderEntry type="module" module-name="image_cropper" />
+    <orderEntry type="module" module-name="image_picker" />
   </component>
 </module>

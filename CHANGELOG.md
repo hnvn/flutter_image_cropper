@@ -1,3 +1,7 @@
+## [1.2.0] - 2020-01-19
+
+* Android: migrate to embedding v2
+
 ## [1.1.2] - 2019-12-18
 
 * Android: fix bug crashing on Flutter v1.12.13
