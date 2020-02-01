@@ -115,6 +115,9 @@ class _MyHomePageState extends State<MyHomePage> {
           toolbarWidgetColor: Colors.white,
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false),
+      iosUiSettings: IOSUiSettings(
+        title: 'Cropper',
+      )
     );
     if (croppedFile != null) {
       imageFile = croppedFile;

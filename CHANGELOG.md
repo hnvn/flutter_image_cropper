@@ -1,3 +1,8 @@
+## [1.2.1] - 2020-02-01
+
+* iOS: add more UI customization properties (title, initRect)
+* update Flutter version constraint (>= v1.12.13)
+
 ## [1.2.0] - 2020-01-19
 
 * Android: migrate to embedding v2
