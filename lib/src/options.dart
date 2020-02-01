@@ -173,6 +173,12 @@ class IOSUiSettings {
   /// cropping rectangle to lower aspect ratio than defined by the parameter.
   final double minimumAspectRatio;
 
+  /// The initial rect of cropping.
+  final double rectX;
+  final double rectY;
+  final double rectWidth;
+  final double rectHeight;
+
   /// If true, when the user hits 'Done', a UIActivityController will appear
   /// before the view controller ends.
   final bool showActivitySheetOnDone;
@@ -241,6 +247,10 @@ class IOSUiSettings {
 
   const IOSUiSettings(
       {this.minimumAspectRatio,
+      this.rectX,
+      this.rectY,
+      this.rectWidth,
+      this.rectHeight,
       this.showActivitySheetOnDone,
       this.showCancelConfirmationDialog,
       this.rotateClockwiseButtonHidden,
@@ -257,6 +267,10 @@ class IOSUiSettings {
 
   Map<String, dynamic> toMap() => {
         'ios.minimum_aspect_ratio': this.minimumAspectRatio,
+        'ios.rect_x': this.rectX,
+        'ios.rect_y': this.rectY,
+        'ios.rect_width': this.rectWidth,
+        'ios.rect_height': this.rectHeight,
         'ios.show_activity_sheet_on_done': this.showActivitySheetOnDone,
         'ios.show_cancel_confirmation_dialog':
             this.showCancelConfirmationDialog,
