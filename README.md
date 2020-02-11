@@ -40,6 +40,9 @@ This project aims to provide an ultimate and flexible image cropping experience.
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 ````
 
+#### Note:
+From v1.2.0, you need to migrate your android project to v2 embedding ([detail](https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects))
+
 ### iOS
 - No configuration required
 
