@@ -41,6 +41,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Integer compressQuality = call.argument("compress_quality");
         ArrayList<String> aspectRatioPresets = call.argument("aspect_ratio_presets");
         String initAspectRatio = call.argument("android.init_aspect_ratio");
+        Integer maxBitmapSize = call.argument("android.max_bitmap_size");
 
         pendingResult = result;
 
@@ -52,6 +53,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         UCrop.Options options = new UCrop.Options();
         options.setCompressionFormat("png".equals(compressFormat) ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG);
         options.setCompressionQuality(compressQuality != null ? compressQuality : 90);
+        options.setMaxBitmapSize(maxBitmapSize != null ? maxBitmapSize : 0);
 
         // UI customization settings
         if ("circle".equals(cropStyle)) {
