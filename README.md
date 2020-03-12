@@ -102,6 +102,7 @@ The result file is saved in `NSTemporaryDirectory` on iOS and application Cache 
 | `lockAspectRatio`           | set to true if you want to lock the aspect ratio of crop bounds with a fixed value (locked by default)  | bool                  |
 | `hideBottomControls`        | set to true to hide the bottom controls (shown by default)                                              | bool                  |
 | `initAspectRatio`           | desired aspect ratio is applied (from the list of given aspect ratio presets) when starting the cropper | CropAspectRatioPreset |
+| `maxBitmapSize`             | the maximum size of the Bitmap object generated after cropping                                          | int                   |
 
 
 ### iOS
