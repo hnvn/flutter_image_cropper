@@ -82,26 +82,25 @@ The result file is saved in `NSTemporaryDirectory` on iOS and application Cache 
 
 **Image Cropper** provides a helper class called `AndroidUiSettings` that wraps all properties can be used to customize UI in **uCrop** library. 
 
-| Property                    | Description                                                                                             | Type                  |
-|-----------------------------|---------------------------------------------------------------------------------------------------------|-----------------------|
-| `toolbarTitle`              | desired text for Toolbar title                                                                          | String                |
-| `toolbarColor`              | desired color of the Toolbar                                                                            | Color                 |
-| `statusBarColor`            | desired color of status                                                                                 | Color                 |
-| `toolbarWidgetColor`        | desired color of Toolbar text and buttons (default is darker orange)                                    | Color                 |
-| `backgroundColor`           | desired background color that should be applied to the root view                                        | Color                 |
-| `activeControlsWidgetColor` | desired color of the active and selected widget (default is white)                                      | Color                 |
-| `activeWidgetColor`         | desired color of the progress wheel middle line (default is violet)                                     | Color                 |
-| `dimmedLayerColor`          | desired color of dimmed area around the crop bounds                                                     | Color                 |
-| `cropFrameColor`            | desired color of crop frame                                                                             | Color                 |
-| `cropGridColor`             | desired color of crop grid/guidelines                                                                   | Color                 |
-| `cropFrameStrokeWidth`      | desired width of crop frame line in pixels                                                              | int                   |
-| `cropGridRowCount`          | crop grid rows count                                                                                    | int                   |
-| `cropGridColumnCount`       | crop grid columns count                                                                                 | int                   |
-| `cropGridStrokeWidth`       | desired width of crop grid lines in pixels                                                              | int                   |
-| `showCropGrid`              | set to true if you want to see a crop grid/guidelines on top of an image                                | bool                  |
-| `lockAspectRatio`           | set to true if you want to lock the aspect ratio of crop bounds with a fixed value (locked by default)  | bool                  |
-| `hideBottomControls`        | set to true to hide the bottom controls (shown by default)                                              | bool                  |
-| `initAspectRatio`           | desired aspect ratio is applied (from the list of given aspect ratio presets) when starting the cropper | CropAspectRatioPreset |
+| Property                    | Description                                                                                                 | Type                  |
+|-----------------------------|-------------------------------------------------------------------------------------------------------------|-----------------------|
+| `toolbarTitle`              | desired text for Toolbar title                                                                              | String                |
+| `toolbarColor`              | desired color of the Toolbar                                                                                | Color                 |
+| `statusBarColor`            | desired color of status                                                                                     | Color                 |
+| `toolbarWidgetColor`        | desired color of Toolbar text and buttons (default is darker orange)                                        | Color                 |
+| `backgroundColor`           | desired background color that should be applied to the root view                                            | Color                 |
+| `activeControlsWidgetColor` | desired resolved color of the active and selected widget and progress wheel middle line (default is white)  | Color                 |
+| `dimmedLayerColor`          | desired color of dimmed area around the crop bounds                                                         | Color                 |
+| `cropFrameColor`            | desired color of crop frame                                                                                 | Color                 |
+| `cropGridColor`             | desired color of crop grid/guidelines                                                                       | Color                 |
+| `cropFrameStrokeWidth`      | desired width of crop frame line in pixels                                                                  | int                   |
+| `cropGridRowCount`          | crop grid rows count                                                                                        | int                   |
+| `cropGridColumnCount`       | crop grid columns count                                                                                     | int                   |
+| `cropGridStrokeWidth`       | desired width of crop grid lines in pixels                                                                  | int                   |
+| `showCropGrid`              | set to true if you want to see a crop grid/guidelines on top of an image                                    | bool                  |
+| `lockAspectRatio`           | set to true if you want to lock the aspect ratio of crop bounds with a fixed value (locked by default)      | bool                  |
+| `hideBottomControls`        | set to true to hide the bottom controls (shown by default)                                                  | bool                  |
+| `initAspectRatio`           | desired aspect ratio is applied (from the list of given aspect ratio presets) when starting the cropper     | CropAspectRatioPreset |
 
 
 ### iOS

@@ -127,7 +127,6 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Integer toolbarWidgetColor = call.argument("android.toolbar_widget_color");
         Integer backgroundColor = call.argument("android.background_color");
         Integer activeControlsWidgetColor = call.argument("android.active_controls_widget_color");
-        Integer activeWidgetColor = call.argument("android.active_widget_color");
         Integer dimmedLayerColor = call.argument("android.dimmed_layer_color");
         Integer cropFrameColor = call.argument("android.crop_frame_color");
         Integer cropGridColor = call.argument("android.crop_grid_color");
@@ -158,9 +157,6 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         }
         if (activeControlsWidgetColor != null) {
             options.setActiveControlsWidgetColor(activeControlsWidgetColor);
-        }
-        if (activeWidgetColor != null) {
-            options.setActiveWidgetColor(activeWidgetColor);
         }
         if (dimmedLayerColor != null) {
             options.setDimmedLayerColor(dimmedLayerColor);
