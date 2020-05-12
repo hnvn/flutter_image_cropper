@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
 
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.model.AspectRatio;
@@ -20,7 +22,18 @@ import io.flutter.plugin.common.PluginRegistry;
 
 import static android.app.Activity.RESULT_OK;
 
-public class ImageCropperDelegate implements PluginRegistry.ActivityResultListener {
+public class ImageCropperDelegate implements PluginRegistry.ActivityResultListener,
+        PluginRegistry.RequestPermissionsResultListener {
+
+    static final int REQUEST_CODE_CHOOSE_IMAGE_FROM_GALLERY = 2342;
+    static final int REQUEST_CODE_TAKE_IMAGE_WITH_CAMERA = 2343;
+    static final int REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION = 2344;
+    static final int REQUEST_CAMERA_IMAGE_PERMISSION = 2345;
+    static final int REQUEST_CODE_CHOOSE_VIDEO_FROM_GALLERY = 2352;
+    static final int REQUEST_CODE_TAKE_VIDEO_WITH_CAMERA = 2353;
+    static final int REQUEST_EXTERNAL_VIDEO_STORAGE_PERMISSION = 2354;
+    static final int REQUEST_CAMERA_VIDEO_PERMISSION = 2355;
+
     private final Activity activity;
     private MethodChannel.Result pendingResult;
     private FileUtils fileUtils;
@@ -127,6 +140,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Integer toolbarWidgetColor = call.argument("android.toolbar_widget_color");
         Integer backgroundColor = call.argument("android.background_color");
         Integer activeControlsWidgetColor = call.argument("android.active_controls_widget_color");
+        Integer activeWidgetColor = call.argument("android.active_widget_color");
         Integer dimmedLayerColor = call.argument("android.dimmed_layer_color");
         Integer cropFrameColor = call.argument("android.crop_frame_color");
         Integer cropGridColor = call.argument("android.crop_grid_color");
@@ -157,6 +171,9 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         }
         if (activeControlsWidgetColor != null) {
             options.setActiveControlsWidgetColor(activeControlsWidgetColor);
+        }
+        if (activeWidgetColor != null) {
+            //options.setActiveWidgetColor(activeWidgetColor);
         }
         if (dimmedLayerColor != null) {
             options.setDimmedLayerColor(dimmedLayerColor);
@@ -226,5 +243,45 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
             return new AspectRatio(activity.getString(R.string.ucrop_label_original).toUpperCase(),
                     CropImageView.SOURCE_IMAGE_ASPECT_RATIO, 1.0f);
         }
+    }
+
+    @Override
+    public boolean onRequestPermissionsResult(
+            int requestCode, String[] permissions, int[] grantResults) {
+        boolean permissionGranted =
+                grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+        switch (requestCode) {
+            case REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION:
+                if (permissionGranted) {
+                }
+                break;
+            case REQUEST_EXTERNAL_VIDEO_STORAGE_PERMISSION:
+                if (permissionGranted) {
+                }
+                break;
+            case REQUEST_CAMERA_IMAGE_PERMISSION:
+                if (permissionGranted) {
+                }
+                break;
+            case REQUEST_CAMERA_VIDEO_PERMISSION:
+                if (permissionGranted) {
+                }
+                break;
+            default:
+                return false;
+        }
+
+        if (!permissionGranted) {
+            switch (requestCode) {
+                case REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION:
+                case REQUEST_EXTERNAL_VIDEO_STORAGE_PERMISSION:
+                case REQUEST_CAMERA_IMAGE_PERMISSION:
+                case REQUEST_CAMERA_VIDEO_PERMISSION:
+                    break;
+            }
+        }
+
+        return true;
     }
 }
