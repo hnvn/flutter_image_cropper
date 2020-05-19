@@ -1,3 +1,8 @@
+## [1.2.2] - 2020-05-12
+
+* Android: upgrade uCrop to v2.2.5
+* **BREAKING CHANGE**: remove `activeWidgetColor` from `AndroidUiSettings`
+
 ## [1.2.1] - 2020-02-01
 
 * iOS: add more UI customization properties (title, initRect)

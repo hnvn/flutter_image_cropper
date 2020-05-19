@@ -74,11 +74,8 @@ class AndroidUiSettings {
   /// desired background color that should be applied to the root view
   final Color backgroundColor;
 
-  /// desired color of the active and selected widget (default is white)
+  /// desired resolved color of the active and selected widget and progress wheel middle line (default is white)
   final Color activeControlsWidgetColor;
-
-  /// desired color of the progress wheel middle line (default is violet)
-  final Color activeWidgetColor;
 
   /// desired color of dimmed area around the crop bounds
   final Color dimmedLayerColor;
@@ -122,7 +119,6 @@ class AndroidUiSettings {
       this.toolbarWidgetColor,
       this.backgroundColor,
       this.activeControlsWidgetColor,
-      this.activeWidgetColor,
       this.dimmedLayerColor,
       this.cropFrameColor,
       this.cropGridColor,
@@ -143,7 +139,6 @@ class AndroidUiSettings {
         'android.background_color': int32(this.backgroundColor?.value),
         'android.active_controls_widget_color':
             int32(this.activeControlsWidgetColor?.value),
-        'android.active_widget_color': int32(this.activeWidgetColor?.value),
         'android.dimmed_layer_color': int32(this.dimmedLayerColor?.value),
         'android.crop_frame_color': int32(this.cropFrameColor?.value),
         'android.crop_grid_color': int32(this.cropGridColor?.value),
