@@ -1,6 +1,8 @@
 package vn.hunghd.flutter.plugins.imagecropper;
 
 
+import android.app.Activity;
+
 import androidx.appcompat.app.AppCompatDelegate;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -35,7 +37,7 @@ public class ImageCropperPlugin implements MethodCallHandler, FlutterPlugin, Act
         ImageCropperPlugin plugin = new ImageCropperPlugin();
 
         plugin.setupEngine(registrar.messenger());
-        ImageCropperDelegate delegate = plugin.setupActivity();
+        ImageCropperDelegate delegate = plugin.setupActivity(registrar.activity());
         registrar.addActivityResultListener(delegate);
 
     }
@@ -45,8 +47,8 @@ public class ImageCropperPlugin implements MethodCallHandler, FlutterPlugin, Act
         channel.setMethodCallHandler(this);
     }
 
-    private ImageCropperDelegate setupActivity() {
-        delegate = new ImageCropperDelegate(activityPluginBinding.getActivity());
+    public ImageCropperDelegate setupActivity(Activity activity) {
+        delegate = new ImageCropperDelegate(activity);
         return delegate;
     }
 
@@ -68,7 +70,7 @@ public class ImageCropperPlugin implements MethodCallHandler, FlutterPlugin, Act
     @Override
     public void onAttachedToActivity(ActivityPluginBinding activityPluginBinding) {
 
-        setupActivity();
+        setupActivity(activityPluginBinding.getActivity());
         this.activityPluginBinding = activityPluginBinding;
         activityPluginBinding.addActivityResultListener(delegate);
     }
