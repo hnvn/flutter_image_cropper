@@ -1,3 +1,7 @@
+## [1.2.3] - 2020-06-08
+
+* Android: fix bug
+
 ## [1.2.2] - 2020-05-12
 
 * Android: upgrade uCrop to v2.2.5
