@@ -1,4 +1,4 @@
-#import "ImageCropperPlugin.h"
+#import "FLTImageCropperPlugin.h"
 #import <TOCropViewController/TOCropViewController.h>
 #import <UIKit/UIKit.h>
 #import <MobileCoreServices/MobileCoreServices.h>

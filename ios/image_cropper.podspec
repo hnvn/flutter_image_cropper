@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'image_cropper'
-  s.version          = '0.0.2'
+  s.version          = '0.0.3'
   s.summary          = 'A Flutter plugin supports cropping images'
   s.description      = <<-DESC
 A Flutter plugin supports cropping images
@@ -15,7 +15,7 @@ A Flutter plugin supports cropping images
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'TOCropViewController', '~> 2.5.2'
+  s.dependency 'TOCropViewController', '~> 2.5.4'
   
   s.ios.deployment_target = '8.0'
 end
