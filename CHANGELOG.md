@@ -1,3 +1,8 @@
+## [1.3.0] - 2020-08-09
+
+* Update `pubspec` to new format
+* Upgrade `TOCropViewController` to v2.5.4
+
 ## [1.2.3] - 2020-06-08
 
 * Android: fix bug
