@@ -45,7 +45,12 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         pendingResult = result;
 
         File outputDir = activity.getCacheDir();
-        File outputFile = new File(outputDir, "image_cropper_" + (new Date()).getTime() + ".jpg");
+	if("png".equals(compressFormat)){
+        	File outputFile = new File(outputDir, "image_cropper_" + (new Date()).getTime() + ".png");
+	}
+	else{
+		File outputFile = new File(outputDir, "image_cropper_" + (new Date()).getTime() + ".jpg");
+	}
         Uri sourceUri = Uri.fromFile(new File(sourcePath));
         Uri destinationUri = Uri.fromFile(outputFile);
 
