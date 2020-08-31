@@ -1,3 +1,8 @@
+## [1.3.1] - 2020-08-31
+
+* Upgrade `uCrop` to v2.2.6
+* Fix bug: image compress file format (png)
+
 ## [1.3.0] - 2020-08-09
 
 * Update `pubspec` to new format
