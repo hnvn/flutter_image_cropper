@@ -76,6 +76,7 @@ class ImageCropper {
     int compressQuality = 90,
     AndroidUiSettings androidUiSettings,
     IOSUiSettings iosUiSettings,
+    Double maxScaleMultilpier,
   }) async {
     assert(sourcePath != null);
     assert(await File(sourcePath).exists());
@@ -94,6 +95,7 @@ class ImageCropper {
       'crop_style': cropStyleName(cropStyle),
       'compress_format': compressFormatName(compressFormat),
       'compress_quality': compressQuality,
+      'maxScaleMultiplier': maxScaleMultilpier
     }
       ..addAll(androidUiSettings?.toMap() ?? {})
       ..addAll(iosUiSettings?.toMap() ?? {});
