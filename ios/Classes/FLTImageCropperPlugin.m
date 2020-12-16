@@ -10,7 +10,6 @@
 @implementation FLTImageCropperPlugin {
     FlutterResult _result;
     NSDictionary *_arguments;
-    UIViewController *_viewController;
     float _compressQuality;
     NSString *_compressFormat;
 }
@@ -18,17 +17,30 @@
     FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"plugins.hunghd.vn/image_cropper"
             binaryMessenger:[registrar messenger]];
-    UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-    FLTImageCropperPlugin* instance = [[FLTImageCropperPlugin alloc] initWithViewController:viewController];
+    FLTImageCropperPlugin* instance = [[FLTImageCropperPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
-- (instancetype)initWithViewController:(UIViewController *)viewController {
-    self = [super init];
-    if (self) {
-        _viewController = viewController;
+- (UIViewController *)_viewController {
+    NSArray<UIWindow*>* windows = [UIApplication sharedApplication].windows;
+    
+    NSArray<UIWindow*>* activeWindows = [windows filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(UIWindow* object, NSDictionary *bindings) {
+        return object.isHidden == NO;
+    }]];
+    
+    UIWindow* firstActiveWindow = activeWindows.firstObject;
+    if (firstActiveWindow == nil) {
+        [NSException raise:@"NilWindow" format:@"Unable to retrieve active window"];
+        return nil;
     }
-    return self;
+    
+    UIViewController* rootViewController = firstActiveWindow.rootViewController;
+    if (rootViewController == nil) {
+        [NSException raise:@"NilRootViewController" format:@"Unable to retrieve rootViewController"];
+        return nil;
+    }
+    
+    return rootViewController;
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -83,7 +95,7 @@
           cropViewController.aspectRatioLockEnabled = YES;
       }
       
-      [_viewController presentViewController:cropViewController animated:YES completion:nil];
+      [self._viewController presentViewController:cropViewController animated:YES completion:nil];
   } else {
       result(FlutterMethodNotImplemented);
   }
