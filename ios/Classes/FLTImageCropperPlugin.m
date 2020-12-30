@@ -71,9 +71,7 @@
               [allowedAspectRatios addObject:@([self parseAspectRatioPresetFromName:preset])];
           }
       }
-      cropViewController.allowedAspectRatios = allowedAspectRatios;
-      
-      [self setupUiCustomizedOptions:call.arguments forViewController:cropViewController];
+      cropViewController.allowedAspectRatios = allowedAspectRatios;        
       
       if (ratioX != (id)[NSNull null] && ratioY != (id)[NSNull null]) {
           cropViewController.customAspectRatio = CGSizeMake([ratioX floatValue], [ratioY floatValue]);
@@ -82,6 +80,8 @@
           cropViewController.aspectRatioLockDimensionSwapEnabled = YES;
           cropViewController.aspectRatioLockEnabled = YES;
       }
+
+      [self setupUiCustomizedOptions:call.arguments forViewController:cropViewController];
       
       [_viewController presentViewController:cropViewController animated:YES completion:nil];
   } else {
