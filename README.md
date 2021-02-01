@@ -48,7 +48,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 ## Usage
 
-### Required paramsters
+### Required parameters
 
 * **sourcePath**: the absolute path of an image file.
 
