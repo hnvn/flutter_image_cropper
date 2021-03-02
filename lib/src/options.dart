@@ -111,25 +111,24 @@ class AndroidUiSettings {
   /// when starting the cropper
   final CropAspectRatioPreset? initAspectRatio;
 
-  const AndroidUiSettings({
-    this.toolbarTitle,
-    this.toolbarColor,
-    this.statusBarColor,
-    this.toolbarWidgetColor,
-    this.backgroundColor,
-    this.activeControlsWidgetColor,
-    this.dimmedLayerColor,
-    this.cropFrameColor,
-    this.cropGridColor,
-    this.cropFrameStrokeWidth,
-    this.cropGridRowCount,
-    this.cropGridColumnCount,
-    this.cropGridStrokeWidth,
-    this.showCropGrid,
-    this.lockAspectRatio,
-    this.hideBottomControls,
-    this.initAspectRatio,
-  });
+  const AndroidUiSettings(
+      {this.toolbarTitle,
+      this.toolbarColor,
+      this.statusBarColor,
+      this.toolbarWidgetColor,
+      this.backgroundColor,
+      this.activeControlsWidgetColor,
+      this.dimmedLayerColor,
+      this.cropFrameColor,
+      this.cropGridColor,
+      this.cropFrameStrokeWidth,
+      this.cropGridRowCount,
+      this.cropGridColumnCount,
+      this.cropGridStrokeWidth,
+      this.showCropGrid,
+      this.lockAspectRatio,
+      this.hideBottomControls,
+      this.initAspectRatio});
 
   Map<String, dynamic> toMap() => {
         'android.toolbar_title': this.toolbarTitle,
