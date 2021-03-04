@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   final String title;
 
-  MyHomePage({this.title});
+  MyHomePage({required this.title});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -36,8 +36,8 @@ enum AppState {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  AppState state;
-  File imageFile;
+  AppState? state;
+  File? imageFile;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: imageFile != null ? Image.file(imageFile) : Container(),
+        child: imageFile != null ? Image.file(imageFile!) : Container(),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepOrange,
@@ -80,7 +80,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<Null> _pickImage() async {
-    imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final picker = ImagePicker();
+    PickedFile? pickedFile = await picker.getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+    }
     if (imageFile != null) {
       setState(() {
         state = AppState.picked;
@@ -89,8 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<Null> _cropImage() async {
-    File croppedFile = await ImageCropper.cropImage(
-        sourcePath: imageFile.path,
+    File? croppedFile = await ImageCropper.cropImage(
+        sourcePath: imageFile!.path,
         aspectRatioPresets: Platform.isAndroid
             ? [
                 CropAspectRatioPreset.square,

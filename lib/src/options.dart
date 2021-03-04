@@ -35,9 +35,7 @@ class CropAspectRatio {
   final double ratioX;
   final double ratioY;
 
-  const CropAspectRatio({@required this.ratioX, @required this.ratioY})
-      : assert(
-            ratioX != null && ratioY != null && ratioX > 0.0 && ratioY > 0.0);
+  const CropAspectRatio({required this.ratioX, required this.ratioY});
 
   @override
   int get hashCode => ratioX.hashCode ^ ratioY.hashCode;
@@ -60,57 +58,57 @@ class CropAspectRatio {
 ///
 class AndroidUiSettings {
   /// desired text for Toolbar title
-  final String toolbarTitle;
+  final String? toolbarTitle;
 
   /// desired color of the Toolbar
-  final Color toolbarColor;
+  final Color? toolbarColor;
 
   /// desired color of status
-  final Color statusBarColor;
+  final Color? statusBarColor;
 
   /// desired color of Toolbar text and buttons (default is darker orange)
-  final Color toolbarWidgetColor;
+  final Color? toolbarWidgetColor;
 
   /// desired background color that should be applied to the root view
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// desired resolved color of the active and selected widget and progress wheel middle line (default is white)
-  final Color activeControlsWidgetColor;
+  final Color? activeControlsWidgetColor;
 
   /// desired color of dimmed area around the crop bounds
-  final Color dimmedLayerColor;
+  final Color? dimmedLayerColor;
 
   /// desired color of crop frame
-  final Color cropFrameColor;
+  final Color? cropFrameColor;
 
   /// desired color of crop grid/guidelines
-  final Color cropGridColor;
+  final Color? cropGridColor;
 
   /// desired width of crop frame line in pixels
-  final int cropFrameStrokeWidth;
+  final int? cropFrameStrokeWidth;
 
   /// crop grid rows count
-  final int cropGridRowCount;
+  final int? cropGridRowCount;
 
   /// crop grid columns count
-  final int cropGridColumnCount;
+  final int? cropGridColumnCount;
 
   /// desired width of crop grid lines in pixels
-  final int cropGridStrokeWidth;
+  final int? cropGridStrokeWidth;
 
   /// set to true if you want to see a crop grid/guidelines on top of an image
-  final bool showCropGrid;
+  final bool? showCropGrid;
 
   /// set to true if you want to lock the aspect ratio of crop bounds with a fixed value
   /// (locked by default)
-  final bool lockAspectRatio;
+  final bool? lockAspectRatio;
 
   /// set to true to hide the bottom controls (shown by default)
-  final bool hideBottomControls;
+  final bool? hideBottomControls;
 
   /// desired aspect ratio is applied (from the list of given aspect ratio presets)
   /// when starting the cropper
-  final CropAspectRatioPreset initAspectRatio;
+  final CropAspectRatioPreset? initAspectRatio;
 
   const AndroidUiSettings(
       {this.toolbarTitle,
@@ -133,15 +131,16 @@ class AndroidUiSettings {
 
   Map<String, dynamic> toMap() => {
         'android.toolbar_title': this.toolbarTitle,
-        'android.toolbar_color': int32(this.toolbarColor?.value),
-        'android.statusbar_color': int32(this.statusBarColor?.value),
-        'android.toolbar_widget_color': int32(this.toolbarWidgetColor?.value),
-        'android.background_color': int32(this.backgroundColor?.value),
+        'android.toolbar_color': int32(this.toolbarColor?.value ?? 0),
+        'android.statusbar_color': int32(this.statusBarColor?.value ?? 0),
+        'android.toolbar_widget_color':
+            int32(this.toolbarWidgetColor?.value ?? 0),
+        'android.background_color': int32(this.backgroundColor?.value ?? 0),
         'android.active_controls_widget_color':
-            int32(this.activeControlsWidgetColor?.value),
-        'android.dimmed_layer_color': int32(this.dimmedLayerColor?.value),
-        'android.crop_frame_color': int32(this.cropFrameColor?.value),
-        'android.crop_grid_color': int32(this.cropGridColor?.value),
+            int32(this.activeControlsWidgetColor?.value ?? 0),
+        'android.dimmed_layer_color': int32(this.dimmedLayerColor?.value ?? 0),
+        'android.crop_frame_color': int32(this.cropFrameColor?.value ?? 0),
+        'android.crop_grid_color': int32(this.cropGridColor?.value ?? 0),
         'android.crop_frame_stroke_width': this.cropFrameStrokeWidth,
         'android.crop_grid_row_count': this.cropGridRowCount,
         'android.crop_grid_column_count': this.cropGridColumnCount,
@@ -166,44 +165,44 @@ class AndroidUiSettings {
 class IOSUiSettings {
   /// The minimum croping aspect ratio. If set, user is prevented from setting
   /// cropping rectangle to lower aspect ratio than defined by the parameter.
-  final double minimumAspectRatio;
+  final double? minimumAspectRatio;
 
   /// The initial rect of cropping.
-  final double rectX;
-  final double rectY;
-  final double rectWidth;
-  final double rectHeight;
+  final double? rectX;
+  final double? rectY;
+  final double? rectWidth;
+  final double? rectHeight;
 
   /// If true, when the user hits 'Done', a UIActivityController will appear
   /// before the view controller ends.
-  final bool showActivitySheetOnDone;
+  final bool? showActivitySheetOnDone;
 
   /// Shows a confirmation dialog when the user hits 'Cancel' and there are pending changes.
   /// (default is false)
-  final bool showCancelConfirmationDialog;
+  final bool? showCancelConfirmationDialog;
 
   /// When disabled, an additional rotation button that rotates the canvas in
   /// 90-degree segments in a clockwise direction is shown in the toolbar.
   /// (default is false)
-  final bool rotateClockwiseButtonHidden;
+  final bool? rotateClockwiseButtonHidden;
 
   /// If this controller is embedded in UINavigationController its navigation bar
   /// is hidden by default. Set this property to false to show the navigation bar.
   /// This must be set before this controller is presented.
-  final bool hidesNavigationBar;
+  final bool? hidesNavigationBar;
 
   /// When enabled, hides the rotation button, as well as the alternative rotation
   /// button visible when `showClockwiseRotationButton` is set to YES.
   /// (default is false)
-  final bool rotateButtonsHidden;
+  final bool? rotateButtonsHidden;
 
   /// When enabled, hides the 'Reset' button on the toolbar.
   /// (default is false)
-  final bool resetButtonHidden;
+  final bool? resetButtonHidden;
 
   /// When enabled, hides the 'Aspect Ratio Picker' button on the toolbar.
   /// (default is false)
-  final bool aspectRatioPickerButtonHidden;
+  final bool? aspectRatioPickerButtonHidden;
 
   /// If true, tapping the reset button will also reset the aspect ratio back to the image
   /// default ratio. Otherwise, the reset will just zoom out to the current aspect ratio.
@@ -212,14 +211,14 @@ class IOSUiSettings {
   /// button will automatically be hidden from the toolbar.
   ///
   /// (default is true)
-  final bool resetAspectRatioEnabled;
+  final bool? resetAspectRatioEnabled;
 
   /// If true, a custom aspect ratio is set, and the aspectRatioLockEnabled is set to true, the crop box
   /// will swap it's dimensions depending on portrait or landscape sized images.
   /// This value also controls whether the dimensions can swap when the image is rotated.
   ///
   /// (default is false)
-  final bool aspectRatioLockDimensionSwapEnabled;
+  final bool? aspectRatioLockDimensionSwapEnabled;
 
   /// If true, while it can still be resized, the crop box will be locked to its current aspect ratio.
   ///
@@ -227,18 +226,18 @@ class IOSUiSettings {
   /// button will automatically be hidden from the toolbar.
   ///
   /// (default is false)
-  final bool aspectRatioLockEnabled;
+  final bool? aspectRatioLockEnabled;
 
   /// Title text that appears at the top of the view controller.
-  final String title;
+  final String? title;
 
   /// Title for the 'Done' button.
   /// Setting this will override the Default which is a localized string for "Done".
-  final String doneButtonTitle;
+  final String? doneButtonTitle;
 
   /// Title for the 'Cancel' button.
   /// Setting this will override the Default which is a localized string for "Cancel".
-  final String cancelButtonTitle;
+  final String? cancelButtonTitle;
 
   const IOSUiSettings(
       {this.minimumAspectRatio,
@@ -285,7 +284,7 @@ class IOSUiSettings {
       };
 }
 
-String aspectRatioPresetName(CropAspectRatioPreset preset) {
+String aspectRatioPresetName(CropAspectRatioPreset? preset) {
   switch (preset) {
     case CropAspectRatioPreset.original:
       return 'original';
