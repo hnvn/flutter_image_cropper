@@ -13,7 +13,7 @@
 /// value int Dart codes is 32-bit number and it will be a integer number in Java
 /// codes.
 ///
-int int32(int i) {
+int? int32(int? i) {
   if (i == null)
     return i;
   else
