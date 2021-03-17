@@ -1,3 +1,8 @@
+## [1.4.0] - 2021-03-07
+
+* Upgrade `TOCropViewController` to v2.6.0
+* Migrate to nullsafety
+
 ## [1.3.1] - 2020-08-31
 
 * Upgrade `uCrop` to v2.2.6

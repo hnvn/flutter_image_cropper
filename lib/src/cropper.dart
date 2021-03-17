@@ -4,7 +4,6 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 
@@ -59,11 +58,11 @@ class ImageCropper {
   /// on Android, so it can be lost later, you are responsible for storing it somewhere
   /// permanent (if needed).
   ///
-  static Future<File> cropImage({
-    @required String sourcePath,
-    int maxWidth,
-    int maxHeight,
-    CropAspectRatio aspectRatio,
+  static Future<File?> cropImage({
+    required String sourcePath,
+    int? maxWidth,
+    int? maxHeight,
+    CropAspectRatio? aspectRatio,
     List<CropAspectRatioPreset> aspectRatioPresets = const [
       CropAspectRatioPreset.original,
       CropAspectRatioPreset.square,
@@ -74,10 +73,9 @@ class ImageCropper {
     CropStyle cropStyle = CropStyle.rectangle,
     ImageCompressFormat compressFormat = ImageCompressFormat.jpg,
     int compressQuality = 90,
-    AndroidUiSettings androidUiSettings,
-    IOSUiSettings iosUiSettings,
+    AndroidUiSettings? androidUiSettings,
+    IOSUiSettings? iosUiSettings,
   }) async {
-    assert(sourcePath != null);
     assert(await File(sourcePath).exists());
     assert(maxWidth == null || maxWidth > 0);
     assert(maxHeight == null || maxHeight > 0);
@@ -98,7 +96,7 @@ class ImageCropper {
       ..addAll(androidUiSettings?.toMap() ?? {})
       ..addAll(iosUiSettings?.toMap() ?? {});
 
-    final String resultPath =
+    final String? resultPath =
         await _channel.invokeMethod('cropImage', arguments);
     return resultPath == null ? null : new File(resultPath);
   }
