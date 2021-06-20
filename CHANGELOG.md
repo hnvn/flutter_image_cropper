@@ -1,3 +1,7 @@
+## [1.4.1] - 2021-06-20
+
+* Upgrade `uCrop` to v2.2.7
+
 ## [1.4.0] - 2021-03-07
 
 * Upgrade `TOCropViewController` to v2.6.0
