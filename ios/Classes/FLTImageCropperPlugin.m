@@ -218,10 +218,11 @@
                                     details:nil]);
     }
     
-    [cropViewController dismissViewControllerAnimated:YES completion:nil];
-
-    _result = nil;
-    _arguments = nil;
+    [cropViewController dismissViewControllerAnimated:YES completion:^{
+         _result = nil;
+         _arguments = nil;
+        
+    }];
 }
 
 - (void)cropViewController:(TOCropViewController *)cropViewController didFinishCancelled:(BOOL)cancelled {
