@@ -67,13 +67,13 @@ class AndroidUiSettings {
   /// desired color of status
   final Color? statusBarColor;
 
-  /// desired color of Toolbar text and buttons (default is darker orange)
+  /// desired color of Toolbar text and buttons (default is black)
   final Color? toolbarWidgetColor;
 
   /// desired background color that should be applied to the root view
   final Color? backgroundColor;
 
-  /// desired resolved color of the active and selected widget and progress wheel middle line (default is white)
+  /// desired resolved color of the active and selected widget and progress wheel middle line (default is darker orange)
   final Color? activeControlsWidgetColor;
 
   /// desired color of dimmed area around the crop bounds
