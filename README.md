@@ -12,7 +12,7 @@ A Flutter plugin for Android and iOS supports cropping images. This plugin is ba
 ### uCrop - Yalantis 
 [![GitHub watchers](https://img.shields.io/github/watchers/Yalantis/uCrop.svg?style=social&label=Watch&maxAge=2592000)](https://GitHub.com/Yalantis/uCrop/watchers/)  [![GitHub stars](https://img.shields.io/github/stars/Yalantis/uCrop.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/Yalantis/uCrop/stargazers/)  [![GitHub forks](https://img.shields.io/github/forks/Yalantis/uCrop.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/Yalantis/uCrop/network/) [![](https://jitpack.io/v/Yalantis/uCrop.svg)](https://jitpack.io/#Yalantis/uCrop) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-This project aims to provide an ultimate and flexible image cropping experience. Made in Made in [Yalantis](https://yalantis.com/?utm_source=github)
+This project aims to provide an ultimate and flexible image cropping experience. Made in [Yalantis](https://yalantis.com/?utm_source=github)
 
 <p align="center">
 	<img src="https://github.com/hnvn/flutter_image_cropper/blob/master/screenshots/android_demo.gif?raw=true" width="200"  />
