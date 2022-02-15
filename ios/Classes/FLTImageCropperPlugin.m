@@ -210,18 +210,20 @@
     NSString *tmpDirectory = NSTemporaryDirectory();
     NSString *tmpPath = [tmpDirectory stringByAppendingPathComponent:tmpFile];
     
-    if ([[NSFileManager defaultManager] createFileAtPath:tmpPath contents:data attributes:nil]) {
-        _result(tmpPath);
-    } else {
-        _result([FlutterError errorWithCode:@"create_error"
-                                    message:@"Temporary file could not be created"
-                                    details:nil]);
-    }
-    
-    [cropViewController dismissViewControllerAnimated:YES completion:nil];
+    if (_result) {
+        if ([[NSFileManager defaultManager] createFileAtPath:tmpPath contents:data attributes:nil]) {
+            _result(tmpPath);
+        } else {
+            _result([FlutterError errorWithCode:@"create_error"
+                                        message:@"Temporary file could not be created"
+                                        details:nil]);
+        }
+        
+        [cropViewController dismissViewControllerAnimated:YES completion:nil];
 
-    _result = nil;
-    _arguments = nil;
+        _result = nil;
+        _arguments = nil;
+    }
 }
 
 - (void)cropViewController:(TOCropViewController *)cropViewController didFinishCancelled:(BOOL)cancelled {
