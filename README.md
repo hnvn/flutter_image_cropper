@@ -134,7 +134,7 @@ The result file is saved in `NSTemporaryDirectory` on iOS and application Cache 
 
 import 'package:image_cropper/image_cropper.dart';
 
-File croppedFile = await ImageCropper.cropImage(
+File croppedFile = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
