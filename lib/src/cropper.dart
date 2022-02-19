@@ -58,7 +58,7 @@ class ImageCropper {
   /// on Android, so it can be lost later, you are responsible for storing it somewhere
   /// permanent (if needed).
   ///
-  static Future<File?> cropImage({
+  Future<File?> cropImage({
     required String sourcePath,
     int? maxWidth,
     int? maxHeight,
