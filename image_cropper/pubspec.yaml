@@ -19,7 +19,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  image_cropper_platform_interface: 2.0.0-beta
+  image_cropper_platform_interface: ^2.0.0-beta
   
 dev_dependencies:
   flutter_test:
