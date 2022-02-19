@@ -1,3 +1,10 @@
+# [1.5.0] - 2022-02-19
+
+* Upgrade `uCrop` to v2.2.8
+* Ugrade `TOCropViewController` to v2.6.1
+* PR: [#309](https://github.com/hnvn/flutter_image_cropper/pull/309), #[229](https://github.com/hnvn/flutter_image_cropper/pull/299), #[294](https://github.com/hnvn/flutter_image_cropper/pull/294), [#258](https://github.com/hnvn/flutter_image_cropper/pull/258), [#251](https://github.com/hnvn/flutter_image_cropper/pull/258)
+* **BREAKING CHANGE**: change `cropImage()` to instance method
+
 ## [1.4.1] - 2021-06-20
 
 * Upgrade `uCrop` to v2.2.7
