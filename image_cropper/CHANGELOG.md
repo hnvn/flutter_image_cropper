@@ -1,4 +1,8 @@
-# [2.0.0-beta] - 2002-02-19
+# [2.0.0-beta.1] - 2022-03-27
+
+* **BREAKING CHANGE**: update result models to support web, replace `File` by `CroppedFile`
+
+# [2.0.0-beta] - 2022-02-19
 
 * migrate to federated plugins
 * **BREAKING CHANGE**: remove `androidUiSettings` and `iosUiSettings`, they are replaced by `uiSettings` for sake of supporting multiple platforms in future.

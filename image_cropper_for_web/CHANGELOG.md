@@ -1,3 +1,3 @@
-## 0.0.1
+# [0.0.1] - 2022-03-27
 
-* TODO: Describe initial release.
+* initial release for web support
