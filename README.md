@@ -3,11 +3,11 @@
 [![pub package](https://img.shields.io/pub/v/image_cropper.svg)](https://pub.dartlang.org/packages/image_cropper)
 
 
-A Flutter plugin for Android and iOS supports cropping images. This plugin is based on two different native libraries so it comes with different UI between these platforms.
+A Flutter plugin for Android, iOS and Web supports cropping images. This plugin is based on thres different native libraries so it comes with different UI between these platforms.
 
 ## Introduction
 
-**Image Cropper** doesn't manipulate images in Dart codes directly, instead, the plugin uses [Platform Channel](https://flutter.dev/docs/development/platform-integration/platform-channels) to expose Dart APIs that Flutter application can use to communicate with two very powerful native libraries ([uCrop](https://github.com/Yalantis/uCrop) and [TOCropViewController](https://github.com/TimOliver/TOCropViewController)) to crop and rotate images. Because of that, all credits belong to these libraries.
+**Image Cropper** doesn't manipulate images in Dart codes directly, instead, the plugin uses [Platform Channel](https://flutter.dev/docs/development/platform-integration/platform-channels) to expose Dart APIs that Flutter application can use to communicate with three very powerful native libraries ([uCrop](https://github.com/Yalantis/uCrop), [TOCropViewController](https://github.com/TimOliver/TOCropViewController) and [croppie](https://github.com/Foliotek/Croppie)) to crop and rotate images. Because of that, all credits belong to these libraries.
 
 ### uCrop - Yalantis 
 [![GitHub watchers](https://img.shields.io/github/watchers/Yalantis/uCrop.svg?style=social&label=Watch&maxAge=2592000)](https://GitHub.com/Yalantis/uCrop/watchers/)  [![GitHub stars](https://img.shields.io/github/stars/Yalantis/uCrop.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/Yalantis/uCrop/stargazers/)  [![GitHub forks](https://img.shields.io/github/forks/Yalantis/uCrop.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/Yalantis/uCrop/network/) [![](https://jitpack.io/v/Yalantis/uCrop.svg)](https://jitpack.io/#Yalantis/uCrop) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
