@@ -3,11 +3,11 @@
 [![pub package](https://img.shields.io/pub/v/image_cropper.svg)](https://pub.dartlang.org/packages/image_cropper)
 
 
-A Flutter plugin for Android and iOS supports cropping images. This plugin is based on two different native libraries so it comes with different UI between these platforms.
+A Flutter plugin for Android, iOS and Web supports cropping images. This plugin is based on three different native libraries so it comes with different UI between these platforms.
 
 ## Introduction
 
-**Image Cropper** doesn't manipulate images in Dart codes directly, instead, the plugin uses [Platform Channel](https://flutter.dev/docs/development/platform-integration/platform-channels) to expose Dart APIs that Flutter application can use to communicate with two very powerful native libraries ([uCrop](https://github.com/Yalantis/uCrop) and [TOCropViewController](https://github.com/TimOliver/TOCropViewController)) to crop and rotate images. Because of that, all credits belong to these libraries.
+**Image Cropper** doesn't manipulate images in Dart codes directly, instead, the plugin uses [Platform Channel](https://flutter.dev/docs/development/platform-integration/platform-channels) to expose Dart APIs that Flutter application can use to communicate with three very powerful native libraries ([uCrop](https://github.com/Yalantis/uCrop), [TOCropViewController](https://github.com/TimOliver/TOCropViewController) and [croppie](https://github.com/Foliotek/Croppie)) to crop and rotate images. Because of that, all credits belong to these libraries.
 
 ### uCrop - Yalantis 
 [![GitHub watchers](https://img.shields.io/github/watchers/Yalantis/uCrop.svg?style=social&label=Watch&maxAge=2592000)](https://GitHub.com/Yalantis/uCrop/watchers/)  [![GitHub stars](https://img.shields.io/github/stars/Yalantis/uCrop.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/Yalantis/uCrop/stargazers/)  [![GitHub forks](https://img.shields.io/github/forks/Yalantis/uCrop.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/Yalantis/uCrop/network/) [![](https://jitpack.io/v/Yalantis/uCrop.svg)](https://jitpack.io/#Yalantis/uCrop) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -15,7 +15,7 @@ A Flutter plugin for Android and iOS supports cropping images. This plugin is ba
 This project aims to provide an ultimate and flexible image cropping experience. Made in [Yalantis](https://yalantis.com/?utm_source=github)
 
 <p align="center">
-	<img src="https://github.com/hnvn/flutter_image_cropper/blob/master/screenshots/android_demo.gif?raw=true" width="200"  />
+	<img src="https://github.com/hnvn/flutter_image_cropper/blob/v2/image_cropper/screenshots/android_demo.gif?raw=true" width="200"  />
 </p>
 
 ### TOCropViewController - TimOliver
@@ -24,7 +24,16 @@ This project aims to provide an ultimate and flexible image cropping experience.
 `TOCropViewController` is an open-source `UIViewController` subclass to crop out sections of `UIImage` objects, as well as perform basic rotations. It is excellent for things like editing profile pictures, or sharing parts of a photo online. It has been designed with the iOS Photos app editor in mind, and as such, behaves in a way that should already feel familiar to users of iOS.
 
 <p align="center">
-  <img src="https://github.com/hnvn/flutter_image_cropper/blob/master/screenshots/ios_demo.gif?raw=true" width="200" />
+  <img src="https://github.com/hnvn/flutter_image_cropper/blob/v2/image_cropper/screenshots/ios_demo.gif?raw=true" width="200" />
+</p>
+
+### Croppie - Foliotek 
+[![GitHub watchers](https://img.shields.io/github/watchers/foliotek/croppie.svg?style=social&label=Watch&maxAge=2592000)](https://GitHub.com/foliotek/croppie/watchers/) [![GitHub stars](https://img.shields.io/github/stars/foliotek/croppie.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/foliotek/croppie/stargazers/) [![GitHub forks](https://img.shields.io/github/forks/foliotek/croppie.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/foliotek/croppie/network/) [![npm version](https://badge.fury.io/js/croppie.svg)](https://badge.fury.io/js/croppie) 
+
+Croppie is a fast, easy to use image cropping plugin with tons of configuration options!
+
+<p align="center">
+  <img src="https://github.com/hnvn/flutter_image_cropper/blob/v2/image_cropper/screenshots/croppie_preview.png?raw=true" width="400"/>
 </p>
 
 ## How to install
@@ -46,6 +55,23 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 ### iOS
 - No configuration required
 
+### Web
+- Add following codes inside `<head>` tag in file `web/index.html`:
+
+```html
+<head>
+  ....
+
+  <!-- Croppie -->
+  <link rel="stylesheet" href="packages/image_cropper_for_web/src/croppie/js/croppie.css" />
+  <!--exif.js If you need-->
+  <script defer src="packages/image_cropper_for_web/src/croppie/js/exif.js"></script>
+  <script src="packages/image_cropper_for_web/src/croppie/js/croppie.min.js"></script>
+
+  ....
+</head>
+```
+
 ## Usage
 
 ### Required parameters
@@ -54,31 +80,40 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 ### Optional parameters
 
-* **maxWidth**: maximum cropped image width.
+* **maxWidth**: maximum cropped image width. Note: this field is ignored on Web.
 
-* **maxHeight**: maximum cropped image height.
+* **maxHeight**: maximum cropped image height. Note: this field is ignored on Web.
 
-* **aspectRatio**: controls the aspect ratio of crop bounds. If this values is set, the cropper is locked and user can't change the aspect ratio of crop bounds.
+* **aspectRatio**: controls the aspect ratio of crop bounds. If this values is set, the cropper is locked and user can't change the aspect ratio of crop bounds. Note: this field is ignored on Web.
 
-* **aspectRatioPresets**: controls the list of aspect ratios in the crop menu view. In Android, you can set the initialized aspect ratio when starting the cropper by setting the value of `AndroidUiSettings.initAspectRatio`.
+* **aspectRatioPresets**: controls the list of aspect ratios in the crop menu view. In Android, you can set the initialized aspect ratio when starting the cropper by setting the value of `AndroidUiSettings.initAspectRatio`. Note: this field is ignored on Web.
 
-* **cropStyle**: controls the style of crop bounds, it can be rectangle or circle style (default is `CropStyle.rectangle`).
+* **cropStyle**: controls the style of crop bounds, it can be rectangle or circle style (default is `CropStyle.rectangle`). Note: this field can be overrided by `WebUiSettings.viewPort.type` on Web
 
 * **compressFormat**: the format of result image, png or jpg (default is ImageCompressFormat.jpg).
 
-* **compressQuality**: the value [0 - 100] to control the quality of image compression.
+* **compressQuality**: number between 0 and 100 to control the quality of image compression.
 
-* **androidUiSettings**: controls UI customization on Android. See [Android customization](#android-1).
+* **uiSettings**: controls UI customization on specific platform (android, ios, web,...)
 
-* **iosUiSettings**: controls UI customization on iOS. See [iOS customization](#ios-1).
+  * Android: see [Android customization](#android-1).
+
+  * iOS: see [iOS customization](#ios-1).
+
+  * Web: see [Web customization](#web-1).
 
 ### Note
 
-The result file is saved in `NSTemporaryDirectory` on iOS and application Cache directory on Android, so it can be lost later, you are responsible for storing it somewhere permanent (if needed).
+* The result file is saved in `NSTemporaryDirectory` on iOS and application Cache directory on Android, so it can be lost later, you are responsible for storing it somewhere permanent (if needed).
+
+* The implementation on Web is much different compared to the implementation on mobile app. It causes some configuration fields not working (`maxWidth`, `maxHeight`, `aspectRatio`, `aspectRatioPresets`) and `WebUiSettings` is required for Web.
 
 ## Customization
 
 ### Android
+
+<details>
+<summary>Click to view detail</summary>
 
 **Image Cropper** provides a helper class called `AndroidUiSettings` that wraps all properties can be used to customize UI in **uCrop** library. 
 
@@ -102,8 +137,12 @@ The result file is saved in `NSTemporaryDirectory` on iOS and application Cache 
 | `hideBottomControls`        | set to true to hide the bottom controls (shown by default)                                                  | bool                  |
 | `initAspectRatio`           | desired aspect ratio is applied (from the list of given aspect ratio presets) when starting the cropper     | CropAspectRatioPreset |
 
+</details>
 
 ### iOS
+
+<details>
+<summary>Click to view detail</summary>
 
 **Image Cropper** provides a helper class called `IOUiSettings` that wraps all properties can be used to customize UI in **TOCropViewController** library. 
 
@@ -127,6 +166,72 @@ The result file is saved in `NSTemporaryDirectory` on iOS and application Cache 
 | `title`                               | Title text that appears at the top of the view controller.                                                                                                                                                                                                                                                                                  | String |
 | `doneButtonTitle`                     | Title for the 'Done' button. Setting this will override the Default which is a localized string for "Done"                                                                                                                                                                                                                                  | String |
 | `cancelButtonTitle`                   | Title for the 'Cancel' button. Setting this will override the Default which is a localized string for "Cancel"                                                                                                                                                                                                                              | String |
+
+</details>
+
+### Web
+
+<details>
+<summary>Click to view detail</summary>
+
+**Image Cropper** provides a helper class called `WebUiSettings` that wraps all properties can be used to customize UI in **croppie** library. 
+
+| `Property`            | Description                                                                                                                                                                                                       | Type                 |
+|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
+| `boundary`            | The outer container of the cropper. Default = { width: 500, height: 500 }                                                                                                                                         | Boundary             |
+| `viewPort`            | The inner container of the coppie. The visible part of the image. Valid type values:'square' 'circle'. Default = { width: 400, height: 400, type: 'square' }                                                      | ViewPort             |
+| `customClass`         | A class of your choosing to add to the container to add custom styles to your croppie. Default = ''                                                                                                               | String               |
+| `enableExif`          | Enable exif orientation reading. Tells Croppie to read exif orientation from the image data and orient the image correctly before rendering to the page. Requires exif.js (packages/croppie_dart/lib/src/exif.js) | bool                 |
+| `enableOrientation`   | Enable or disable support for specifying a custom orientation when binding images. Default = false                                                                                                                | bool                 |
+| `enableZoom`          | Enable zooming functionality. If set to false - scrolling and pinching would not zoom. Default = false                                                                                                            | bool                 |
+| `enableResize`        | Enable or disable support for resizing the viewport area. Default = false                                                                                                                                         | bool                 |
+| `mouseWheelZoom`      | Enable or disable the ability to use the mouse wheel to zoom in and out on a croppie instance. Default = true                                                                                                     | bool                 |
+| `showZoomer`          | Hide or show the zoom slider. Default = true                                                                                                                                                                      | bool                 |
+| `presentStyle`        | Presentation style of cropper, either a dialog or a page (route). Default = dialog                                                                                                                                | CropperPresentStyle  |
+| `context`             | Current BuildContext. The context is required to show cropper dialog or route                                                                                                                                     | BuildContext         |
+| `customDialogBuilder` | Builder to customize the cropper Dialog                                                                                                                                                                           | CropperDialogBuilder |
+| `customRouteBuilder`  | Builder to customize the cropper PageRoute                                                                                                                                                                        | CropperRouteBuilder  |
+
+#### Note:
+
+If using `CropperDialogBuilder` and `CropperRouteBuilder` to customize cropper dialog and route, the customization codes need to call `crop()` function to trigger crop feature and then returning the crop result data to the plugin by using `Navigator.of(context).pop(result)`. 
+
+````dart
+
+ WebUiSettings(
+   ...
+   customDialogBuilder: (cropper, crop) {
+      return Dialog(
+       child: Builder(
+         builder: (context) {
+          return Container(
+            ...
+            child: Column(
+              ...
+              children: [
+                ...
+                cropper,
+                ...
+                TextButton(
+                  onPressed: () async {
+                    final result = await crop();
+                    Navigator.of(context).pop(result);
+                  },
+                  child: Text('Crop'),
+                )
+              ]
+            ),
+          );
+        },
+       ),
+     );
+   },
+   ...
+ )
+
+````
+
+</details>
 
 ## Example
 
@@ -153,6 +258,22 @@ File croppedFile = await ImageCropper().cropImage(
         IOSUiSettings(
           title: 'Cropper',
         ),
+        WebUiSettings(
+          context: context,
+          presentStyle: CropperPresentStyle.dialog,
+          boundary: Boundary(
+            width: 520,
+            height: 520,
+          ),
+          viewPort: ViewPort(
+            width: 480,
+            height: 480,
+            type: 'circle'
+          ),
+          enableExif: true,
+          enableZoom: true,
+          showZoomer: true,
+        )
       ],
     );
     
@@ -163,3 +284,4 @@ File croppedFile = await ImageCropper().cropImage(
 
 - Android: [uCrop](https://github.com/Yalantis/uCrop) created by [Yalantis](https://github.com/Yalantis)
 - iOS: [TOCropViewController](https://github.com/TimOliver/TOCropViewController) created by [Tim Oliver](https://twitter.com/TimOliverAU)
+- Web: [croppie](https://github.com/Foliotek/Croppie) created by [Foliotek](https://github.com/Foliotek) and [croppie-dart](https://gitlab.com/michel.werren/croppie-dart) created by [Michel Werren](https://gitlab.com/michel.werren)
