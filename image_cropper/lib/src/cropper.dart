@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:io';
 
 import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
 
@@ -58,7 +57,7 @@ class ImageCropper {
   /// on Android, so it can be lost later, you are responsible for storing it somewhere
   /// permanent (if needed).
   ///
-  Future<File?> cropImage({
+  Future<CroppedFile?> cropImage({
     required String sourcePath,
     int? maxWidth,
     int? maxHeight,

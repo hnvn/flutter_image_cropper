@@ -51,7 +51,7 @@ class MethodChannelImageCropper extends ImageCropperPlatform {
   /// A result file of the cropped image.
   ///
   ///
-  Future<File?> cropImage({
+  Future<CroppedFile?> cropImage({
     required String sourcePath,
     int? maxWidth,
     int? maxHeight,
@@ -94,6 +94,6 @@ class MethodChannelImageCropper extends ImageCropperPlatform {
 
     final String? resultPath =
         await _channel.invokeMethod('cropImage', arguments);
-    return resultPath == null ? null : new File(resultPath);
+    return resultPath == null ? null : CroppedFile(resultPath);
   }
 }

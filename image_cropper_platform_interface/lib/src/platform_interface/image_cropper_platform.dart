@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:io';
-
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import '../../image_cropper_platform_interface.dart';
@@ -72,7 +70,7 @@ abstract class ImageCropperPlatform extends PlatformInterface {
   /// A result file of the cropped image.
   ///
   ///
-  Future<File?> cropImage({
+  Future<CroppedFile?> cropImage({
     required String sourcePath,
     int? maxWidth,
     int? maxHeight,

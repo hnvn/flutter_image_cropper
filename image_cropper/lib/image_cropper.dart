@@ -10,11 +10,13 @@
 /// those platforms.
 ///
 
-export 'src/cropper.dart';
-export 'src/settings.dart';
 export 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart'
     show
         CropAspectRatioPreset,
         CropStyle,
         ImageCompressFormat,
-        PlatformUiSettings;
+        CropAspectRatio,
+        CroppedFile;
+
+export 'src/cropper.dart';
+export 'src/settings.dart';
