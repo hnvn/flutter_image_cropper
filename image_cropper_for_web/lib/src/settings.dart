@@ -13,11 +13,11 @@ enum CropperPresentStyle { dialog, page }
 
 class WebUiSettings extends PlatformUiSettings {
   /// The outer container of the cropper
-  /// Default = { width: 400, height: 400 }
+  /// Default = { width: 500, height: 500 }
   final Boundary? boundary;
 
   /// The inner container of the coppie. The visible part of the image.
-  /// Default = { width: 100, height: 100, type: 'square' }
+  /// Default = { width: 400, height: 400, type: 'square' }
   /// Valid type values:'square' 'circle'
   final ViewPort? viewPort;
 
@@ -37,6 +37,10 @@ class WebUiSettings extends PlatformUiSettings {
   /// Enable zooming functionality. If set to false - scrolling and pinching would not zoom.
   /// Default = false
   final bool? enableZoom;
+
+  /// Enable or disable support for resizing the viewport area.
+  /// Default = false
+  final bool? enableResize;
 
   /// Restricts zoom so image cannot be smaller than viewport.
   /// Experimental
@@ -76,6 +80,7 @@ class WebUiSettings extends PlatformUiSettings {
     this.enableExif,
     this.enableOrientation,
     this.enableZoom,
+    this.enableResize,
     this.enforceBoundary,
     this.mouseWheelZoom,
     this.showZoomer,

@@ -66,6 +66,7 @@ class Options {
       String? customClass,
       bool? enableExif,
       bool? enableOrientation,
+      bool? enableResize,
       bool? enableZoom,
       bool? enforceBoundary,
       bool? mouseWheelZoom,
@@ -87,6 +88,10 @@ class Options {
   /// Enable or disable support for specifying a custom orientation when binding images (See bind method)
   /// Default = false
   external bool? get enableOrientation;
+
+  /// Enable or disable support for resizing the viewport area.
+  /// Default = false
+  external bool? get enableResize;
 
   /// Enable zooming functionality. If set to false - scrolling and pinching would not zoom.
   /// Default = false
@@ -123,7 +128,7 @@ class CroppieJS implements CroppieBase {
   external Promise bind(BindConfiguration conf);
 
   external Promise result(
-      String? type, String? size, String? format, int? quality, bool? circle);
+      String? type, String? size, String? format, num? quality, bool? circle);
 
   external void rotate(int degrees);
 

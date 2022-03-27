@@ -51,7 +51,7 @@ abstract class CroppieBase {
   /// circle = force the result to be cropped into a circle
   ///     Valid Values: bool
   Promise result(
-      String type, String size, String format, int quality, bool circle);
+      String type, String size, String format, num quality, bool circle);
 
   /// Rotate the image by a specified degree amount. Only works with enableOrientation option enabled (see 'Options').
   /// degrees Valid Values: 90, 180, 270, -90, -180, -270
@@ -73,7 +73,7 @@ abstract class Croppie implements CroppieBase {
     String? type,
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   });
 
@@ -81,7 +81,7 @@ abstract class Croppie implements CroppieBase {
   Future<String?> resultBase64({
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   });
 
@@ -89,7 +89,7 @@ abstract class Croppie implements CroppieBase {
   Future<T> resultHtml<T extends Element>({
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   });
 
@@ -97,7 +97,7 @@ abstract class Croppie implements CroppieBase {
   Future<Blob?> resultBlob({
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   });
 
@@ -105,7 +105,7 @@ abstract class Croppie implements CroppieBase {
   Future<Uint8List?> resultByteArray({
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   });
 
@@ -113,7 +113,7 @@ abstract class Croppie implements CroppieBase {
   Future<CanvasElement?> resultRawCanvas({
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   });
 
@@ -140,7 +140,7 @@ class _Croppie implements Croppie {
 
   @override
   Promise result(
-      String? type, String? size, String? format, int? quality, bool? circle) {
+      String? type, String? size, String? format, num? quality, bool? circle) {
     return impl.result(type, size, format, quality, circle);
   }
 
@@ -149,7 +149,7 @@ class _Croppie implements Croppie {
     String? type,
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   }) {
     Promise promise = result(type, size, format, quality, circle);
@@ -160,7 +160,7 @@ class _Croppie implements Croppie {
   Future<String?> resultBase64({
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   }) {
     Promise promise = result("base64", size, format, quality, circle);
@@ -171,7 +171,7 @@ class _Croppie implements Croppie {
   Future<T> resultHtml<T extends Element>({
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   }) {
     Promise promise = result("html", size, format, quality, circle);
@@ -182,7 +182,7 @@ class _Croppie implements Croppie {
   Future<Blob?> resultBlob({
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   }) {
     Promise promise = result("blob", size, format, quality, circle);
@@ -193,7 +193,7 @@ class _Croppie implements Croppie {
   Future<Uint8List?> resultByteArray({
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   }) async {
     Blob? blob = await resultBlob(
@@ -222,7 +222,7 @@ class _Croppie implements Croppie {
   Future<CanvasElement?> resultRawCanvas({
     String? size,
     String? format,
-    int? quality,
+    num? quality,
     bool? circle,
   }) async {
     Promise promise = result("rawcanvas", size, format, quality, circle);
