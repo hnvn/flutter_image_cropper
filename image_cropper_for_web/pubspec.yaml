@@ -1,5 +1,5 @@
 name: image_cropper_for_web
-description: A new Flutter package project.
+description: A Flutter plugin for Web supports cropping images
 repository: https://github.com/hnvn/flutter_image_cropper
 version: 0.0.1
 
