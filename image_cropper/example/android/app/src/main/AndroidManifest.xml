@@ -2,7 +2,7 @@
     package="vn.hunghd.flutter.plugins.example">
     <application
         android:name="${applicationName}"
-        android:label="example"
+        android:label="Image Cropper Demo"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

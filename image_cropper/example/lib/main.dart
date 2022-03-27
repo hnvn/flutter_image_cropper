@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -11,10 +12,41 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ImageCropper',
-      theme: ThemeData.light().copyWith(primaryColor: Colors.deepOrange),
+      title: 'Image Cropper Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        highlightColor: const Color(0xFFD0996F),
+        backgroundColor: const Color(0xFFFDF5EC),
+        canvasColor: const Color(0xFFFDF5EC),
+        textTheme: TextTheme(
+          headline5: ThemeData.light()
+              .textTheme
+              .headline5!
+              .copyWith(color: const Color(0xFFBC764A)),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFBC764A),
+          foregroundColor: Colors.white,
+          actionsIconTheme: IconThemeData(color: Colors.white),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateColor.resolveWith(
+                (states) => const Color(0xFFBC764A)),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateColor.resolveWith(
+              (states) => const Color(0xFFBC764A),
+            ),
+            side: MaterialStateBorderSide.resolveWith(
+                (states) => const BorderSide(color: Color(0xFFBC764A))),
+          ),
+        ),
+      ),
       home: MyHomePage(
-        title: 'ImageCropper',
+        title: 'Image Cropper Demo',
       ),
     );
   }
@@ -29,21 +61,9 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-enum AppState {
-  free,
-  picked,
-  cropped,
-}
-
 class _MyHomePageState extends State<MyHomePage> {
-  late AppState state;
-  File? imageFile;
-
-  @override
-  void initState() {
-    super.initState();
-    state = AppState.free;
-  }
+  File? _pickedFile;
+  File? _croppedFile;
 
   @override
   Widget build(BuildContext context) {
@@ -51,48 +71,158 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: imageFile != null ? Image.file(imageFile!) : Container(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepOrange,
-        onPressed: () {
-          if (state == AppState.free)
-            _pickImage();
-          else if (state == AppState.picked)
-            _cropImage();
-          else if (state == AppState.cropped) _clearImage();
-        },
-        child: _buildButtonIcon(),
+      body: _body(),
+    );
+  }
+
+  Widget _body() {
+    if (_croppedFile != null || _pickedFile != null) {
+      return _imageCard();
+    } else {
+      return _uploaderCard();
+    }
+  }
+
+  Widget _imageCard() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Card(
+            elevation: 4.0,
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: _image(),
+            ),
+          ),
+          const SizedBox(height: 24.0),
+          _menu(),
+        ],
       ),
     );
   }
 
-  Widget _buildButtonIcon() {
-    if (state == AppState.free)
-      return Icon(Icons.add);
-    else if (state == AppState.picked)
-      return Icon(Icons.crop);
-    else if (state == AppState.cropped)
-      return Icon(Icons.clear);
-    else
-      return Container();
+  Widget _image() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    if (_croppedFile != null) {
+      return ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: 0.8 * screenWidth,
+            maxHeight: 0.7 * screenHeight,
+          ),
+          child: Image.file(_croppedFile!));
+    } else if (_pickedFile != null) {
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: 0.8 * screenWidth,
+          maxHeight: 0.7 * screenHeight,
+        ),
+        child: Image.file(_pickedFile!),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+
+  Widget _menu() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        FloatingActionButton(
+          onPressed: () {
+            _clearImage();
+          },
+          backgroundColor: Colors.redAccent,
+          tooltip: 'Delete',
+          child: const Icon(Icons.delete),
+        ),
+        if (_croppedFile == null)
+          Padding(
+            padding: const EdgeInsets.only(left: 32.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                _cropImage();
+              },
+              backgroundColor: const Color(0xFFBC764A),
+              tooltip: 'Crop',
+              child: const Icon(Icons.crop),
+            ),
+          )
+      ],
+    );
+  }
+
+  Widget _uploaderCard() {
+    return Center(
+      child: Card(
+        elevation: 4.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: SizedBox(
+            height: 270.0,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DottedBorder(
+                  radius: const Radius.circular(12.0),
+                  borderType: BorderType.RRect,
+                  dashPattern: const [8, 4],
+                  color: Theme.of(context).highlightColor.withOpacity(0.4),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.image,
+                          color: Theme.of(context).highlightColor,
+                          size: 64.0,
+                        ),
+                        const SizedBox(height: 24.0),
+                        Text(
+                          'Select an image from Gallery to start',
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    color: Theme.of(context).highlightColor,
+                                  ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24.0),
+                ElevatedButton(
+                  onPressed: () {
+                    _pickImage();
+                  },
+                  child: const Text('Select'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Future<Null> _pickImage() async {
     final pickedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    imageFile = pickedImage != null ? File(pickedImage.path) : null;
-    if (imageFile != null) {
-      setState(() {
-        state = AppState.picked;
-      });
-    }
+    _pickedFile = pickedImage != null ? File(pickedImage.path) : null;
+    setState(() {});
   }
 
   Future<Null> _cropImage() async {
     final croppedFile = await ImageCropper().cropImage(
-      sourcePath: imageFile!.path,
+      sourcePath: _pickedFile!.path,
       aspectRatioPresets: Platform.isAndroid
           ? [
               CropAspectRatioPreset.square,
@@ -124,17 +254,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
     if (croppedFile != null) {
-      imageFile = File(croppedFile.path);
-      setState(() {
-        state = AppState.cropped;
-      });
+      _croppedFile = File(croppedFile.path);
+      setState(() {});
     }
   }
 
   void _clearImage() {
-    imageFile = null;
     setState(() {
-      state = AppState.free;
+      _pickedFile = null;
+      _croppedFile = null;
     });
   }
 }
