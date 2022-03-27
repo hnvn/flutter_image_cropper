@@ -33,7 +33,7 @@ This project aims to provide an ultimate and flexible image cropping experience.
 Croppie is a fast, easy to use image cropping plugin with tons of configuration options!
 
 <p align="center">
-  <img src="https://github.com/hnvn/flutter_image_cropper/blob/v2/image_cropper/screenshots/croppie_preview.gif?raw=true" width="200"/>
+  <img src="https://github.com/hnvn/flutter_image_cropper/blob/v2/image_cropper/screenshots/croppie_preview.png?raw=true" width="200"/>
 </p>
 
 ## How to install
