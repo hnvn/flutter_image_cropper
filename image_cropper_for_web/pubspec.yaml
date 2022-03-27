@@ -1,5 +1,6 @@
 name: image_cropper_for_web
 description: A new Flutter package project.
+repository: https://github.com/hnvn/flutter_image_cropper
 version: 0.0.1
 
 environment:
