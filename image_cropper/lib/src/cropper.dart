@@ -63,7 +63,7 @@ class ImageCropper {
   /// permanent (if needed).
   ///
   /// * The implementation on Web is much different compared to the implementation on mobile app.
-  /// It causes some configuration fields not working for Web (maxWidth, maxHeight, aspectRatio,
+  /// It causes some configuration fields not working (maxWidth, maxHeight, aspectRatio,
   /// aspectRatioPresets) and [WebUiSettings] is required for Web.
   ///
   Future<CroppedFile?> cropImage({

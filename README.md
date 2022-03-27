@@ -106,7 +106,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 * The result file is saved in `NSTemporaryDirectory` on iOS and application Cache directory on Android, so it can be lost later, you are responsible for storing it somewhere permanent (if needed).
 
-* The implementation on Web is much different compared to the implementation on mobile app. It causes some configuration fields not working for Web (`maxWidth`, `maxHeight`, `aspectRatio`, `aspectRatioPresets`) and `WebUiSettings` is required. 
+* The implementation on Web is much different compared to the implementation on mobile app. It causes some configuration fields not working (`maxWidth`, `maxHeight`, `aspectRatio`, `aspectRatioPresets`) and `WebUiSettings` is required for Web.
 
 ## Customization
 
