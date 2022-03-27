@@ -30,7 +30,7 @@ class WebUiSettings extends PlatformUiSettings {
   /// Requires exif.js (packages/croppie_dart/lib/src/exif.js)
   final bool? enableExif;
 
-  /// Enable or disable support for specifying a custom orientation when binding images (See bind method)
+  /// Enable or disable support for specifying a custom orientation when binding images
   /// Default = false
   final bool? enableOrientation;
 
@@ -63,10 +63,10 @@ class WebUiSettings extends PlatformUiSettings {
   /// The context is required to show cropper dialog or route
   final BuildContext context;
 
-  /// Builder to customize the parent [Dialog] of cropper Widget
+  /// Builder to customize the cropper [Dialog]
   final CropperDialogBuilder? customDialogBuilder;
 
-  /// Builder to customize the [PageRoute] that hosts cropper Widget
+  /// Builder to customize the cropper [PageRoute]
   final CropperRouteBuilder? customRouteBuilder;
 
   WebUiSettings({

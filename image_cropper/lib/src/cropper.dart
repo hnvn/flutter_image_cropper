@@ -22,12 +22,13 @@ class ImageCropper {
   ///
   /// * sourcePath: the absolute path of an image file.
   ///
-  /// * maxWidth: maximum cropped image width.
+  /// * maxWidth: maximum cropped image width. Note: this field is ignored on Web.
   ///
-  /// * maxHeight: maximum cropped image height.
+  /// * maxHeight: maximum cropped image height. Note: this field is ignored on Web
   ///
   /// * aspectRatio: controls the aspect ratio of crop bounds. If this values is set,
   /// the cropper is locked and user can't change the aspect ratio of crop bounds.
+  /// Note: this field is ignored on Web
   ///
   /// * aspectRatioPresets: controls the list of aspect ratios in the crop menu view.
   /// In Android, you can set the initialized aspect ratio when starting the cropper
@@ -35,9 +36,11 @@ class ImageCropper {
   /// [CropAspectRatioPreset.original], [CropAspectRatioPreset.square],
   /// [CropAspectRatioPreset.ratio3x2], [CropAspectRatioPreset.ratio4x3] and
   /// [CropAspectRatioPreset.ratio16x9].
+  /// Note: this field is ignored on Web
   ///
   /// * cropStyle: controls the style of crop bounds, it can be rectangle or
   /// circle style (default is [CropStyle.rectangle]).
+  /// Note: on Web, this field can be overrided by [WebUiSettings.viewPort.type]
   ///
   /// * compressFormat: the format of result image, png or jpg (default is [ImageCompressFormat.jpg])
   ///
@@ -53,9 +56,15 @@ class ImageCropper {
   ///
   /// A result file of the cropped image.
   ///
-  /// Note: The result file is saved in NSTemporaryDirectory on iOS and application Cache directory
+  /// **Note:**
+  ///
+  /// * The result file is saved in NSTemporaryDirectory on iOS and application Cache directory
   /// on Android, so it can be lost later, you are responsible for storing it somewhere
   /// permanent (if needed).
+  ///
+  /// * The implementation on Web is much different compared to the implementation on mobile app.
+  /// It causes some configuration fields not working for Web (maxWidth, maxHeight, aspectRatio,
+  /// aspectRatioPresets) and [WebUiSettings] is required for Web.
   ///
   Future<CroppedFile?> cropImage({
     required String sourcePath,

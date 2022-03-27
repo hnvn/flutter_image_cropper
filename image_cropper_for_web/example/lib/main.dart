@@ -278,17 +278,37 @@ class _HomePageState extends State<_HomePage> {
             width: (screenWidth * 0.9).round(),
             height: (screenHeight * 0.8).round(),
           ),
+          viewPort: ViewPort(
+            width: 480,
+            height: 480,
+          ),
+          enableExif: true,
+          enableZoom: true,
+          showZoomer: true,
         );
       } else {
         settings = WebUiSettings(
           context: context,
           presentStyle: CropperPresentStyle.dialog,
+          boundary: Boundary(
+            width: 520,
+            height: 520,
+          ),
+          viewPort: ViewPort(
+            width: 480,
+            height: 480,
+          ),
+          enableExif: true,
+          enableZoom: true,
+          showZoomer: true,
         );
       }
-      final croppedFile = await ImageCropperPlugin()
-          .cropImage(sourcePath: _uploadedBlobUrl!, uiSettings: [
-        settings,
-      ]);
+      final croppedFile = await ImageCropperPlugin().cropImage(
+        sourcePath: _uploadedBlobUrl!,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: [settings],
+      );
       if (croppedFile != null) {
         setState(() {
           _croppedBlobUrl = croppedFile.path;

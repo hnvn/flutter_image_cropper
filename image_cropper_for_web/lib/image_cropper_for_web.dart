@@ -39,40 +39,36 @@ class ImageCropperPlugin extends ImageCropperPlatform {
   ///
   /// * sourcePath: the absolute path of an image file.
   ///
-  /// * maxWidth: maximum cropped image width.
+  /// * maxWidth: maximum cropped image width. (IGNORED)
   ///
-  /// * maxHeight: maximum cropped image height.
+  /// * maxHeight: maximum cropped image height. (IGNORED)
   ///
   /// * aspectRatio: controls the aspect ratio of crop bounds. If this values is set,
   /// the cropper is locked and user can't change the aspect ratio of crop bounds.
+  /// (IGNORED)
   ///
   /// * aspectRatioPresets: controls the list of aspect ratios in the crop menu view.
   /// In Android, you can set the initialized aspect ratio when starting the cropper
   /// by setting the value of [AndroidUiSettings.initAspectRatio]. Default is a list of
   /// [CropAspectRatioPreset.original], [CropAspectRatioPreset.square],
   /// [CropAspectRatioPreset.ratio3x2], [CropAspectRatioPreset.ratio4x3] and
-  /// [CropAspectRatioPreset.ratio16x9].
+  /// [CropAspectRatioPreset.ratio16x9]. (IGNORED)
   ///
   /// * cropStyle: controls the style of crop bounds, it can be rectangle or
-  /// circle style (default is [CropStyle.rectangle]).
+  /// circle style (default is [CropStyle.rectangle]). This field can be overrided
+  /// by [WebUiSettings.viewPort.type]
   ///
   /// * compressFormat: the format of result image, png or jpg (default is [ImageCompressFormat.jpg])
   ///
   /// * compressQuality: the value [0 - 100] to control the quality of image compression
   ///
-  /// * uiSettings: controls UI customization on specific platform (android, ios, web,...)
-  ///
-  /// See:
-  ///  * [AndroidUiSettings] controls UI customization for Android
-  ///  * [IOSUiSettings] controls UI customization for iOS
+  /// * uiSettings: controls UI customization on specific platform (android, ios, web,...).
+  /// This field is required and must provide [WebUiSettings]
   ///
   /// **return:**
   ///
   /// A result file of the cropped image.
   ///
-  /// Note: The result file is saved in NSTemporaryDirectory on iOS and application Cache directory
-  /// on Android, so it can be lost later, you are responsible for storing it somewhere
-  /// permanent (if needed).
   ///
   @override
   Future<CroppedFile?> cropImage({
@@ -105,15 +101,18 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     }
 
     final context = webSettings.context;
+    final shapeType = cropStyle == CropStyle.circle ? 'circle' : 'square';
 
     final element = html.DivElement();
     final option = Options(
-      boundary: webSettings.boundary ?? Boundary(width: 400, height: 400),
-      viewport: webSettings.viewPort ?? ViewPort(width: 320, height: 320),
+      boundary: webSettings.boundary ?? Boundary(width: 500, height: 500),
+      viewport: webSettings.viewPort ??
+          ViewPort(width: 400, height: 400, type: shapeType),
       customClass: webSettings.customClass,
       enableExif: webSettings.enableExif ?? false,
       enableOrientation: webSettings.enableOrientation ?? false,
-      enableZoom: webSettings.enableZoom ?? true,
+      enableZoom: webSettings.enableZoom ?? false,
+      enableResize: webSettings.enableResize ?? false,
       enforceBoundary: webSettings.enforceBoundary ?? true,
       mouseWheelZoom: webSettings.mouseWheelZoom ?? true,
       showZoomer: webSettings.showZoomer ?? true,
@@ -132,8 +131,14 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       viewType: viewId,
     );
 
+    final format = compressFormat == ImageCompressFormat.png ? 'png' : 'jpeg';
+    final quality = compressQuality * 1.0 / 100;
+
     Future<String?> doCrop() async {
-      final blob = await croppie.resultBlob();
+      final blob = await croppie.resultBlob(
+        format: format,
+        quality: quality,
+      );
       if (blob != null) {
         final blobUrl = html.Url.createObjectUrlFromBlob(blob);
         return blobUrl;
@@ -141,8 +146,8 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       return null;
     }
 
-    final cropperWidth = option.boundary?.width ?? 400;
-    final cropperHeight = option.boundary?.height ?? 400;
+    final cropperWidth = option.boundary?.width ?? 500;
+    final cropperHeight = option.boundary?.height ?? 500;
     if (webSettings.presentStyle == CropperPresentStyle.page) {
       PageRoute<String> pageRoute;
       if (webSettings.customRouteBuilder != null) {
