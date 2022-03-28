@@ -1,19 +1,19 @@
-# [2.0.0-beta.2] - 2022-03-27
+## [2.0.0-beta.2] - 2022-03-27
 
 * correct missing README document about Web support.
 
-# [2.0.0-beta.1] - 2022-03-27
+## [2.0.0-beta.1] - 2022-03-27
 
 * **BREAKING CHANGE**: update result models to support web, replace `File` by `CroppedFile`
 
-# [2.0.0-beta] - 2022-02-19
+## [2.0.0-beta] - 2022-02-19
 
 * migrate to federated plugins
 * **BREAKING CHANGE**: remove `androidUiSettings` and `iosUiSettings`, they are replaced by `uiSettings` for sake of supporting multiple platforms in future.
 
-## ***MIGRATION GUIDE***
+### ***MIGRATION GUIDE***
 
-### **BEFORE**
+#### **BEFORE**
 ```dart
 File croppedFile = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
@@ -29,7 +29,7 @@ File croppedFile = await ImageCropper().cropImage(
     );
 ```
 
-### **AFTER**
+#### **AFTER**
 ```dart
 File croppedFile = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
@@ -47,7 +47,7 @@ File croppedFile = await ImageCropper().cropImage(
     );
 ```
 
-# [1.5.0] - 2022-02-19
+## [1.5.0] - 2022-02-19
 
 * Upgrade `uCrop` to v2.2.8
 * Upgrade `TOCropViewController` to v2.6.1
