@@ -106,7 +106,9 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 * The result file is saved in `NSTemporaryDirectory` on iOS and application Cache directory on Android, so it can be lost later, you are responsible for storing it somewhere permanent (if needed).
 
-* The implementation on Web is much different compared to the implementation on mobile app. It causes some configuration fields not working (`maxWidth`, `maxHeight`, `aspectRatio`, `aspectRatioPresets`) and `WebUiSettings` is required for Web.
+* The implementation on Web is much different compared to the implementation on mobile app. It causes some configuration fields not working (`maxWidth`, `maxHeight`, `aspectRatio`, `aspectRatioPresets`) on Web.
+
+* `WebUiSettings` is required for Web.
 
 ## Customization
 
@@ -194,7 +196,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 #### Note:
 
-If using `CropperDialogBuilder` and `CropperRouteBuilder` to customize cropper dialog and route, the customization codes need to call `crop()` function to trigger crop feature and then returning the crop result data to the plugin by using `Navigator.of(context).pop(result)`. 
+If using `CropperDialogBuilder` and `CropperRouteBuilder` to customize cropper dialog and route, the customization codes need to call `crop()` function to trigger crop feature and then returning the cropped result data to the plugin by using `Navigator.of(context).pop(result)`. 
 
 ````dart
 
@@ -214,6 +216,8 @@ If using `CropperDialogBuilder` and `CropperRouteBuilder` to customize cropper d
                 ...
                 TextButton(
                   onPressed: () async {
+                    /// it is important to call crop() function and return
+                    /// result data to plugin, for example:
                     final result = await crop();
                     Navigator.of(context).pop(result);
                   },
@@ -258,6 +262,7 @@ File croppedFile = await ImageCropper().cropImage(
         IOSUiSettings(
           title: 'Cropper',
         ),
+        /// this settings is required for Web
         WebUiSettings(
           context: context,
           presentStyle: CropperPresentStyle.dialog,
