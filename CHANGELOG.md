@@ -1,4 +1,8 @@
-# [1.5.0] - 2022-02-19
+## [1.5.1] - 2022-04-01
+
+* update README to introduce Web support experiment
+
+## [1.5.0] - 2022-02-19
 
 * Upgrade `uCrop` to v2.2.8
 * Upgrade `TOCropViewController` to v2.6.1

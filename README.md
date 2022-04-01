@@ -5,6 +5,9 @@
 
 A Flutter plugin for Android and iOS supports cropping images. This plugin is based on two different native libraries so it comes with different UI between these platforms.
 
+### **Development note:** 
+Flutter Web support is available as beta version now.
+
 ## Introduction
 
 **Image Cropper** doesn't manipulate images in Dart codes directly, instead, the plugin uses [Platform Channel](https://flutter.dev/docs/development/platform-integration/platform-channels) to expose Dart APIs that Flutter application can use to communicate with two very powerful native libraries ([uCrop](https://github.com/Yalantis/uCrop) and [TOCropViewController](https://github.com/TimOliver/TOCropViewController)) to crop and rotate images. Because of that, all credits belong to these libraries.
