@@ -64,7 +64,6 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
   <!-- Croppie -->
   <link rel="stylesheet" href="packages/image_cropper_for_web/src/croppie/js/croppie.css" />
-  <!--exif.js If you need-->
   <script defer src="packages/image_cropper_for_web/src/croppie/js/exif.js"></script>
   <script src="packages/image_cropper_for_web/src/croppie/js/croppie.min.js"></script>
 
@@ -184,7 +183,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 | `viewPort`            | The inner container of the coppie. The visible part of the image. Valid type values:'square' 'circle'. Default = { width: 400, height: 400, type: 'square' }                                                      | ViewPort             |
 | `customClass`         | A class of your choosing to add to the container to add custom styles to your croppie. Default = ''                                                                                                               | String               |
 | `enableExif`          | Enable exif orientation reading. Tells Croppie to read exif orientation from the image data and orient the image correctly before rendering to the page. Requires exif.js (packages/croppie_dart/lib/src/exif.js) | bool                 |
-| `enableOrientation`   | Enable or disable support for specifying a custom orientation when binding images. Default = false                                                                                                                | bool                 |
+| `enableOrientation`   | Enable or disable support for specifying a custom orientation when binding images. Default = true                                                                                                                | bool                 |
 | `enableZoom`          | Enable zooming functionality. If set to false - scrolling and pinching would not zoom. Default = false                                                                                                            | bool                 |
 | `enableResize`        | Enable or disable support for resizing the viewport area. Default = false                                                                                                                                         | bool                 |
 | `mouseWheelZoom`      | Enable or disable the ability to use the mouse wheel to zoom in and out on a croppie instance. Default = true                                                                                                     | bool                 |
@@ -202,7 +201,7 @@ If using `CropperDialogBuilder` and `CropperRouteBuilder` to customize cropper d
 
  WebUiSettings(
    ...
-   customDialogBuilder: (cropper, crop) {
+   customDialogBuilder: (cropper, crop, rotate) {
       return Dialog(
        child: Builder(
          builder: (context) {

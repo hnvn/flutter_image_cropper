@@ -29,6 +29,9 @@ class MyApp extends StatelessWidget {
                 .headline5!
                 .copyWith(color: const Color(0xFFBC764A)),
           ),
+          iconTheme: IconThemeData(
+            color: Colors.grey[600],
+          ),
           appBarTheme: const AppBarTheme(
             backgroundColor: Color(0xFFBC764A),
             centerTitle: false,

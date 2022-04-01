@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'settings.dart';
+
 class CropperDialog extends StatelessWidget {
   final Widget cropper;
   final Future<String?> Function() crop;
+  final void Function(RotationAngle) rotate;
   final double cropperContainerWidth;
   final double cropperContainerHeight;
 
@@ -10,6 +13,7 @@ class CropperDialog extends StatelessWidget {
     Key? key,
     required this.cropper,
     required this.crop,
+    required this.rotate,
     required this.cropperContainerWidth,
     required this.cropperContainerHeight,
   }) : super(key: key);
@@ -35,12 +39,7 @@ class CropperDialog extends StatelessWidget {
                 right: 24.0,
                 bottom: 8.0,
               ),
-              child: Center(
-                  child: SizedBox(
-                width: cropperContainerWidth,
-                height: cropperContainerHeight,
-                child: cropper,
-              )),
+              child: _body(context),
             ),
             const Divider(height: 1.0, thickness: 1.0),
             _footer(context),
@@ -63,6 +62,44 @@ class CropperDialog extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _body(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Center(
+          child: SizedBox(
+            width: cropperContainerWidth,
+            height: cropperContainerHeight,
+            child: cropper,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 5.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                onPressed: () {
+                  rotate(RotationAngle.counterClockwise90);
+                },
+                tooltip: 'Rotate 90 degree counter-clockwise',
+                icon: const Icon(Icons.rotate_90_degrees_ccw_rounded),
+              ),
+              IconButton(
+                onPressed: () {
+                  rotate(RotationAngle.clockwise90);
+                },
+                tooltip: 'Rotate 90 degree clockwise',
+                icon: const Icon(Icons.rotate_90_degrees_cw_outlined),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 

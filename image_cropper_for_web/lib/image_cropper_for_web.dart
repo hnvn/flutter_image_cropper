@@ -109,8 +109,8 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       viewport: webSettings.viewPort ??
           ViewPort(width: 400, height: 400, type: shapeType),
       customClass: webSettings.customClass,
-      enableExif: webSettings.enableExif ?? false,
-      enableOrientation: webSettings.enableOrientation ?? false,
+      enableExif: webSettings.enableExif ?? true,
+      enableOrientation: webSettings.enableOrientation ?? true,
       enableZoom: webSettings.enableZoom ?? false,
       enableResize: webSettings.enableResize ?? false,
       enforceBoundary: webSettings.enforceBoundary ?? true,
@@ -146,17 +146,22 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       return null;
     }
 
+    void doRotate(RotationAngle angle) {
+      croppie.rotate(rotationAngleToNumber(angle));
+    }
+
     final cropperWidth = option.boundary?.width ?? 500;
     final cropperHeight = option.boundary?.height ?? 500;
     if (webSettings.presentStyle == CropperPresentStyle.page) {
       PageRoute<String> pageRoute;
       if (webSettings.customRouteBuilder != null) {
-        pageRoute = webSettings.customRouteBuilder!(cropper, doCrop);
+        pageRoute = webSettings.customRouteBuilder!(cropper, doCrop, doRotate);
       } else {
         pageRoute = MaterialPageRoute(
           builder: (c) => CropperPage(
             cropper: cropper,
             crop: doCrop,
+            rotate: doRotate,
             cropperContainerWidth: cropperWidth + 50.0,
             cropperContainerHeight: cropperHeight + 50.0,
           ),
@@ -168,7 +173,8 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     } else {
       Dialog cropperDialog;
       if (webSettings.customDialogBuilder != null) {
-        cropperDialog = webSettings.customDialogBuilder!(cropper, doCrop);
+        cropperDialog =
+            webSettings.customDialogBuilder!(cropper, doCrop, doRotate);
       } else {
         cropperDialog = Dialog(
           shape: RoundedRectangleBorder(
@@ -177,6 +183,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
           child: CropperDialog(
             cropper: cropper,
             crop: doCrop,
+            rotate: doRotate,
             cropperContainerWidth: cropperWidth + 50.0,
             cropperContainerHeight: cropperHeight + 50.0,
           ),

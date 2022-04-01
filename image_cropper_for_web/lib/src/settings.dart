@@ -4,10 +4,16 @@ import 'package:image_cropper_platform_interface/image_cropper_platform_interfac
 import 'croppie/croppie_dart_base.dart';
 
 typedef CropperDialogBuilder = Dialog Function(
-    Widget cropper, Future<String?> Function() crop);
+  Widget cropper,
+  Future<String?> Function() crop,
+  void Function(RotationAngle) rotate,
+);
 
 typedef CropperRouteBuilder = PageRoute<String> Function(
-    Widget cropper, Future<String?> Function() crop);
+  Widget cropper,
+  Future<String?> Function() crop,
+  void Function(RotationAngle) rotate,
+);
 
 enum CropperPresentStyle { dialog, page }
 
@@ -31,7 +37,7 @@ class WebUiSettings extends PlatformUiSettings {
   final bool? enableExif;
 
   /// Enable or disable support for specifying a custom orientation when binding images
-  /// Default = false
+  /// Default = true
   final bool? enableOrientation;
 
   /// Enable zooming functionality. If set to false - scrolling and pinching would not zoom.
@@ -88,4 +94,30 @@ class WebUiSettings extends PlatformUiSettings {
 
   @override
   Map<String, dynamic> toMap() => {};
+}
+
+enum RotationAngle {
+  clockwise90,
+  clockwise180,
+  clockwise270,
+  counterClockwise90,
+  counterClockwise180,
+  counterClockwise270,
+}
+
+int rotationAngleToNumber(RotationAngle angle) {
+  switch (angle) {
+    case RotationAngle.clockwise90:
+      return -90;
+    case RotationAngle.clockwise180:
+      return -180;
+    case RotationAngle.clockwise270:
+      return -270;
+    case RotationAngle.counterClockwise90:
+      return 90;
+    case RotationAngle.counterClockwise180:
+      return 180;
+    case RotationAngle.counterClockwise270:
+      return 270;
+  }
 }
