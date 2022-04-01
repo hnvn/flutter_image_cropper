@@ -205,25 +205,21 @@ If using `CropperDialogBuilder` and `CropperRouteBuilder` to customize cropper d
       return Dialog(
        child: Builder(
          builder: (context) {
-          return Container(
-            ...
-            child: Column(
+          return Column(
+            children: [
               ...
-              children: [
-                ...
-                cropper,
-                ...
-                TextButton(
-                  onPressed: () async {
-                    /// it is important to call crop() function and return
-                    /// result data to plugin, for example:
-                    final result = await crop();
-                    Navigator.of(context).pop(result);
-                  },
-                  child: Text('Crop'),
-                )
-              ]
-            ),
+              cropper,
+              ...
+              TextButton(
+                onPressed: () async {
+                  /// it is important to call crop() function and return
+                  /// result data to plugin, for example:
+                  final result = await crop();
+                  Navigator.of(context).pop(result);
+                },
+                child: Text('Crop'),
+              )
+            ]
           );
         },
        ),

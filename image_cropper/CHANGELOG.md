@@ -1,3 +1,7 @@
+## [2.0.0-beta.3] - 2022-04-01
+
+* support rotate image on Web
+
 ## [2.0.0-beta.2] - 2022-03-27
 
 * correct missing README document about Web support.
