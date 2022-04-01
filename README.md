@@ -5,8 +5,7 @@
 
 A Flutter plugin for Android and iOS supports cropping images. This plugin is based on two different native libraries so it comes with different UI between these platforms.
 
-### **Development note:** 
-Flutter Web support is available as beta version now.
+*Development note:* Flutter Web support is available as beta version now. [See more](https://github.com/hnvn/flutter_image_cropper/blob/v2/README.md)
 
 ## Introduction
 
