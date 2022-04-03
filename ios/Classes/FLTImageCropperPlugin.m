@@ -108,7 +108,9 @@
     NSString *title = options[@"ios.title"];
     NSString *doneButtonTitle = options[@"ios.done_button_title"];
     NSString *cancelButtonTitle = options[@"ios.cancel_button_title"];
-    
+    NSNumber *doneButtonColor = options[@"ios.done_button_color"];
+    NSNumber *cancelButtonColor = options[@"ios.cancel_button_color"];
+
     if (minimumAspectRatio && [minimumAspectRatio isKindOfClass:[NSNumber class]]) {
         controller.minimumAspectRatio = minimumAspectRatio.floatValue;
     }
@@ -156,6 +158,12 @@
     }
     if (cancelButtonTitle && [cancelButtonTitle isKindOfClass:[NSString class]]) {
         controller.cancelButtonTitle = cancelButtonTitle;
+    }
+    if (doneButtonColor && [doneButtonColor isKindOfClass:[NSNumber class]]) {
+        controller.doneButtonColor = UIColorFromRGB([doneButtonColor intValue]);
+    }
+    if (cancelButtonColor && [cancelButtonColor isKindOfClass:[NSNumber class]]) {
+        controller.cancelButtonColor = UIColorFromRGB([cancelButtonColor intValue]);
     }
 }
 
