@@ -1,3 +1,4 @@
+
 ## [2.0.0-beta.3] - 2022-04-01
 
 * support rotate image on Web
@@ -50,6 +51,10 @@ File croppedFile = await ImageCropper().cropImage(
       ],
     );
 ```
+
+## [1.5.1] - 2022-04-01
+
+* update README to introduce Web support experiment
 
 ## [1.5.0] - 2022-02-19
 
