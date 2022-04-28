@@ -177,7 +177,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 **Image Cropper** provides a helper class called `WebUiSettings` that wraps all properties can be used to customize UI in **croppie** library. 
 
-| `Property`            | Description                                                                                                                                                                                                       | Type                 |
+| Property              | Description                                                                                                                                                                                                       | Type                 |
 |-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
 | `boundary`            | The outer container of the cropper. Default = { width: 500, height: 500 }                                                                                                                                         | Boundary             |
 | `viewPort`            | The inner container of the coppie. The visible part of the image. Valid type values:'square' 'circle'. Default = { width: 400, height: 400, type: 'square' }                                                      | ViewPort             |
