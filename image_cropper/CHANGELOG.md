@@ -26,7 +26,7 @@ File croppedFile = await ImageCropper().cropImage(
 
 #### **AFTER**
 ```dart
-File croppedFile = await ImageCropper().cropImage(
+CroppedFile croppedFile = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
       uiSettings: [
         AndroidUiSettings(
