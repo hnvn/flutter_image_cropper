@@ -4,7 +4,7 @@
 * Support Web
 * **BREAKING CHANGE**:
   - change result data type from `File` to `CroppedFile`.
-  - remove `androidUiSettings` and `iosUiSettings`, they are replaced by `uiSettings`
+  - remove `androidUiSettings` and `iosUiSettings` parameter in `cropImage` method, they are replaced by `uiSettings`
 
 ### ***MIGRATION GUIDE***
 
