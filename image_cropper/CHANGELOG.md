@@ -1,4 +1,47 @@
 
+## [2.0.0] - 2022-04-28
+
+* Support Web
+* **BREAKING CHANGE**:
+  - change result data type from `File` to `CroppedFile`.
+  - remove `androidUiSettings` and `iosUiSettings`, they are replaced by `uiSettings`
+
+### ***MIGRATION GUIDE***
+
+#### **BEFORE**
+```dart
+File croppedFile = await ImageCropper().cropImage(
+      sourcePath: imageFile.path,
+      androidUiSettings: AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          toolbarColor: Colors.deepOrange,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+      )
+    );
+```
+
+#### **AFTER**
+```dart
+File croppedFile = await ImageCropper().cropImage(
+      sourcePath: imageFile.path,
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        IOSUiSettings(
+          title: 'Cropper',
+        )
+      ],
+    );
+```
+
 ## [2.0.0-beta.3] - 2022-04-01
 
 * support rotate image on Web
