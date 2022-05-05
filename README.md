@@ -238,7 +238,7 @@ If using `CropperDialogBuilder` and `CropperRouteBuilder` to customize cropper d
 
 import 'package:image_cropper/image_cropper.dart';
 
-File croppedFile = await ImageCropper().cropImage(
+CroppedFile croppedFile = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
