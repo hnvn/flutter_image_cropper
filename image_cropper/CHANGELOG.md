@@ -1,4 +1,8 @@
 
+## [2.0.1] - 2022-05-05
+
+* fix missing pubspec config on web
+
 ## [2.0.0] - 2022-04-28
 
 * Support Web

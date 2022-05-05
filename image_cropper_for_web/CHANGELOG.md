@@ -1,3 +1,7 @@
+## [0.0.3] - 2022-05-05
+
+* fix missing pubspec config
+
 ## [0.0.2] - 2022-04-01
 
 * support rotate image
