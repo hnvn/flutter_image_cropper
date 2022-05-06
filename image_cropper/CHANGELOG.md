@@ -1,4 +1,8 @@
 
+## [2.0.2] - 2022-05-06
+
+* update document
+
 ## [2.0.1] - 2022-05-05
 
 * fix missing pubspec config on web
