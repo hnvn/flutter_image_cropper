@@ -270,7 +270,9 @@ CroppedFile croppedFile = await ImageCropper().cropImage(
 <details>
 <summary>Click to view detail</summary>
 <br/>
-Web implementation requires `WebUiSettings` object but this object contains some JS codes, so it cannot be compiled in mobile app. We should use conditional importing to workaround this problem. For example:
+Web implementation requires `WebUiSettings` object but this object contains some JS codes, so it cannot be compiled in mobile app. We should use conditional importing to workaround this problem. 
+
+For example:
 
 ````dart
 import 'package:image_cropper/image_cropper.dart';
