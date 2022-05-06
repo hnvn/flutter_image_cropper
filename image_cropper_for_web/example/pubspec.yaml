@@ -13,8 +13,8 @@ dependencies:
 
   dotted_border: ^2.0.0+2
   image_picker: ^0.8.4+11
-  image_cropper_for_web:
-    path: ../
+  image_cropper:
+    path: ../../image_cropper
 
   cupertino_icons: ^1.0.2
 

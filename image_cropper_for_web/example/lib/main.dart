@@ -3,8 +3,9 @@ import 'dart:html' as html;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
-import 'package:image_cropper_for_web/image_cropper_for_web.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper_for_web/image_cropper_for_web.dart';
 
 void main() {
   runApp(const MyApp());
@@ -306,7 +307,7 @@ class _HomePageState extends State<_HomePage> {
           showZoomer: true,
         );
       }
-      final croppedFile = await ImageCropperPlugin().cropImage(
+      final croppedFile = await ImageCropper().cropImage(
         sourcePath: _uploadedBlobUrl!,
         compressFormat: ImageCompressFormat.jpg,
         compressQuality: 100,

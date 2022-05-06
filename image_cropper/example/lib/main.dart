@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Card(
             elevation: 4.0,
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(16.0),
               child: _image(),
             ),
           ),
