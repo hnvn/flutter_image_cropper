@@ -115,7 +115,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 <details>
 <summary>Click to view detail</summary>
-
+<br/>
 **Image Cropper** provides a helper class called `AndroidUiSettings` that wraps all properties can be used to customize UI in **uCrop** library. 
 
 | Property                    | Description                                                                                                 | Type                  |
@@ -144,7 +144,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 <details>
 <summary>Click to view detail</summary>
-
+<br/>
 **Image Cropper** provides a helper class called `IOUiSettings` that wraps all properties can be used to customize UI in **TOCropViewController** library. 
 
 | Property                              | Description                                                                                                                                                                                                                                                                                                                                 | Type   |
@@ -174,7 +174,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 <details>
 <summary>Click to view detail</summary>
-
+<br/>
 **Image Cropper** provides a helper class called `WebUiSettings` that wraps all properties can be used to customize UI in **croppie** library. 
 
 | Property              | Description                                                                                                                                                                                                       | Type                 |
@@ -266,7 +266,7 @@ CroppedFile croppedFile = await ImageCropper().cropImage(
 
 <details>
 <summary>Click to view detail</summary>
-
+<br/>
 Web implementation requires `WebUiSettings` object but this object contains some JS codes, so it cannot be compiled in mobile app. We should use conditional importing to workaround this problem. For example:
 
 ````dart
