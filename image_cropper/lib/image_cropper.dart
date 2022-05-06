@@ -16,7 +16,8 @@ export 'package:image_cropper_platform_interface/image_cropper_platform_interfac
         CropStyle,
         ImageCompressFormat,
         CropAspectRatio,
-        CroppedFile;
+        CroppedFile,
+        PlatformUiSettings;
 
 export 'src/cropper.dart';
 export 'src/settings.dart';
