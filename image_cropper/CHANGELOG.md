@@ -1,4 +1,8 @@
 
+## [2.0.3] - 2022-05-17
+
+* correct importing JS library
+
 ## [2.0.2] - 2022-05-06
 
 * update document

@@ -1,3 +1,7 @@
+## [0.0.4] - 2022-05-17
+
+* correct importing JS library
+
 ## [0.0.3] - 2022-05-05
 
 * fix missing pubspec config
