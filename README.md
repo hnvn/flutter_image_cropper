@@ -63,9 +63,9 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
   ....
 
   <!-- Croppie -->
-  <link rel="stylesheet" href="packages/image_cropper_for_web/src/croppie/js/croppie.css" />
-  <script defer src="packages/image_cropper_for_web/src/croppie/js/exif.js"></script>
-  <script src="packages/image_cropper_for_web/src/croppie/js/croppie.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" />
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
 
   ....
 </head>
