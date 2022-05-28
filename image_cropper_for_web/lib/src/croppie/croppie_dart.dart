@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 import 'dart:typed_data';
+
 import 'package:js/js.dart';
 
 import 'croppie_dart_base.dart';
@@ -50,8 +51,7 @@ abstract class CroppieBase {
   ///     Default = 1
   /// circle = force the result to be cropped into a circle
   ///     Valid Values: bool
-  Promise result(
-      String type, String size, String format, num quality, bool circle);
+  Promise result(ResultOptions options);
 
   /// Rotate the image by a specified degree amount. Only works with enableOrientation option enabled (see 'Options').
   /// degrees Valid Values: 90, 180, 270, -90, -180, -270
@@ -139,9 +139,19 @@ class _Croppie implements Croppie {
   }
 
   @override
-  Promise result(
+  Promise result(ResultOptions options) {
+    return impl.result(options);
+  }
+
+  @override
+  Promise _result(
       String? type, String? size, String? format, num? quality, bool? circle) {
-    return impl.result(type, size, format, quality, circle);
+    return impl.result(ResultOptions(
+        type: type,
+        size: size,
+        format: format,
+        quality: quality,
+        circle: circle));
   }
 
   @override
@@ -152,7 +162,7 @@ class _Croppie implements Croppie {
     num? quality,
     bool? circle,
   }) {
-    Promise promise = result(type, size, format, quality, circle);
+    Promise promise = _result(type, size, format, quality, circle);
     return _completerForPromise<T>(promise).future;
   }
 
@@ -163,7 +173,7 @@ class _Croppie implements Croppie {
     num? quality,
     bool? circle,
   }) {
-    Promise promise = result("base64", size, format, quality, circle);
+    Promise promise = _result("base64", size, format, quality, circle);
     return _completerForPromise<String?>(promise).future;
   }
 
@@ -174,7 +184,7 @@ class _Croppie implements Croppie {
     num? quality,
     bool? circle,
   }) {
-    Promise promise = result("html", size, format, quality, circle);
+    Promise promise = _result("html", size, format, quality, circle);
     return _completerForPromise<T>(promise).future;
   }
 
@@ -185,7 +195,7 @@ class _Croppie implements Croppie {
     num? quality,
     bool? circle,
   }) {
-    Promise promise = result("blob", size, format, quality, circle);
+    Promise promise = _result("blob", size, format, quality, circle);
     return _completerForPromise<Blob?>(promise).future;
   }
 
@@ -225,7 +235,7 @@ class _Croppie implements Croppie {
     num? quality,
     bool? circle,
   }) async {
-    Promise promise = result("rawcanvas", size, format, quality, circle);
+    Promise promise = _result("rawcanvas", size, format, quality, circle);
     return _completerForPromise<CanvasElement?>(promise).future;
   }
 

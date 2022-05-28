@@ -2,6 +2,7 @@
 library chroppie.native;
 
 import 'dart:html';
+
 import 'package:js/js.dart';
 
 import 'croppie_dart.dart';
@@ -24,6 +25,20 @@ class BindConfiguration {
   external List<String> get points;
   external int get orientation;
   external double get zoom;
+}
+
+/// Options for result()
+@JS()
+@anonymous
+class ResultOptions {
+  external factory ResultOptions(
+      {String? type, String? size, String? format, num? quality, bool? circle});
+
+  external String? get type;
+  external String? get size;
+  external String? get format;
+  external num? get quality;
+  external bool? get circle;
 }
 
 /// Result of the get() function.
@@ -127,8 +142,7 @@ class CroppieJS implements CroppieBase {
 
   external Promise bind(BindConfiguration conf);
 
-  external Promise result(
-      String? type, String? size, String? format, num? quality, bool? circle);
+  external Promise result(ResultOptions options);
 
   external void rotate(int degrees);
 
