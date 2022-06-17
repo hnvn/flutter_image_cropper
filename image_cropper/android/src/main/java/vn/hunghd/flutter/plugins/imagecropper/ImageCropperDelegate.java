@@ -2,9 +2,11 @@ package vn.hunghd.flutter.plugins.imagecropper;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.model.AspectRatio;
@@ -21,12 +23,16 @@ import io.flutter.plugin.common.PluginRegistry;
 import static android.app.Activity.RESULT_OK;
 
 public class ImageCropperDelegate implements PluginRegistry.ActivityResultListener {
+    static final String FILENAME_CACHE_KEY = "imagecropper.FILENAME_CACHE_KEY";
+
     private final Activity activity;
+    private final SharedPreferences preferences;
     private MethodChannel.Result pendingResult;
     private FileUtils fileUtils;
 
     public ImageCropperDelegate(Activity activity) {
         this.activity = activity;
+        preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
         fileUtils = new FileUtils();
     }
 
@@ -91,12 +97,35 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         activity.startActivityForResult(cropper.getIntent(activity), UCrop.REQUEST_CROP);
     }
 
+    public void recoverImage(MethodCall call, MethodChannel.Result result) {
+        result.success(getAndClearCachedImage());
+    }
+
+    private void cacheImage(String filePath) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(FILENAME_CACHE_KEY, filePath);
+        editor.apply();
+    }
+
+    private String getAndClearCachedImage() {
+        if (preferences.contains(FILENAME_CACHE_KEY)) {
+            String result = preferences.getString(FILENAME_CACHE_KEY, "");
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.remove(FILENAME_CACHE_KEY);
+            editor.apply();
+            return result;
+        }
+        return null;
+    }
+
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == UCrop.REQUEST_CROP) {
             if (resultCode == RESULT_OK) {
                 final Uri resultUri = UCrop.getOutput(data);
-                finishWithSuccess(fileUtils.getPathFromUri(activity, resultUri));
+                final String imagePath = fileUtils.getPathFromUri(activity, resultUri);
+                cacheImage(imagePath);
+                finishWithSuccess(imagePath);
                 return true;
             } else if (resultCode == UCrop.RESULT_ERROR) {
                 final Throwable cropError = UCrop.getError(data);

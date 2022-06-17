@@ -197,4 +197,12 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       return result != null ? CroppedFile(result) : null;
     }
   }
+
+  ///
+  /// Not applicable on web, see Android implementation.
+  ///
+  @override
+  Future<CroppedFile?> recoverImage() async {
+    return null;
+  }
 }
