@@ -92,13 +92,12 @@ abstract class ImageCropperPlatform extends PlatformInterface {
 
   ///
   /// Retrieve cropped image lost due to activity termination (Android only).
-  /// See
   /// This method works similarly to [retrieveLostData] method from [image_picker]
   /// library. Unlike [retrieveLostData], does not throw an error on other platforms,
   /// but returns null result.
   ///
   /// [recoverImage] as (well as [retrieveLostData]) will return value on any
-  /// call after a successfull [cropImage], so you can potentially get unexpected
+  /// call after a successful [cropImage], so you can potentially get unexpected
   /// result when using [ImageCropper] in different layout. Recommended usage comes down to
   /// this:
   ///
