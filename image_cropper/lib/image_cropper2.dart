@@ -10,7 +10,7 @@
 /// those platforms.
 ///
 
-export 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart'
+export 'package:image_cropper_platform_interface2/image_cropper_platform_interface2.dart'
     show
         CropAspectRatioPreset,
         CropStyle,

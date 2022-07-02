@@ -1,9 +1,11 @@
 # Image Cropper
 
-[![pub package](https://img.shields.io/pub/v/image_cropper.svg)](https://pub.dartlang.org/packages/image_cropper)
-
+[![pub package](https://img.shields.io/pub/v/image_cropper2.svg)](https://pub.dartlang.org/packages/image_cropper2)
 
 A Flutter plugin for Android, iOS and Web supports cropping images. This plugin is based on three different native libraries so it comes with different UI between these platforms.
+
+Based on hnvn's `image_cropper` plugin. The current difference is the `recoverImage` that allows to restore image on Android lost due to Activity termination.
+(this should be a temporary solution until the pull request is merged into the original `image_cropper`).
 
 ## Introduction
 
@@ -24,7 +26,7 @@ This project aims to provide an ultimate and flexible image cropping experience.
 `TOCropViewController` is an open-source `UIViewController` subclass to crop out sections of `UIImage` objects, as well as perform basic rotations. It is excellent for things like editing profile pictures, or sharing parts of a photo online. It has been designed with the iOS Photos app editor in mind, and as such, behaves in a way that should already feel familiar to users of iOS.
 
 <p align="center">
-  <img src="https://github.com/hnvn/flutter_image_cropper/blob/v2/image_cropper/screenshots/ios_demo.gif?raw=true" width="200" />
+  <img src="https://github.com/yendacoder/flutter_image_cropper/blob/v2/image_cropper/screenshots/ios_demo.gif?raw=true" width="200" />
 </p>
 
 ### Croppie - Foliotek 
@@ -33,7 +35,7 @@ This project aims to provide an ultimate and flexible image cropping experience.
 Croppie is a fast, easy to use image cropping plugin with tons of configuration options!
 
 <p align="center">
-  <img src="https://github.com/hnvn/flutter_image_cropper/blob/v2/image_cropper/screenshots/croppie_preview.png?raw=true" width="400"/>
+  <img src="https://github.com/yendacoder/flutter_image_cropper/blob/v2/image_cropper/screenshots/croppie_preview.png?raw=true" width="400"/>
 </p>
 
 ## How to install
