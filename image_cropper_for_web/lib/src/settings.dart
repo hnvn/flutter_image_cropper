@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
+import 'package:image_cropper_platform_interface2/image_cropper_platform_interface2.dart';
 
 import 'croppie/croppie_dart_base.dart';
 

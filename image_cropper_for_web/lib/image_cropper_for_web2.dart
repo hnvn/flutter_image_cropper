@@ -1,18 +1,18 @@
-library image_cropper_for_web;
+library image_cropper_for_web2;
 
 import 'dart:html' as html;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-import 'package:image_cropper_for_web/src/cropper_dialog.dart';
-import 'package:image_cropper_for_web/src/cropper_page.dart';
-import 'package:image_cropper_for_web/src/settings.dart';
-import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
+import 'package:image_cropper_for_web2/src/cropper_dialog.dart';
+import 'package:image_cropper_for_web2/src/cropper_page.dart';
+import 'package:image_cropper_for_web2/src/settings.dart';
+import 'package:image_cropper_platform_interface2/image_cropper_platform_interface2.dart';
 
 import 'src/croppie/croppie_dart.dart';
 
-export 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart'
+export 'package:image_cropper_platform_interface2/image_cropper_platform_interface2.dart'
     show
         CropAspectRatioPreset,
         CropStyle,
