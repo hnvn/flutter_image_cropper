@@ -1,4 +1,9 @@
-## [2.0.1] - 2022-07-02
+## [2.0.7] - 2022-08-04
+
+* Moved settings to platform interface for easier multiplatform implementation
+* Synchronized version numbers between related libraries
+
+## [2.0.2] - 2022-07-02
 
 * Added `recoverImage` method
 

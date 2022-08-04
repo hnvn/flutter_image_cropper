@@ -4,7 +4,7 @@
 
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import '../../image_cropper_platform_interface.dart';
+import '../../image_cropper_platform_interface2.dart';
 import '../method_channel/method_channel_image_cropper.dart';
 
 /// The interface that implementations of image_cropper must implement.

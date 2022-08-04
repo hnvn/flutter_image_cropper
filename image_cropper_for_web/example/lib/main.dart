@@ -278,11 +278,11 @@ class _HomePageState extends State<_HomePage> {
         settings = WebUiSettings(
           context: context,
           presentStyle: CropperPresentStyle.page,
-          boundary: Boundary(
+          boundary: CroppieBoundary(
             width: (screenWidth * 0.9).round(),
             height: (screenHeight * 0.8).round(),
           ),
-          viewPort: ViewPort(
+          viewPort: CroppieViewPort(
             width: 480,
             height: 480,
           ),
@@ -294,11 +294,11 @@ class _HomePageState extends State<_HomePage> {
         settings = WebUiSettings(
           context: context,
           presentStyle: CropperPresentStyle.dialog,
-          boundary: Boundary(
+          boundary: CroppieBoundary(
             width: 520,
             height: 520,
           ),
-          viewPort: ViewPort(
+          viewPort: CroppieViewPort(
             width: 480,
             height: 480,
           ),

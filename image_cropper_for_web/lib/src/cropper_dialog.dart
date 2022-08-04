@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'settings.dart';
+import 'package:image_cropper_platform_interface2/src/settings.dart';
 
 class CropperDialog extends StatelessWidget {
   final Widget cropper;

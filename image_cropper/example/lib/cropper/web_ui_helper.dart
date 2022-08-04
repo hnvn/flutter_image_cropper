@@ -7,11 +7,11 @@ List<PlatformUiSettings>? buildUiSettings(BuildContext context) {
     WebUiSettings(
       context: context,
       presentStyle: CropperPresentStyle.dialog,
-      boundary: Boundary(
+      boundary: CroppieBoundary(
         width: 520,
         height: 520,
       ),
-      viewPort: ViewPort(width: 480, height: 480, type: 'circle'),
+      viewPort: CroppieViewPort(width: 480, height: 480, type: 'circle'),
       enableExif: true,
       enableZoom: true,
       showZoomer: true,
