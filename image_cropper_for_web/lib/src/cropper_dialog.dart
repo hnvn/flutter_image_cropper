@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'settings.dart';
+import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
 
 class CropperDialog extends StatelessWidget {
   final Widget cropper;
@@ -107,11 +107,11 @@ class CropperDialog extends StatelessWidget {
     return ButtonBar(
       buttonPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       children: [
-        OutlinedButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          style: OutlinedButton.styleFrom(
+          style: TextButton.styleFrom(
             padding:
                 const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
           ),

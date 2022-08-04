@@ -6,8 +6,6 @@ import 'dart:async';
 
 import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
 
-import 'settings.dart';
-
 ///
 /// A convenient class wraps all api functions of **ImageCropper** plugin
 ///

@@ -1,4 +1,4 @@
-library image_cropper_for_web;
+library image_cropper_for_web2;
 
 import 'dart:html' as html;
 import 'dart:ui' as ui;
@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:image_cropper_for_web/src/cropper_dialog.dart';
 import 'package:image_cropper_for_web/src/cropper_page.dart';
-import 'package:image_cropper_for_web/src/settings.dart';
 import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
 
 import 'src/croppie/croppie_dart.dart';
@@ -20,7 +19,6 @@ export 'package:image_cropper_platform_interface/image_cropper_platform_interfac
         CropAspectRatio,
         CroppedFile;
 export 'src/croppie/croppie_dart_base.dart' show Boundary, ViewPort;
-export 'src/settings.dart';
 
 /// The web implementation of [ImageCropperPlatform].
 ///
@@ -105,9 +103,17 @@ class ImageCropperPlugin extends ImageCropperPlatform {
 
     final element = html.DivElement();
     final option = Options(
-      boundary: webSettings.boundary ?? Boundary(width: 500, height: 500),
-      viewport: webSettings.viewPort ??
-          ViewPort(width: 400, height: 400, type: shapeType),
+      boundary: webSettings.boundary == null
+          ? Boundary(width: 500, height: 500)
+          : Boundary(
+              width: webSettings.boundary!.width,
+              height: webSettings.boundary!.height),
+      viewport: webSettings.viewPort == null
+          ? ViewPort(width: 400, height: 400, type: shapeType)
+          : ViewPort(
+              width: webSettings.viewPort!.width,
+              height: webSettings.viewPort!.height,
+              type: webSettings.viewPort!.type),
       customClass: webSettings.customClass,
       enableExif: webSettings.enableExif ?? true,
       enableOrientation: webSettings.enableOrientation ?? true,
