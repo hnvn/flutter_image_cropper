@@ -1,7 +1,7 @@
 name: image_cropper_platform_interface2
 description: A common platform interface for the image_cropper2 plugin.
 repository: https://github.com/yendacoder/flutter_image_cropper
-version: 2.0.7
+version: 2.0.7+1
 
 environment:
   sdk: ">=2.16.1 <3.0.0"

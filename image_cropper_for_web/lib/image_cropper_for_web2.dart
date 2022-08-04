@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:image_cropper_for_web2/src/cropper_dialog.dart';
 import 'package:image_cropper_for_web2/src/cropper_page.dart';
-import 'package:image_cropper_platform_interface2/src/settings.dart';
 import 'package:image_cropper_platform_interface2/image_cropper_platform_interface2.dart';
 
 import 'src/croppie/croppie_dart.dart';
@@ -107,14 +106,14 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       boundary: webSettings.boundary == null
           ? Boundary(width: 500, height: 500)
           : Boundary(
-              width: webSettings.boundary.width,
-              height: webSettings.boundary.height),
+              width: webSettings.boundary!.width,
+              height: webSettings.boundary!.height),
       viewport: webSettings.viewPort == null
           ? ViewPort(width: 400, height: 400, type: shapeType)
           : ViewPort(
-              width: webSettings.viewPort.width,
-              height: webSettings.viewPort.height,
-              type: webSettings.viewPort.type),
+              width: webSettings.viewPort!.width,
+              height: webSettings.viewPort!.height,
+              type: webSettings.viewPort!.type),
       customClass: webSettings.customClass,
       enableExif: webSettings.enableExif ?? true,
       enableOrientation: webSettings.enableOrientation ?? true,

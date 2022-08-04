@@ -1,3 +1,8 @@
+## [2.0.7+1] - 2022-08-04
+
+* Fixed web integration
+* Changed dialog button style on web
+
 ## [2.0.7] - 2022-08-04
 
 * Moved settings to platform interface for easier multiplatform implementation
