@@ -1,4 +1,4 @@
-library image_cropper_for_web2;
+library image_cropper_for_web;
 
 import 'dart:html' as html;
 import 'dart:ui' as ui;
