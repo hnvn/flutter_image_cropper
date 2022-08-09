@@ -7,10 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'cropper/ui_helper.dart'
-    if (dart.library.io) 'cropper/mobile_ui_helper.dart'
-    if (dart.library.html) 'cropper/web_ui_helper.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -267,7 +263,30 @@ class _HomePageState extends State<HomePage> {
         sourcePath: _pickedFile!.path,
         compressFormat: ImageCompressFormat.jpg,
         compressQuality: 100,
-        uiSettings: buildUiSettings(context),
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: 'Cropper',
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: 'Cropper',
+          ),
+          WebUiSettings(
+            context: context,
+            presentStyle: CropperPresentStyle.dialog,
+            boundary: const CroppieBoundary(
+              width: 520,
+              height: 520,
+            ),
+            viewPort:
+                const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+            enableExif: true,
+            enableZoom: true,
+            showZoomer: true,
+          ),
+        ],
       );
       if (croppedFile != null) {
         setState(() {
