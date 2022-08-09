@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_cropper_for_web/image_cropper_for_web.dart';
 
 void main() {
   runApp(const MyApp());
@@ -282,7 +281,7 @@ class _HomePageState extends State<_HomePage> {
             width: (screenWidth * 0.9).round(),
             height: (screenHeight * 0.8).round(),
           ),
-          viewPort: CroppieViewPort(
+          viewPort: const CroppieViewPort(
             width: 480,
             height: 480,
           ),
@@ -294,11 +293,11 @@ class _HomePageState extends State<_HomePage> {
         settings = WebUiSettings(
           context: context,
           presentStyle: CropperPresentStyle.dialog,
-          boundary: CroppieBoundary(
+          boundary: const CroppieBoundary(
             width: 520,
             height: 520,
           ),
-          viewPort: CroppieViewPort(
+          viewPort: const CroppieViewPort(
             width: 480,
             height: 480,
           ),

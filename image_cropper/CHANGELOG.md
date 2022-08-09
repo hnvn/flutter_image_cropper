@@ -1,4 +1,34 @@
 
+## [3.0.0] - 2022-08-09
+
+* **BREAKING CHANGE**: move all setting models to platform interface packages.
+* Separate Javascript codes from `WebSettings` model (so there's no need to use conditional import to config Web UI now)
+
+### ***MIGRATION GUIDE***
+
+#### **BEFORE**
+
+```dart
+WebUiSettings(
+  boundary: Boundary(
+    width: 520,
+    height: 520,
+  ),
+  viewPort: ViewPort(width: 480, height: 480, type: 'circle'),
+)
+```
+
+#### **AFTER**
+```dart
+WebUiSettings(
+  boundary: const CroppieBoundary(
+    width: 520,
+    height: 520,
+  ),
+  viewPort: const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+)
+```
+
 ## [2.0.3] - 2022-05-17
 
 * correct importing JS library

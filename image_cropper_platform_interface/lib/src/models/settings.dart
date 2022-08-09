@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../utils.dart';
@@ -353,19 +352,25 @@ typedef CropperRouteBuilder = PageRoute<String> Function(
 enum CropperPresentStyle { dialog, page }
 
 class CroppieBoundary {
-  const CroppieBoundary({required this.width, required this.height});
+  const CroppieBoundary({
+    this.width,
+    this.height,
+  });
 
-  final int width;
-  final int height;
+  final int? width;
+  final int? height;
 }
 
 class CroppieViewPort {
-  const CroppieViewPort(
-      {required this.width, required this.height, required this.type});
+  const CroppieViewPort({
+    this.width,
+    this.height,
+    this.type,
+  });
 
-  final int width;
-  final int height;
-  final String type;
+  final int? width;
+  final int? height;
+  final String? type;
 }
 
 class WebUiSettings extends PlatformUiSettings {

@@ -106,14 +106,16 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       boundary: webSettings.boundary == null
           ? Boundary(width: 500, height: 500)
           : Boundary(
-              width: webSettings.boundary!.width,
-              height: webSettings.boundary!.height),
+              width: webSettings.boundary!.width ?? 500,
+              height: webSettings.boundary!.height ?? 500,
+            ),
       viewport: webSettings.viewPort == null
           ? ViewPort(width: 400, height: 400, type: shapeType)
           : ViewPort(
-              width: webSettings.viewPort!.width,
-              height: webSettings.viewPort!.height,
-              type: webSettings.viewPort!.type),
+              width: webSettings.viewPort!.width ?? 400,
+              height: webSettings.viewPort!.height ?? 400,
+              type: webSettings.viewPort!.type ?? shapeType,
+            ),
       customClass: webSettings.customClass,
       enableExif: webSettings.enableExif ?? true,
       enableOrientation: webSettings.enableOrientation ?? true,
