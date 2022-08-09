@@ -57,6 +57,8 @@ public class ImageCropperPlugin implements MethodCallHandler, FlutterPlugin, Act
 
         if (call.method.equals("cropImage")) {
             delegate.startCrop(call, result);
+        } else if (call.method.equals("recoverImage")) {
+            delegate.recoverImage(call, result);
         }
 
     }

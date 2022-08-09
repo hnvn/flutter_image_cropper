@@ -17,7 +17,16 @@ export 'package:image_cropper_platform_interface/image_cropper_platform_interfac
         ImageCompressFormat,
         CropAspectRatio,
         CroppedFile,
-        PlatformUiSettings;
+        PlatformUiSettings,
+
+        AndroidUiSettings,
+        IOSUiSettings,
+        CropperDialogBuilder,
+        CropperRouteBuilder,
+        CropperPresentStyle,
+        WebUiSettings,
+        CroppieViewPort,
+        CroppieBoundary,
+        RotationAngle;
 
 export 'src/cropper.dart';
-export 'src/settings.dart';

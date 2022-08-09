@@ -6,8 +6,6 @@ import 'dart:async';
 
 import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
 
-import 'settings.dart';
-
 ///
 /// A convenient class wraps all api functions of **ImageCropper** plugin
 ///
@@ -94,5 +92,51 @@ class ImageCropper {
       compressQuality: compressQuality,
       uiSettings: uiSettings,
     );
+  }
+
+  ///
+  /// Retrieve cropped image lost due to activity termination (Android only).
+  /// This method works similarly to [retrieveLostData] method from [image_picker]
+  /// library. Unlike [retrieveLostData], does not throw an error on other platforms,
+  /// but returns null result.
+  ///
+  /// [recoverImage] as (well as [retrieveLostData]) will return value on any
+  /// call after a successful [cropImage], so you can potentially get unexpected
+  /// result when using [ImageCropper] in different layout. Recommended usage comes down to
+  /// this:
+  ///
+  /// ```dart
+  /// void crop() async {
+  ///   final cropper = ImageCropper();
+  ///   final croppedFile = await cropper.cropImage(/* your parameters */);
+  ///   // At this point we know that the main activity did survive and we can
+  ///   // discard the cached value
+  ///   await cropper.recoverImage();
+  ///   // process croppedFile value
+  /// }
+  ///
+  /// @override
+  /// void initState() {
+  ///   _getLostData();
+  ///   super.initState();
+  /// }
+  ///
+  /// void _getLostData() async {
+  ///   final recoveredCroppedImage = await ImageCropper().recoverImage();
+  ///   if (recoveredCroppedImage != null) {
+  ///      // process recoveredCroppedImage value
+  ///   }
+  /// }
+  /// ```
+  ///
+  /// **return:**
+  ///
+  /// A result file of the cropped image.
+  ///
+  /// See also:
+  /// * [Android Activity Lifecycle](https://developer.android.com/reference/android/app/Activity.html)
+  ///
+  Future<CroppedFile?> recoverImage() {
+    return platform.recoverImage();    
   }
 }
