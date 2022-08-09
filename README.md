@@ -260,99 +260,12 @@ CroppedFile croppedFile = await ImageCropper().cropImage(
         IOSUiSettings(
           title: 'Cropper',
         ),
+        WebUiSettings(
+          context: context,
+        ),
       ],
     );
     
-````
-
-### Example for Web
-
-<details>
-<summary>Click to view detail</summary>
-<br/>
-
-Web implementation requires **WebUiSettings** object but this object contains some JS codes, so it cannot be compiled in mobile app. We should use conditional importing to workaround this problem. 
-
-For example:
-
-````dart
-import 'package:image_cropper/image_cropper.dart';
-
-import 'cropper/ui_helper.dart'
-    if (dart.library.io) 'cropper/mobile_ui_helper.dart'
-    if (dart.library.html) 'cropper/web_ui_helper.dart';
-
-CroppedFile croppedFile = await ImageCropper().cropImage(
-      sourcePath: imageFile.path,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      uiSettings: buildUiSettings(context),
-    );
-
-````
-
-Whereas:
-
-- File `cropper/ui_helper.dart`:
-
-````dart
-import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-
-List<PlatformUiSettings>? buildUiSettings(BuildContext context) {
-  throw UnimplementedError();
-}
-````
-
-- File `cropper/mobile_ui_helper.dart`:
-
-````dart
-import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-
-List<PlatformUiSettings>? buildUiSettings(BuildContext context) {
-  return [
-    AndroidUiSettings(
-        toolbarTitle: 'Cropper',
-        toolbarColor: Colors.deepOrange,
-        toolbarWidgetColor: Colors.white,
-        initAspectRatio: CropAspectRatioPreset.original,
-        lockAspectRatio: false),
-    IOSUiSettings(
-      title: 'Cropper',
-    ),
-  ];
-}
-````
-
-- File `cropper/web_ui_helper.dart`:
-
-````dart
-import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_cropper_for_web/image_cropper_for_web.dart';
-
-List<PlatformUiSettings>? buildUiSettings(BuildContext context) {
-  return [
-    WebUiSettings(
-      context: context,
-      presentStyle: CropperPresentStyle.dialog,
-      boundary: Boundary(
-        width: 520,
-        height: 520,
-      ),
-      viewPort: ViewPort(width: 480, height: 480, type: 'circle'),
-      enableExif: true,
-      enableZoom: true,
-      showZoomer: true,
-    ),
-  ];
-}
 ````
 
 </details>
