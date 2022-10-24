@@ -434,6 +434,9 @@ class WebUiSettings extends PlatformUiSettings {
   /// Barrier color for displayed [Dialog]
   final Color? barrierColor;
 
+  /// Translations to display
+  final WebTranslations? translations;
+
   WebUiSettings({
     required this.context,
     this.presentStyle = CropperPresentStyle.dialog,
@@ -450,6 +453,7 @@ class WebUiSettings extends PlatformUiSettings {
     this.mouseWheelZoom,
     this.showZoomer,
     this.barrierColor,
+    this.translations,
   });
 
   @override
@@ -480,4 +484,27 @@ int rotationAngleToNumber(RotationAngle angle) {
     case RotationAngle.counterClockwise270:
       return 270;
   }
+}
+
+class WebTranslations {
+  final String title;
+  final String rotateLeftTooltip;
+  final String rotateRightTooltip;
+  final String cancelButton;
+  final String cropButton;
+
+  const WebTranslations({
+    required this.title,
+    required this.rotateLeftTooltip,
+    required this.rotateRightTooltip,
+    required this.cancelButton,
+    required this.cropButton,
+  });
+
+  const WebTranslations.en()
+      : title = 'Crop Image',
+        rotateLeftTooltip = 'Rotate 90 degree counter-clockwise',
+        rotateRightTooltip = 'Rotate 90 degree clockwise',
+        cancelButton = 'Cancel',
+        cropButton = 'Crop';
 }
