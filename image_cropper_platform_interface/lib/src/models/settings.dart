@@ -431,6 +431,9 @@ class WebUiSettings extends PlatformUiSettings {
   /// Builder to customize the cropper [PageRoute]
   final CropperRouteBuilder? customRouteBuilder;
 
+  /// Barrier color for displayed [Dialog]
+  final Color? barrierColor;
+
   WebUiSettings({
     required this.context,
     this.presentStyle = CropperPresentStyle.dialog,
@@ -446,6 +449,7 @@ class WebUiSettings extends PlatformUiSettings {
     this.enforceBoundary,
     this.mouseWheelZoom,
     this.showZoomer,
+    this.barrierColor,
   });
 
   @override
