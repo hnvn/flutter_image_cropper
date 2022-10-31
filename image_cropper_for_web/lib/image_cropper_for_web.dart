@@ -199,6 +199,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       }
       final result = await showDialog<String?>(
         context: context,
+        barrierColor: webSettings.barrierColor,
         builder: (_) => cropperDialog,
       );
 
