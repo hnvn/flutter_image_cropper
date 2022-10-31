@@ -8,6 +8,7 @@ class CropperDialog extends StatelessWidget {
   final void Function(RotationAngle) rotate;
   final double cropperContainerWidth;
   final double cropperContainerHeight;
+  final WebTranslations translations;
 
   const CropperDialog({
     Key? key,
@@ -16,6 +17,7 @@ class CropperDialog extends StatelessWidget {
     required this.rotate,
     required this.cropperContainerWidth,
     required this.cropperContainerHeight,
+    required this.translations,
   }) : super(key: key);
 
   @override
@@ -57,7 +59,7 @@ class CropperDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Crop Image',
+            translations.title,
             style: Theme.of(context).textTheme.headline5,
           ),
         ],
@@ -86,14 +88,14 @@ class CropperDialog extends StatelessWidget {
                 onPressed: () {
                   rotate(RotationAngle.counterClockwise90);
                 },
-                tooltip: 'Rotate 90 degree counter-clockwise',
+                tooltip: translations.rotateLeftTooltip,
                 icon: const Icon(Icons.rotate_90_degrees_ccw_rounded),
               ),
               IconButton(
                 onPressed: () {
                   rotate(RotationAngle.clockwise90);
                 },
-                tooltip: 'Rotate 90 degree clockwise',
+                tooltip: translations.rotateRightTooltip,
                 icon: const Icon(Icons.rotate_90_degrees_cw_outlined),
               )
             ],
@@ -115,7 +117,7 @@ class CropperDialog extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
           ),
-          child: const Text('Cancel'),
+          child: Text(translations.cancelButton),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -126,7 +128,7 @@ class CropperDialog extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
           ),
-          child: const Text('Crop'),
+          child: Text(translations.cropButton),
         ),
       ],
     );

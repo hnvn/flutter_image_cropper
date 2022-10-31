@@ -172,6 +172,8 @@ class ImageCropperPlugin extends ImageCropperPlatform {
             rotate: doRotate,
             cropperContainerWidth: cropperWidth + 50.0,
             cropperContainerHeight: cropperHeight + 50.0,
+            translations:
+                webSettings?.translations ?? const WebTranslations.en(),
           ),
         );
       }
@@ -194,6 +196,8 @@ class ImageCropperPlugin extends ImageCropperPlatform {
             rotate: doRotate,
             cropperContainerWidth: cropperWidth + 50.0,
             cropperContainerHeight: cropperHeight + 50.0,
+            translations:
+                webSettings.translations ?? const WebTranslations.en(),
           ),
         );
       }

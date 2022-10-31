@@ -8,6 +8,7 @@ class CropperPage extends StatelessWidget {
   final void Function(RotationAngle) rotate;
   final double cropperContainerWidth;
   final double cropperContainerHeight;
+  final WebTranslations translations;
 
   const CropperPage({
     Key? key,
@@ -16,13 +17,14 @@ class CropperPage extends StatelessWidget {
     required this.rotate,
     required this.cropperContainerWidth,
     required this.cropperContainerHeight,
+    required this.translations,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crop Image'),
+        title: Text(translations.title),
         actions: [
           IconButton(
             onPressed: () async {
@@ -53,14 +55,14 @@ class CropperPage extends StatelessWidget {
                     onPressed: () {
                       rotate(RotationAngle.counterClockwise90);
                     },
-                    tooltip: 'Rotate 90 degree counter-clockwise',
+                    tooltip: translations.rotateLeftTooltip,
                     icon: const Icon(Icons.rotate_90_degrees_ccw_rounded),
                   ),
                   IconButton(
                     onPressed: () {
                       rotate(RotationAngle.clockwise90);
                     },
-                    tooltip: 'Rotate 90 degree clockwise',
+                    tooltip: translations.rotateRightTooltip,
                     icon: const Icon(Icons.rotate_90_degrees_cw_outlined),
                   )
                 ],
