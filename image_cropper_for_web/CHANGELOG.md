@@ -1,4 +1,8 @@
 
+## [1.0.3] - 2022-10-31
+
+* support localization on Web
+
 ## [1.0.2] - 2022-08-09
 
 * correct `WebSettings` model

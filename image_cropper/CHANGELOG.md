@@ -1,4 +1,9 @@
 
+## [3.0.1] - 2022-10-31
+
+* Android: replace `jcenter` by `mavenCentral`
+* Web: support localization
+
 ## [3.0.0] - 2022-08-09
 
 * **BREAKING CHANGE**: move all setting models to platform interface packages.
