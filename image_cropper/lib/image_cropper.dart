@@ -18,7 +18,7 @@ export 'package:image_cropper_platform_interface/image_cropper_platform_interfac
         CropAspectRatio,
         CroppedFile,
         PlatformUiSettings,
-
+        WebTranslations,
         AndroidUiSettings,
         IOSUiSettings,
         CropperDialogBuilder,
