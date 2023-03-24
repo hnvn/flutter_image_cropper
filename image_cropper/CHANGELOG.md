@@ -1,4 +1,8 @@
 
+## [3.0.2] - 2023-03-24
+
+* Web: fix web translation issue
+
 ## [3.0.1] - 2022-10-31
 
 * Android: replace `jcenter` by `mavenCentral`
