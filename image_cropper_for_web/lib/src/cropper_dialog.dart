@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
 
 class CropperDialog extends StatelessWidget {
@@ -60,7 +59,7 @@ class CropperDialog extends StatelessWidget {
         children: [
           Text(
             translations.title,
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
         ],
       ),
