@@ -1,4 +1,8 @@
 
+## [3.0.3] - 2023-04-24
+
+* iOS: bump ios minimum version to 11
+
 ## [3.0.2] - 2023-03-24
 
 * Web: fix web translation issue
