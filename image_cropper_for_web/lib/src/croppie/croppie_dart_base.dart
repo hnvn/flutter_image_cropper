@@ -2,6 +2,7 @@
 library chroppie.native;
 
 import 'dart:html';
+
 import 'package:js/js.dart';
 
 import 'croppie_dart.dart';
@@ -121,16 +122,22 @@ class Options {
 class CroppieJS implements CroppieBase {
   external factory CroppieJS(Element el, Options opts);
 
+  @override
   external Data get();
 
+  @override
   external void destroy();
 
+  @override
   external Promise bind(BindConfiguration conf);
 
+  @override
   external Promise result(
       String? type, String? size, String? format, num? quality, bool? circle);
 
+  @override
   external void rotate(int degrees);
 
+  @override
   external void setZoom(double value);
 }

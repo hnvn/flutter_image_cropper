@@ -1,8 +1,6 @@
-import 'dart:html' as html;
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -19,14 +17,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          primarySwatch: Colors.blue,
           highlightColor: const Color(0xFFD0996F),
-          backgroundColor: const Color(0xFFFDF5EC),
           canvasColor: const Color(0xFFFDF5EC),
           textTheme: TextTheme(
-            headline5: ThemeData.light()
+            headlineSmall: ThemeData.light()
                 .textTheme
-                .headline5!
+                .headlineSmall!
                 .copyWith(color: const Color(0xFFBC764A)),
           ),
           iconTheme: IconThemeData(
@@ -52,7 +48,7 @@ class MyApp extends StatelessWidget {
               side: MaterialStateBorderSide.resolveWith(
                   (states) => const BorderSide(color: Color(0xFFBC764A))),
             ),
-          )),
+          ), colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(background: const Color(0xFFFDF5EC))),
       home: const MyHomePage(title: 'Image Cropper Demo'),
     );
   }
@@ -246,7 +242,7 @@ class _HomePageState extends State<_HomePage> {
                       const SizedBox(height: 24.0),
                       Text(
                         'Upload an image to start',
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                               color: Theme.of(context).highlightColor,
                             ),
                       )
