@@ -83,7 +83,21 @@
       
       [self setupUiCustomizedOptions:call.arguments forViewController:cropViewController];
 
-      [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:cropViewController animated:YES completion:nil];
+      UIWindow *window = [UIApplication sharedApplication].delegate.window;
+      if (!window && @available(iOS 13.0, *)) {
+          for (UIWindowScene* scene in [UIApplication sharedApplication].connectedScenes) {
+              if (scene.activationState == UISceneActivationStateForegroundActive) {
+                  for (UIWindow *w in scene.windows) {
+                      if (w.isKeyWindow) {
+                          window = w;
+                          break;
+                      }
+                  }
+              }
+          }
+      }
+
+      [window.rootViewController presentViewController:cropViewController animated:YES completion:nil];
   } else {
       result(FlutterMethodNotImplemented);
   }
