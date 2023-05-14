@@ -1,5 +1,5 @@
 
-## 2.0.9
+## 2.0.0
 
 * update SDK constraint
 * refactor CHANGELOG

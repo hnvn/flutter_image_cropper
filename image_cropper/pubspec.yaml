@@ -21,8 +21,8 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  image_cropper_platform_interface: ^3.0.3
-  image_cropper_for_web: ^1.0.3
+  image_cropper_platform_interface: ^4.0.0
+  image_cropper_for_web: ^2.0.0
 
 dev_dependencies:
   flutter_test:
