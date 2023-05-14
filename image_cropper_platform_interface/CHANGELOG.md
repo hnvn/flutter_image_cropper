@@ -1,23 +1,27 @@
-## [3.0.3] - 2022-10-31
+## 3.0.4
+
+* refactor CHANGELOG
+
+## 3.0.3
 
 * support localization on Web
 
-## [3.0.2] - 2022-08-09
+## 3.0.2
 
 * correct `WebSettings` model
 
-## [3.0.1] - 2022-08-09
+## 3.0.1
 
 * correct default values of `WebUiSettings`
 
-## [3.0.0] - 2022-08-09
+## 3.0.0
 
 * **BREAKING CHANGE**: move all setting models to platform interface packages
 
-## [2.0.0-beta.1] - 2022-03-27
+## 2.0.0-beta.1
 
 * **BREAKING CHANGE**: update result models to support web, replace `File` by `CroppedFile`
 
-## [2.0.0-beta] - 2022-02-19
+## 2.0.0-beta
 
 * migrate to federated plugins
