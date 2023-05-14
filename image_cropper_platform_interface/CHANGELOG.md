@@ -1,5 +1,6 @@
-## 3.0.4
+## 4.0.0
 
+* update SKD constraint
 * refactor CHANGELOG
 
 ## 3.0.3
