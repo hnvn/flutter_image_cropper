@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.image_cropper_example">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
    <application
         android:label="image_cropper_example"
         android:name="${applicationName}"
