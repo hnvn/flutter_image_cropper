@@ -1,3 +1,6 @@
+$$ [4.0.0] - 2023-05-14
+
+* Android: support namespace, Gradle 8
 
 ## [3.0.3] - 2023-04-24
 
