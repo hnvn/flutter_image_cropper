@@ -1,3 +1,7 @@
+## 5.0.0
+
+* upgrade `http` to v1.0.0
+
 ## 4.0.0
 
 * update SKD constraint
