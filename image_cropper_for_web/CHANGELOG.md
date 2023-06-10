@@ -1,4 +1,8 @@
 
+## 3.0.0
+
+* upgrade `http` to v1.0.0
+
 ## 2.0.0
 
 * update SDK constraint
