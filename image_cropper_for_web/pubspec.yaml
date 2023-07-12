@@ -13,9 +13,10 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   
-  image_cropper_platform_interface: ^5.0.0
+  image_cropper_platform_interface:
+    path: /Users/brijeshmarvaniya/Documents/Twinr/flutter_image_cropper/image_cropper_platform_interface
 
-  js: ^0.6.3
+  js: ^0.6.5
 
 
 dev_dependencies:
