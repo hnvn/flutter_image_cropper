@@ -21,30 +21,36 @@ class CropperDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: cropperContainerWidth + 2 * 24.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: IntrinsicHeight(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _header(context),
-            const Divider(height: 1.0, thickness: 1.0),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 24.0,
-                left: 24.0,
-                right: 24.0,
-                bottom: 8.0,
-              ),
-              child: _body(context),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Container(
+          width: cropperContainerWidth + 2 * 24.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: IntrinsicHeight(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _header(context),
+                const Divider(height: 1.0, thickness: 1.0),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 24.0,
+                    left: 24.0,
+                    right: 24.0,
+                    bottom: 8.0,
+                  ),
+                  child: _body(context),
+                ),
+                const Divider(height: 1.0, thickness: 1.0),
+                _footer(context),
+              ],
             ),
-            const Divider(height: 1.0, thickness: 1.0),
-            _footer(context),
-          ],
+          ),
         ),
       ),
     );
