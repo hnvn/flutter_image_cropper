@@ -1,0 +1,1 @@
+Web implementation for the `image_cropper` plugin.

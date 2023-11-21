@@ -1,0 +1,1 @@
+Common platform interface for the `image_cropper` plugin.
