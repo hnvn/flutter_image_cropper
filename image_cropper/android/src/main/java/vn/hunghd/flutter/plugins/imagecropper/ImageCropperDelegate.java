@@ -61,7 +61,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Uri destinationUri = Uri.fromFile(outputFile);
 
         UCrop.Options options = new UCrop.Options();
-        uCrop.withMaxResultSize(1000, 1000);
+        // uCrop.withMaxResultSize(1000, 1000);
         options.setCompressionFormat("png".equals(compressFormat) ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG);
         options.setCompressionQuality(compressQuality != null ? compressQuality : 90);
         options.setMaxBitmapSize(10000);
