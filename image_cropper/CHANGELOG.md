@@ -1,3 +1,7 @@
+## 5.0.1
+
+* Android: improve compression quality
+
 ## 5.0.0
 
 * upgrade `http` to v1.0.0
