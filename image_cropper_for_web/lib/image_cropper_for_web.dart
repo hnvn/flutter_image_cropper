@@ -145,6 +145,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     Future<String?> doCrop() async {
       final blob = await croppie.resultBlob(
         format: format,
+        size: 'original',
         quality: quality,
       );
       if (blob != null) {
