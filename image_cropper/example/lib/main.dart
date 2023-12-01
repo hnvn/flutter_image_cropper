@@ -132,8 +132,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _image() {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final screenHeight = MediaQuery.sizeOf(context).height;
     if (_croppedFile != null) {
       final path = _croppedFile!.path;
       return ConstrainedBox(

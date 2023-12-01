@@ -1,7 +1,8 @@
 library image_cropper_for_web;
 
 import 'dart:html' as html;
-import 'dart:ui' as ui;
+import 'src/universal_ui/dart_fake_ui.dart'
+    if (dart.library.html) 'src/universal_ui/dart_real_ui.dart' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -130,8 +131,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
 
     final viewId = 'croppie-view-${DateTime.now().millisecondsSinceEpoch}';
 
-    // ignore: undefined_prefixed_name
-    ui.platformViewRegistry
+    ui.PlatformViewRegistry()
         .registerViewFactory(viewId, (int viewId) => element);
 
     final cropper = HtmlElementView(
