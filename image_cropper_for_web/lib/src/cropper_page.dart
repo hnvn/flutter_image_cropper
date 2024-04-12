@@ -11,14 +11,14 @@ class CropperPage extends StatelessWidget {
   final WebTranslations translations;
 
   const CropperPage({
-    Key? key,
+    super.key,
     required this.cropper,
     required this.crop,
     required this.rotate,
     required this.cropperContainerWidth,
     required this.cropperContainerHeight,
     required this.translations,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,7 @@ class CropperPage extends StatelessWidget {
           IconButton(
             onPressed: () async {
               final result = await crop();
+              if (!context.mounted) return;
               Navigator.of(context).pop(result);
             },
             icon: const Icon(Icons.done),

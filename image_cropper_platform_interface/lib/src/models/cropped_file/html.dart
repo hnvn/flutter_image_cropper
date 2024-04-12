@@ -29,7 +29,7 @@ class CroppedFile extends CroppedFileBase {
 
   Future<Uint8List> get _bytes async {
     if (_initBytes != null) {
-      return Future<Uint8List>.value(UnmodifiableUint8ListView(_initBytes!));
+      return Future<Uint8List>.value(UnmodifiableUint8ListView(_initBytes));
     }
     return http.readBytes(Uri.parse(path));
   }
