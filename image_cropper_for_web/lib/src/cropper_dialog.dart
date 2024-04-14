@@ -10,14 +10,14 @@ class CropperDialog extends StatelessWidget {
   final WebTranslations translations;
 
   const CropperDialog({
-    Key? key,
+    super.key,
     required this.cropper,
     required this.crop,
     required this.rotate,
     required this.cropperContainerWidth,
     required this.cropperContainerHeight,
     required this.translations,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +127,7 @@ class CropperDialog extends StatelessWidget {
         ElevatedButton(
           onPressed: () async {
             final result = await crop();
+            if (!context.mounted) return;
             Navigator.of(context).pop(result);
           },
           style: ElevatedButton.styleFrom(
