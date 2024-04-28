@@ -246,6 +246,8 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     _uploadImage();
                   },
+                  style:
+                      ElevatedButton.styleFrom(foregroundColor: Colors.white),
                   child: const Text('Upload'),
                 ),
               ),
