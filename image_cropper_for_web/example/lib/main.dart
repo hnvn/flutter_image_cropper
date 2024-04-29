@@ -62,7 +62,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.sizeOf(context).width;
     if (screenWidth > 700) {
       return _HomePage(
         key: const ValueKey('desktop'),
@@ -159,8 +159,8 @@ class _HomePageState extends State<_HomePage> {
   }
 
   Widget _image() {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final screenHeight = MediaQuery.sizeOf(context).height;
     if (_croppedBlobUrl != null) {
       return ConstrainedBox(
           constraints: BoxConstraints(
@@ -271,8 +271,8 @@ class _HomePageState extends State<_HomePage> {
     if (_uploadedBlobUrl != null) {
       WebUiSettings settings;
       if (widget.displayStyle == PageDisplayStyle.mobile) {
-        final screenWidth = MediaQuery.of(context).size.width;
-        final screenHeight = MediaQuery.of(context).size.height;
+        final screenWidth = MediaQuery.sizeOf(context).width;
+        final screenHeight = MediaQuery.sizeOf(context).height;
         settings = WebUiSettings(
           context: context,
           presentStyle: CropperPresentStyle.page,
