@@ -1,3 +1,6 @@
+## 4.0.0
+
+* upgrade JS package to v0.7
 
 ## 3.0.0
 
