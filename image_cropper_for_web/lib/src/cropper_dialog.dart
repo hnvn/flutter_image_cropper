@@ -113,8 +113,10 @@ class CropperDialog extends StatelessWidget {
             Navigator.of(context).pop();
           },
           style: TextButton.styleFrom(
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 12.0,
+              horizontal: 16.0,
+            ),
           ),
           child: Text(translations.cancelButton),
         ),
@@ -124,8 +126,11 @@ class CropperDialog extends StatelessWidget {
             Navigator.of(context).pop(result);
           },
           style: ElevatedButton.styleFrom(
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 12.0,
+              horizontal: 20.0,
+            ),
+            foregroundColor: Colors.white,
           ),
           child: Text(translations.cropButton),
         ),
