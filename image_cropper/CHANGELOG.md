@@ -1,3 +1,9 @@
+## 6.0.0
+
+* Android: upgrade `uCrop` to v2.2.9
+* iOS: upgrade `TOCropViewController` to v2.7.3
+* web: upgrade `js` to v0.7.1
+
 ## 5.0.1
 
 * Android: improve compression quality
