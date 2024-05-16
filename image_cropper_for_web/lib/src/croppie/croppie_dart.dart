@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:html';
+import 'package:web/web.dart';
 import 'dart:typed_data';
-import 'package:js/js.dart';
+import "dart:js_util";
 
 import 'croppie_dart_base.dart';
 

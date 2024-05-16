@@ -1,6 +1,6 @@
 library image_cropper_for_web;
 
-import 'dart:html' as html;
+import 'package:web/web.dart' as web;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -101,7 +101,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     final context = webSettings.context;
     final shapeType = cropStyle == CropStyle.circle ? 'circle' : 'square';
 
-    final element = html.DivElement();
+    final element = web.HTMLDivElement();
     final option = Options(
       boundary: webSettings.boundary == null
           ? Boundary(width: 500, height: 500)
@@ -148,7 +148,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
         quality: quality,
       );
       if (blob != null) {
-        final blobUrl = html.Url.createObjectUrlFromBlob(blob);
+        final blobUrl = web.URL.createObjectURL(blob);
         return blobUrl;
       }
       return null;
