@@ -351,71 +351,186 @@ typedef CropperRouteBuilder = PageRoute<String> Function(
 
 enum CropperPresentStyle { dialog, page }
 
-class CroppieBoundary {
-  const CroppieBoundary({
+class CropperSize {
+  const CropperSize({
     this.width,
     this.height,
   });
 
   final int? width;
   final int? height;
-}
-
-class CroppieViewPort {
-  const CroppieViewPort({
-    this.width,
-    this.height,
-    this.type,
-  });
-
-  final int? width;
-  final int? height;
-  final String? type;
 }
 
 class WebUiSettings extends PlatformUiSettings {
-  /// The outer container of the cropper
+  /// Display size of the cropper
+  ///
   /// Default = { width: 500, height: 500 }
-  final CroppieBoundary? boundary;
+  final CropperSize? size;
 
-  /// The inner container of the coppie. The visible part of the image.
-  /// Default = { width: 400, height: 400, type: 'square' }
-  /// Valid type values:'square' 'circle'
-  final CroppieViewPort? viewPort;
+  /// Define the view mode of the cropper.
+  ///
+  /// Options:
+  ///  - 0: no restrictions
+  ///  - 1: restrict the crop box not to exceed the size of the canvas.
+  ///  - 2: restrict the minimum canvas size to fit within the container.
+  ///       If the proportions of the canvas and the container differ,
+  ///       the minimum canvas will be surrounded by extra space in one of the dimensions.
+  ///  - 3: restrict the minimum canvas size to fill fit the container.
+  ///       If the proportions of the canvas and the container are different,
+  ///       the container will not be able to fit the whole canvas in one of the dimensions.
+  ///
+  /// Default = 0
+  ///
+  /// If you set viewMode to 0, the crop box can extend outside the canvas,
+  /// while a value of 1, 2, or 3 will restrict the crop box to the size of the canvas.
+  /// viewMode of 2 or 3 will additionally restrict the canvas to the container.
+  /// There is no difference between 2 and 3 when the proportions of the canvas and the container are the same.
+  final WebViewMode? viewwMode;
 
-  /// A class of your choosing to add to the container to add custom styles to your croppie
-  /// Default = ''
-  final String? customClass;
+  /// Define the dragging mode of the cropper.
+  ///
+  /// Options:
+  ///   - 'crop': create a new crop box
+  ///   - 'move':  move the canvas
+  ///   - 'none': do nothing
+  ///
+  /// Default = 'crop'
+  final WebDragMode? dragMode;
 
-  /// Enable exif orientation reading. Tells Croppie to read exif orientation from the image data and orient the image correctly before
-  /// rendering to the page.
-  /// Requires exif.js (packages/croppie_dart/lib/src/exif.js)
-  final bool? enableExif;
+  /// Define the initial aspect ratio of the crop box.
+  /// By default, it is the same as the aspect ratio of the canvas (image wrapper).
+  ///
+  /// Note: Only available when the aspectRatio option is set to NaN.
+  final num? initialAspectRatio;
 
-  /// Enable or disable support for specifying a custom orientation when binding images
+  /// Define the fixed aspect ratio of the crop box. By default, the crop box has a free ratio.
+  final num? aspectRatio;
+
+  /// Check if the current image is a cross-origin image.
+  ///
+  /// If so, a crossOrigin attribute will be added to the cloned image element,
+  /// and a timestamp parameter will be added to the src attribute to reload the source image to avoid browser cache error.
+  ///
+  /// Adding a crossOrigin attribute to the image element will stop adding a timestamp to the image URL
+  /// and stop reloading the image. But the request (XMLHttpRequest) to read the image data for orientation checking
+  /// will require a timestamp to bust the cache to avoid browser cache error.
+  /// You can set the checkOrientation option to false to cancel this request.
+  ///
+  /// If the value of the image's crossOrigin attribute is "use-credentials",
+  /// then the withCredentials attribute will set to true when read the image data by XMLHttpRequest.
+  ///
   /// Default = true
-  final bool? enableOrientation;
+  final bool? checkCrossOrigin;
 
-  /// Enable zooming functionality. If set to false - scrolling and pinching would not zoom.
-  /// Default = false
-  final bool? enableZoom;
-
-  /// Enable or disable support for resizing the viewport area.
-  /// Default = false
-  final bool? enableResize;
-
-  /// Restricts zoom so image cannot be smaller than viewport.
-  /// Experimental
+  /// Check the current image's Exif Orientation information.
+  /// Note that only a JPEG image may contain Exif Orientation information.
+  ///
+  /// Requires to set both the rotatable and scalable options to true at the same time.
+  ///
+  /// Note: Do not trust this all the time as some JPG images may have incorrect (non-standard) Orientation values
+  ///
   /// Default = true
-  final bool? enforceBoundary;
+  ///
+  final bool? checkOrientation;
 
-  /// Enable or disable the ability to use the mouse wheel to zoom in and out on a croppie instance
+  /// Show the black modal above the image and under the crop box.
+  ///
   /// Default = true
-  final bool? mouseWheelZoom;
+  final bool? modal;
 
-  /// Hide or Show the zoom slider.
+  /// Show the dashed lines above the crop box.
+  ///
   /// Default = true
-  final bool? showZoomer;
+  final bool? guides;
+
+  /// Show the center indicator above the crop box.
+  ///
+  /// Default = true
+  final bool? center;
+
+  /// Show the white modal above the crop box (highlight the crop box).
+  ///
+  /// Default = true
+  final bool? highlight;
+
+  /// Show the grid background of the container.
+  ///
+  /// Default = true
+  final bool? background;
+
+  /// Enable to move the image.
+  ///
+  /// Default = true
+  final bool? movable;
+
+  /// Enable to rotate the image.
+  ///
+  /// Default = true
+  final bool? rotatable;
+
+  /// Enable to scale the image.
+  ///
+  /// Default = true
+  final bool? scalable;
+
+  /// Enable to zoom the image.
+  ///
+  /// Default = true
+  final bool? zoomable;
+
+  /// Enable to zoom the image by dragging touch.
+  ///
+  /// Default = true
+  final bool? zoomOnTouch;
+
+  /// Enable to zoom the image by mouse wheeling.
+  ///
+  /// Default = true
+  final bool? zoomOnWheel;
+
+  /// Define zoom ratio when zooming the image by mouse wheeling.
+  ///
+  /// Default = 0.1
+  final num? wheelZoomRatio;
+
+  /// Enable to move the crop box by dragging.
+  ///
+  /// Default = true
+  final bool? cropBoxMovable;
+
+  /// Enable to resize the crop box by dragging.
+  ///
+  /// Default = true
+  final bool? cropBoxResizable;
+
+  /// Enable to toggle drag mode between "crop" and "move" when clicking twice on the cropper.
+  ///
+  /// Default = true
+  final bool? toggleDragModeOnDblclick;
+
+  /// The minimum width of the container.
+  ///
+  /// Default = 200
+  final num? minContainerWidth;
+
+  /// The minimum height of the container.
+  ///
+  /// Default = 100
+  final num? minContainerHeight;
+
+  /// The minimum width of the crop box.
+  ///
+  /// Note: This size is relative to the page, not the image.
+  ///
+  /// Default = 0
+  final num? minCropBoxWidth;
+
+  /// The minimum height of the crop box.
+  ///
+  /// Note: This size is relative to the page, not the image.
+  ///
+  /// Default = 0
+  final num? minCropBoxHeight;
 
   /// Presentation style of cropper, either a dialog or a page (route)
   /// Default = dialog
@@ -442,18 +557,34 @@ class WebUiSettings extends PlatformUiSettings {
     this.presentStyle = CropperPresentStyle.dialog,
     this.customDialogBuilder,
     this.customRouteBuilder,
-    this.boundary,
-    this.viewPort,
-    this.customClass,
-    this.enableExif,
-    this.enableOrientation,
-    this.enableZoom,
-    this.enableResize,
-    this.enforceBoundary,
-    this.mouseWheelZoom,
-    this.showZoomer,
-    this.barrierColor,
+    this.size,
+    this.viewwMode,
+    this.dragMode,
+    this.initialAspectRatio,
+    this.aspectRatio,
+    this.checkCrossOrigin,
+    this.checkOrientation,
+    this.modal,
+    this.guides,
+    this.center,
+    this.highlight,
+    this.background,
+    this.movable,
+    this.rotatable,
+    this.scalable,
+    this.zoomable,
+    this.zoomOnTouch,
+    this.zoomOnWheel,
+    this.wheelZoomRatio,
+    this.cropBoxMovable,
+    this.cropBoxResizable,
+    this.toggleDragModeOnDblclick,
+    this.minContainerWidth,
+    this.minContainerHeight,
+    this.minCropBoxWidth,
+    this.minCropBoxHeight,
     this.translations,
+    this.barrierColor,
   });
 
   @override
@@ -472,17 +603,17 @@ enum RotationAngle {
 int rotationAngleToNumber(RotationAngle angle) {
   switch (angle) {
     case RotationAngle.clockwise90:
-      return -90;
-    case RotationAngle.clockwise180:
-      return -180;
-    case RotationAngle.clockwise270:
-      return -270;
-    case RotationAngle.counterClockwise90:
       return 90;
-    case RotationAngle.counterClockwise180:
+    case RotationAngle.clockwise180:
       return 180;
-    case RotationAngle.counterClockwise270:
+    case RotationAngle.clockwise270:
       return 270;
+    case RotationAngle.counterClockwise90:
+      return -90;
+    case RotationAngle.counterClockwise180:
+      return -180;
+    case RotationAngle.counterClockwise270:
+      return -270;
   }
 }
 
@@ -507,4 +638,41 @@ class WebTranslations {
         rotateRightTooltip = 'Rotate 90 degree clockwise',
         cancelButton = 'Cancel',
         cropButton = 'Crop';
+}
+
+enum WebDragMode {
+  crop,
+  move,
+  none,
+}
+
+String dragModeToString(WebDragMode mode) {
+  switch (mode) {
+    case WebDragMode.crop:
+      return 'crop';
+    case WebDragMode.move:
+      return 'move';
+    case WebDragMode.none:
+      return 'none';
+  }
+}
+
+enum WebViewMode {
+  mode_0,
+  mode_1,
+  mode_2,
+  mode_3,
+}
+
+int viewModeToNumber(WebViewMode mode) {
+  switch (mode) {
+    case WebViewMode.mode_0:
+      return 0;
+    case WebViewMode.mode_1:
+      return 1;
+    case WebViewMode.mode_2:
+      return 2;
+    case WebViewMode.mode_3:
+      return 3;
+  }
 }

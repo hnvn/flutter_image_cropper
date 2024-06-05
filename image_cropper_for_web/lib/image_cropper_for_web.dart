@@ -1,5 +1,8 @@
 library image_cropper_for_web;
 
+import 'dart:async';
+import 'dart:js_interop';
+
 import 'package:web/web.dart' as web;
 import 'dart:ui' as ui;
 
@@ -9,16 +12,7 @@ import 'package:image_cropper_for_web/src/cropper_dialog.dart';
 import 'package:image_cropper_for_web/src/cropper_page.dart';
 import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
 
-import 'src/croppie/croppie_dart.dart';
-
-export 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart'
-    show
-        CropAspectRatioPreset,
-        CropStyle,
-        ImageCompressFormat,
-        CropAspectRatio,
-        CroppedFile;
-export 'src/croppie/croppie_dart_base.dart' show Boundary, ViewPort;
+import 'src/interop/cropper_interop.dart';
 
 /// The web implementation of [ImageCropperPlatform].
 ///
@@ -52,13 +46,11 @@ class ImageCropperPlugin extends ImageCropperPlatform {
   /// [CropAspectRatioPreset.ratio3x2], [CropAspectRatioPreset.ratio4x3] and
   /// [CropAspectRatioPreset.ratio16x9]. (IGNORED)
   ///
-  /// * cropStyle: controls the style of crop bounds, it can be rectangle or
-  /// circle style (default is [CropStyle.rectangle]). This field can be overrided
-  /// by [WebUiSettings.viewPort.type]
+  /// * cropStyle: controls the style of crop bounds, (IGNORED)
   ///
-  /// * compressFormat: the format of result image, png or jpg (default is [ImageCompressFormat.jpg])
+  /// * compressFormat: the format of result image, png or jpg (IGNORED)
   ///
-  /// * compressQuality: the value [0 - 100] to control the quality of image compression
+  /// * compressQuality: the value [0 - 100] to control the quality of image compression (IGNORED)
   ///
   /// * uiSettings: controls UI customization on specific platform (android, ios, web,...).
   /// This field is required and must provide [WebUiSettings]
@@ -99,79 +91,85 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     }
 
     final context = webSettings.context;
-    final shapeType = cropStyle == CropStyle.circle ? 'circle' : 'square';
 
-    final element = web.HTMLDivElement();
-    final option = Options(
-      boundary: webSettings.boundary == null
-          ? Boundary(width: 500, height: 500)
-          : Boundary(
-              width: webSettings.boundary!.width ?? 500,
-              height: webSettings.boundary!.height ?? 500,
-            ),
-      viewport: webSettings.viewPort == null
-          ? ViewPort(width: 400, height: 400, type: shapeType)
-          : ViewPort(
-              width: webSettings.viewPort!.width ?? 400,
-              height: webSettings.viewPort!.height ?? 400,
-              type: webSettings.viewPort!.type ?? shapeType,
-            ),
-      customClass: webSettings.customClass,
-      enableExif: webSettings.enableExif ?? true,
-      enableOrientation: webSettings.enableOrientation ?? true,
-      enableZoom: webSettings.enableZoom ?? false,
-      enableResize: webSettings.enableResize ?? false,
-      enforceBoundary: webSettings.enforceBoundary ?? true,
-      mouseWheelZoom: webSettings.mouseWheelZoom ?? true,
-      showZoomer: webSettings.showZoomer ?? true,
+    final div = web.HTMLDivElement();
+    final image = web.HTMLImageElement()
+      ..src = sourcePath
+      ..style.maxWidth = '100%'
+      ..style.display = 'block';
+    div.appendChild(image);
+
+    final options = CropperOptions(
+      dragMode: webSettings.dragMode != null
+          ? dragModeToString(webSettings.dragMode!)
+          : 'crop',
+      viewMode: webSettings.viewwMode != null
+          ? viewModeToNumber(webSettings.viewwMode!)
+          : 0,
+      initialAspectRatio: webSettings.initialAspectRatio,
+      aspectRatio: webSettings.aspectRatio,
+      checkCrossOrigin: webSettings.checkCrossOrigin ?? true,
+      checkOrientation: webSettings.checkOrientation ?? true,
+      modal: webSettings.modal ?? true,
+      guides: webSettings.guides ?? true,
+      center: webSettings.center ?? true,
+      highlight: webSettings.highlight ?? true,
+      background: webSettings.background ?? true,
+      movable: webSettings.movable ?? true,
+      rotatable: webSettings.rotatable ?? true,
+      scalable: webSettings.scalable ?? true,
+      zoomable: webSettings.zoomable ?? true,
+      zoomOnTouch: webSettings.zoomOnTouch ?? true,
+      zoomOnWheel: webSettings.zoomOnWheel ?? true,
+      wheelZoomRatio: webSettings.wheelZoomRatio ?? 0.1,
+      cropBoxMovable: webSettings.cropBoxMovable ?? true,
+      cropBoxResizable: webSettings.cropBoxResizable ?? true,
+      toggleDragModeOnDblclick: webSettings.toggleDragModeOnDblclick ?? true,
+      minContainerWidth: webSettings.minContainerWidth ?? 200,
+      minContainerHeight: webSettings.minContainerHeight ?? 100,
+      minCropBoxWidth: webSettings.minCropBoxWidth ?? 0,
+      minCropBoxHeight: webSettings.minCropBoxHeight ?? 0,      
     );
-    final croppie = Croppie(element, option);
-    croppie.bind(BindConfiguration(url: sourcePath));
+    final cropper = Cropper(image, options);
 
-    final viewId = 'croppie-view-${DateTime.now().millisecondsSinceEpoch}';
+    final viewType = 'cropper-view-$sourcePath';
 
     // ignore: undefined_prefixed_name
-    ui.platformViewRegistry
-        .registerViewFactory(viewId, (int viewId) => element);
+    ui.platformViewRegistry.registerViewFactory(viewType, (int viewId) => div);
 
-    final cropper = HtmlElementView(
-      key: UniqueKey(),
-      viewType: viewId,
+    final cropperWidget = HtmlElementView(
+      key: ValueKey(sourcePath),
+      viewType: viewType,
     );
 
-    final format = compressFormat == ImageCompressFormat.png ? 'png' : 'jpeg';
-    final quality = compressQuality * 1.0 / 100;
-
     Future<String?> doCrop() async {
-      final blob = await croppie.resultBlob(
-        format: format,
-        quality: quality,
-      );
-      if (blob != null) {
-        final blobUrl = web.URL.createObjectURL(blob);
-        return blobUrl;
-      }
-      return null;
+      final result = cropper.getCroppedCanvas();
+      final completer = Completer<String>();
+      result.toBlob((web.Blob blob) {
+        completer.complete(web.URL.createObjectURL(blob));
+      }.toJS);
+      return completer.future;
     }
 
     void doRotate(RotationAngle angle) {
-      croppie.rotate(rotationAngleToNumber(angle));
+      cropper.rotate(rotationAngleToNumber(angle));
     }
 
-    final cropperWidth = option.boundary?.width ?? 500;
-    final cropperHeight = option.boundary?.height ?? 500;
+    final cropperWidth = webSettings.size?.width ?? 500;
+    final cropperHeight = webSettings.size?.height ?? 500;
     if (webSettings.presentStyle == CropperPresentStyle.page) {
       PageRoute<String> pageRoute;
       if (webSettings.customRouteBuilder != null) {
-        pageRoute = webSettings.customRouteBuilder!(cropper, doCrop, doRotate);
+        pageRoute =
+            webSettings.customRouteBuilder!(cropperWidget, doCrop, doRotate);
       } else {
         pageRoute = MaterialPageRoute(
           builder: (c) => CropperPage(
-            cropper: cropper,
+            cropper: cropperWidget,
             crop: doCrop,
             rotate: doRotate,
-            cropperContainerWidth: cropperWidth + 50.0,
-            cropperContainerHeight: cropperHeight + 50.0,
+            cropperContainerWidth: cropperWidth * 1.0,
+            cropperContainerHeight: cropperHeight * 1.0,
             translations:
                 webSettings?.translations ?? const WebTranslations.en(),
           ),
@@ -181,29 +179,24 @@ class ImageCropperPlugin extends ImageCropperPlatform {
 
       return result != null ? CroppedFile(result) : null;
     } else {
-      Dialog cropperDialog;
+      Widget cropperDialog;
       if (webSettings.customDialogBuilder != null) {
         cropperDialog =
-            webSettings.customDialogBuilder!(cropper, doCrop, doRotate);
+            webSettings.customDialogBuilder!(cropperWidget, doCrop, doRotate);
       } else {
-        cropperDialog = Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          child: CropperDialog(
-            cropper: cropper,
-            crop: doCrop,
-            rotate: doRotate,
-            cropperContainerWidth: cropperWidth + 50.0,
-            cropperContainerHeight: cropperHeight + 50.0,
-            translations:
-                webSettings.translations ?? const WebTranslations.en(),
-          ),
+        cropperDialog = CropperDialog(
+          cropper: cropperWidget,
+          crop: doCrop,
+          rotate: doRotate,
+          cropperContainerWidth: cropperWidth * 1.0,
+          cropperContainerHeight: cropperHeight * 1.0,
+          translations: webSettings.translations ?? const WebTranslations.en(),
         );
       }
       final result = await showDialog<String?>(
         context: context,
         barrierColor: webSettings.barrierColor,
+        barrierDismissible: false,
         builder: (_) => cropperDialog,
       );
 

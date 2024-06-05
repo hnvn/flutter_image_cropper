@@ -21,30 +21,35 @@ class CropperDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: cropperContainerWidth + 2 * 24.0,
-      decoration: BoxDecoration(
+    return Dialog(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
-      child: IntrinsicHeight(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _header(context),
-            const Divider(height: 1.0, thickness: 1.0),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 24.0,
-                left: 24.0,
-                right: 24.0,
-                bottom: 8.0,
+      child: Container(
+        width: cropperContainerWidth + 2 * 24.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        child: IntrinsicHeight(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _header(context),
+              const Divider(height: 1.0, thickness: 1.0),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 24.0,
+                  left: 24.0,
+                  right: 24.0,
+                  bottom: 8.0,
+                ),
+                child: _body(context),
               ),
-              child: _body(context),
-            ),
-            const Divider(height: 1.0, thickness: 1.0),
-            _footer(context),
-          ],
+              const Divider(height: 1.0, thickness: 1.0),
+              _footer(context),
+            ],
+          ),
         ),
       ),
     );
@@ -67,18 +72,20 @@ class CropperDialog extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Center(
-          child: SizedBox(
-            width: cropperContainerWidth,
-            height: cropperContainerHeight,
-            child: cropper,
-          ),
+        SizedBox(
+          width: cropperContainerWidth,
+          height: cropperContainerHeight,
+          child: cropper,
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 5.0),
+          padding: const EdgeInsets.only(
+            left: 24.0,
+            right: 24.0,
+            top: 16.0,
+          ),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,12 +119,6 @@ class CropperDialog extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(
-              vertical: 12.0,
-              horizontal: 16.0,
-            ),
-          ),
           child: Text(translations.cancelButton),
         ),
         ElevatedButton(
@@ -125,13 +126,6 @@ class CropperDialog extends StatelessWidget {
             final result = await crop();
             Navigator.of(context).pop(result);
           },
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(
-              vertical: 12.0,
-              horizontal: 20.0,
-            ),
-            foregroundColor: Colors.white,
-          ),
           child: Text(translations.cropButton),
         ),
       ],

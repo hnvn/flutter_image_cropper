@@ -19,40 +19,53 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          highlightColor: const Color(0xFFD0996F),
-          canvasColor: const Color(0xFFFDF5EC),
-          textTheme: TextTheme(
-            headlineSmall: ThemeData.light()
-                .textTheme
-                .headlineSmall!
-                .copyWith(color: const Color(0xFFBC764A)),
-          ),
-          iconTheme: IconThemeData(
-            color: Colors.grey[600],
-          ),
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Color(0xFFBC764A),
-            centerTitle: false,
-            foregroundColor: Colors.white,
-            actionsIconTheme: IconThemeData(color: Colors.white),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateColor.resolveWith(
-                  (states) => const Color(0xFFBC764A)),
+        highlightColor: const Color(0xFFD0996F),
+        canvasColor: const Color(0xFFFDF5EC),
+        textTheme: TextTheme(
+          headlineSmall: ThemeData.light()
+              .textTheme
+              .headlineSmall!
+              .copyWith(color: const Color(0xFFBC764A)),
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.grey[600],
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFBC764A),
+          centerTitle: false,
+          foregroundColor: Colors.white,
+          actionsIconTheme: IconThemeData(color: Colors.white),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateColor.resolveWith(
+                (states) => const Color(0xFFBC764A)),
+            foregroundColor: WidgetStateColor.resolveWith(
+              (states) => Colors.white,
             ),
           ),
-          outlinedButtonTheme: OutlinedButtonThemeData(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateColor.resolveWith(
-                (states) => const Color(0xFFBC764A),
-              ),
-              side: MaterialStateBorderSide.resolveWith(
-                  (states) => const BorderSide(color: Color(0xFFBC764A))),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStateColor.resolveWith(
+              (states) => const Color(0xFFBC764A),
+            ),
+            side: WidgetStateBorderSide.resolveWith(
+                (states) => const BorderSide(color: Color(0xFFBC764A))),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStateColor.resolveWith(
+              (states) => const Color(0xFFBC764A),
             ),
           ),
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
-              .copyWith(background: const Color(0xFFFDF5EC))),
+        ),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          background: const Color(0xFFFDF5EC),
+          primary: const Color(0xFFD0996F),
+        ),
+      ),
       home: const HomePage(title: 'Image Cropper Demo'),
     );
   }
@@ -266,26 +279,22 @@ class _HomePageState extends State<HomePage> {
         compressQuality: 100,
         uiSettings: [
           AndroidUiSettings(
-              toolbarTitle: 'Cropper',
-              toolbarColor: Colors.deepOrange,
-              toolbarWidgetColor: Colors.white,
-              initAspectRatio: CropAspectRatioPreset.original,
-              lockAspectRatio: false),
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false,
+          ),
           IOSUiSettings(
             title: 'Cropper',
           ),
           WebUiSettings(
             context: context,
             presentStyle: CropperPresentStyle.dialog,
-            boundary: const CroppieBoundary(
+            size: const CropperSize(
               width: 520,
               height: 520,
             ),
-            viewPort:
-                const CroppieViewPort(width: 480, height: 480, type: 'circle'),
-            enableExif: true,
-            enableZoom: true,
-            showZoomer: true,
           ),
         ],
       );

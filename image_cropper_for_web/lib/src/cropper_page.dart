@@ -35,41 +35,46 @@ class CropperPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            SizedBox(
-              width: cropperContainerWidth,
-              height: cropperContainerHeight,
-              child: cropper,
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 48.0, right: 48.0, bottom: 5.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      rotate(RotationAngle.counterClockwise90);
-                    },
-                    tooltip: translations.rotateLeftTooltip,
-                    icon: const Icon(Icons.rotate_90_degrees_ccw_rounded),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      rotate(RotationAngle.clockwise90);
-                    },
-                    tooltip: translations.rotateRightTooltip,
-                    icon: const Icon(Icons.rotate_90_degrees_cw_outlined),
-                  )
-                ],
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Center(
+              child: SizedBox(
+                width: cropperContainerWidth,
+                height: cropperContainerHeight,
+                child: cropper,
               ),
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 48.0,
+              vertical: 24.0,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    rotate(RotationAngle.counterClockwise90);
+                  },
+                  tooltip: translations.rotateLeftTooltip,
+                  icon: const Icon(Icons.rotate_90_degrees_ccw_rounded),
+                ),
+                IconButton(
+                  onPressed: () {
+                    rotate(RotationAngle.clockwise90);
+                  },
+                  tooltip: translations.rotateRightTooltip,
+                  icon: const Icon(Icons.rotate_90_degrees_cw_outlined),
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

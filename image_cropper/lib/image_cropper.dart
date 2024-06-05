@@ -25,8 +25,9 @@ export 'package:image_cropper_platform_interface/image_cropper_platform_interfac
         CropperRouteBuilder,
         CropperPresentStyle,
         WebUiSettings,
-        CroppieViewPort,
-        CroppieBoundary,
+        CropperSize,
+        WebDragMode,
+        WebViewMode,
         RotationAngle;
 
 export 'src/cropper.dart';

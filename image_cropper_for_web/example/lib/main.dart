@@ -8,7 +8,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -16,47 +16,63 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          highlightColor: const Color(0xFFD0996F),
-          canvasColor: const Color(0xFFFDF5EC),
-          textTheme: TextTheme(
-            headlineSmall: ThemeData.light()
-                .textTheme
-                .headlineSmall!
-                .copyWith(color: const Color(0xFFBC764A)),
-          ),
-          iconTheme: IconThemeData(
-            color: Colors.grey[600],
-          ),
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Color(0xFFBC764A),
-            centerTitle: false,
-            foregroundColor: Colors.white,
-            actionsIconTheme: IconThemeData(color: Colors.white),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateColor.resolveWith(
-                  (states) => const Color(0xFFBC764A)),
+        highlightColor: const Color(0xFFD0996F),
+        canvasColor: const Color(0xFFFDF5EC),
+        textTheme: TextTheme(
+          headlineSmall: ThemeData.light()
+              .textTheme
+              .headlineSmall!
+              .copyWith(color: const Color(0xFFBC764A)),
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.grey[600],
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFBC764A),
+          centerTitle: false,
+          foregroundColor: Colors.white,
+          actionsIconTheme: IconThemeData(color: Colors.white),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateColor.resolveWith(
+                (states) => const Color(0xFFBC764A)),
+            foregroundColor: WidgetStateColor.resolveWith(
+              (states) => Colors.white,
             ),
           ),
-          outlinedButtonTheme: OutlinedButtonThemeData(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateColor.resolveWith(
-                (states) => const Color(0xFFBC764A),
-              ),
-              side: MaterialStateBorderSide.resolveWith(
-                  (states) => const BorderSide(color: Color(0xFFBC764A))),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStateColor.resolveWith(
+              (states) => const Color(0xFFBC764A),
+            ),
+            side: WidgetStateBorderSide.resolveWith(
+                (states) => const BorderSide(color: Color(0xFFBC764A))),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStateColor.resolveWith(
+              (states) => const Color(0xFFBC764A),
             ),
           ),
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
-              .copyWith(background: const Color(0xFFFDF5EC))),
+        ),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          background: const Color(0xFFFDF5EC),
+          primary: const Color(0xFFD0996F),
+        ),
+      ),
       home: const MyHomePage(title: 'Image Cropper Demo'),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({
+    super.key,
+    required this.title,
+  });
 
   final String title;
 
@@ -89,10 +105,10 @@ class _HomePage extends StatefulWidget {
   final String title;
 
   const _HomePage({
-    Key? key,
+    super.key,
     required this.displayStyle,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -276,33 +292,19 @@ class _HomePageState extends State<_HomePage> {
         settings = WebUiSettings(
           context: context,
           presentStyle: CropperPresentStyle.page,
-          boundary: CroppieBoundary(
+          size: CropperSize(
             width: (screenWidth * 0.9).round(),
             height: (screenHeight * 0.8).round(),
           ),
-          viewPort: const CroppieViewPort(
-            width: 480,
-            height: 480,
-          ),
-          enableExif: true,
-          enableZoom: true,
-          showZoomer: true,
         );
       } else {
         settings = WebUiSettings(
           context: context,
           presentStyle: CropperPresentStyle.dialog,
-          boundary: const CroppieBoundary(
+          size: const CropperSize(
             width: 520,
             height: 520,
           ),
-          viewPort: const CroppieViewPort(
-            width: 480,
-            height: 480,
-          ),
-          enableExif: true,
-          enableZoom: true,
-          showZoomer: true,
         );
       }
       final croppedFile = await ImageCropper().cropImage(
