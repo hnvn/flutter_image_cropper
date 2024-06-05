@@ -304,7 +304,6 @@ class _HomePageState extends State<_HomePage> {
             height: (screenHeight * 0.8).round(),
           ),
           aspectRatio: 1.0,
-          cropBoxResizable: false,
         );
       } else {
         settings = WebUiSettings(
@@ -315,7 +314,6 @@ class _HomePageState extends State<_HomePage> {
             height: 520,
           ),
           aspectRatio: 1.0,
-          cropBoxResizable: false,
         );
       }
       final croppedFile = await ImageCropper().cropImage(
