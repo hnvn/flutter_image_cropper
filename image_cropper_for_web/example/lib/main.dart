@@ -58,6 +58,13 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        iconButtonTheme: IconButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStateColor.resolveWith(
+              (states) => const Color(0xFFBC764A),
+            ),
+          ),
+        ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           background: const Color(0xFFFDF5EC),
           primary: const Color(0xFFD0996F),
@@ -296,6 +303,8 @@ class _HomePageState extends State<_HomePage> {
             width: (screenWidth * 0.9).round(),
             height: (screenHeight * 0.8).round(),
           ),
+          aspectRatio: 1.0,
+          cropBoxResizable: false,
         );
       } else {
         settings = WebUiSettings(
@@ -305,6 +314,8 @@ class _HomePageState extends State<_HomePage> {
             width: 520,
             height: 520,
           ),
+          aspectRatio: 1.0,
+          cropBoxResizable: false,
         );
       }
       final croppedFile = await ImageCropper().cropImage(

@@ -61,6 +61,13 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        iconButtonTheme: IconButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStateColor.resolveWith(
+              (states) => const Color(0xFFBC764A),
+            ),
+          ),
+        ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           background: const Color(0xFFFDF5EC),
           primary: const Color(0xFFD0996F),

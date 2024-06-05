@@ -155,6 +155,10 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       cropper.rotate(rotationAngleToNumber(angle));
     }
 
+    void doScale(num value) {
+      cropper.scale(value);
+    }
+
     final cropperWidth = webSettings.size?.width ?? 500;
     final cropperHeight = webSettings.size?.height ?? 500;
     if (webSettings.presentStyle == CropperPresentStyle.page) {
@@ -168,6 +172,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
             cropper: cropperWidget,
             crop: doCrop,
             rotate: doRotate,
+            scale: doScale,
             cropperContainerWidth: cropperWidth * 1.0,
             cropperContainerHeight: cropperHeight * 1.0,
             translations:
@@ -188,6 +193,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
           cropper: cropperWidget,
           crop: doCrop,
           rotate: doRotate,
+          scale: doScale,
           cropperContainerWidth: cropperWidth * 1.0,
           cropperContainerHeight: cropperHeight * 1.0,
           translations: webSettings.translations ?? const WebTranslations.en(),

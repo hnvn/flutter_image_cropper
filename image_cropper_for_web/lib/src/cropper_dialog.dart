@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:image_cropper_for_web/src/cropper_actionbar.dart';
 import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
 
 class CropperDialog extends StatelessWidget {
   final Widget cropper;
   final Future<String?> Function() crop;
   final void Function(RotationAngle) rotate;
+  final void Function(num) scale;
   final double cropperContainerWidth;
   final double cropperContainerHeight;
   final WebTranslations translations;
@@ -14,6 +16,7 @@ class CropperDialog extends StatelessWidget {
     required this.cropper,
     required this.crop,
     required this.rotate,
+    required this.scale,
     required this.cropperContainerWidth,
     required this.cropperContainerHeight,
     required this.translations,
@@ -86,25 +89,14 @@ class CropperDialog extends StatelessWidget {
             right: 24.0,
             top: 16.0,
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () {
-                  rotate(RotationAngle.counterClockwise90);
-                },
-                tooltip: translations.rotateLeftTooltip,
-                icon: const Icon(Icons.rotate_90_degrees_ccw_rounded),
-              ),
-              IconButton(
-                onPressed: () {
-                  rotate(RotationAngle.clockwise90);
-                },
-                tooltip: translations.rotateRightTooltip,
-                icon: const Icon(Icons.rotate_90_degrees_cw_outlined),
-              )
-            ],
+          child: CropperActionBar(
+            onRotate: (angle) {
+              rotate(angle);
+            },
+            onScale: (value) {
+              scale(value);
+            },
+            translations: translations,
           ),
         ),
       ],
