@@ -473,7 +473,7 @@ class WebUiSettings extends PlatformUiSettings {
   ///
   /// Options:
   ///   - 'crop': create a new crop box
-  ///   - 'move':  move the canvas
+  ///   - 'move': move the canvas
   ///   - 'none': do nothing
   ///
   /// Default = 'crop'
