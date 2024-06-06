@@ -634,7 +634,7 @@ class WebUiSettings extends PlatformUiSettings {
   /// Translations to display
   final WebTranslations? translations;
 
-  /// Control theme customization
+  /// Control UI customization
   final WebThemeData? themeData;
 
   WebUiSettings({
