@@ -177,7 +177,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 <summary>Click to view detail</summary>
 <br/>
 
-**Image Cropper** provides a helper class called `WebUiSettings` that wraps all properties can be used to customize UI in **croppie** library. 
+**Image Cropper** provides a helper class called `WebUiSettings` that wraps all properties can be used to customize UI in **cropperjs** library. 
 
 | Property                   | Description                                                                                                                                                                                                                       | Type             |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
