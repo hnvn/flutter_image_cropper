@@ -28,7 +28,7 @@ This project aims to provide an ultimate and flexible image cropping experience.
 </p>
 
 ### Cropper.js - Fengyuan Chen 
-[![GitHub watchers](https://img.shields.io/github/watchers/fengyuanchen/cropperjs.svg?style=social&label=Watch&maxAge=2592000)](https://GitHub.com/fengyuanchen/cropperjs/watchers/) [![GitHub stars](https://img.shields.io/github/stars/fengyuanchen/cropperjs.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/fengyuanchen/cropperjs/stargazers/) [![GitHub forks](https://img.shields.io/github/forks/fengyuanchen/cropperjs.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/fengyuanchen/cropperjs/network/) [![npm version](https://badge.fury.io/js/cropperjs.svg)](https://badge.fury.io/js/cropperjs) 
+[![GitHub watchers](https://img.shields.io/github/watchers/fengyuanchen/cropperjs.svg?style=social&label=Watch&maxAge=2592000)](https://GitHub.com/fengyuanchen/cropperjs/watchers/) [![GitHub stars](https://img.shields.io/github/stars/fengyuanchen/cropperjs.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/fengyuanchen/cropperjs/stargazers/) [![GitHub forks](https://img.shields.io/github/forks/fengyuanchen/cropperjs.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/fengyuanchen/cropperjs/network/) [![npm version](https://badge.fury.io/js/cropperjs.svg)](https://badge.fury.io/js/cropperjs) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/LICENSE)
 
 JavaScript image cropper.
 
@@ -182,8 +182,8 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 | Property                   | Description                                                                                                                                                                                                                       | Type             |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
 | `size`                     | Display size of the cropper. Default = `{ width: 500, height: 500 }`                                                                                                                                                              | CropperSize      |
-| `viewwMode`                | Define the view mode of the cropper. Details of available options in [View Mode](web#view-mode). Default = `0`                                                                                                                    | WebViewMode      |
-| `dragMode`                 | Define the dragging mode of the cropper. Details of available options in [Drag Mode](web#drag-mode). Default = `crop`                                                                                                             | WebDragMode      |
+| `viewwMode`                | Define the view mode of the cropper. Details of available options in [View Mode](#view-mode). Default = `0`                                                                                                                       | WebViewMode      |
+| `dragMode`                 | Define the dragging mode of the cropper. Details of available options in [Drag Mode](#drag-mode). Default = `crop`                                                                                                                | WebDragMode      |
 | `initialAspectRatio`       | Define the initial aspect ratio of the crop box. By default, it is the same as the aspect ratio of the canvas (image wrapper).  Note: Only available when the aspectRatio option is set to NaN.                                   | num              |
 | `checkCrossOrigin`         | Check if the current image is a cross-origin. Default = `true` image.                                                                                                                                                             | bool             |
 | `checkOrientation`         | Check the current image's Exif Orientation information. Note that only a JPEG image may contain Exif Orientation information.  Requires to set both the rotatable and scalable options to true at the same time. Default = `true` | bool             |
@@ -222,7 +222,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 - `2`: restrict the minimum canvas size to fit within the container. If the proportions of the canvas and the container differ, the minimum canvas will be surrounded by extra space in one of the dimensions.
 - `3`: restrict the minimum canvas size to fill fit the container. If the proportions of the canvas and the container are different, the container will not be able to fit the whole canvas in one of the dimensions.
 
-**Note**: If you set `viewMode` to `0`, the crop box can extend outside the canvas, while a value of `1`, `2`, or `3` will restrict the crop box to the size of the canvas. `viewMode` of `2` or `3` will additionally restrict the canvas to the container. There is no difference between `2` and `3` when the proportions of the canvas and the container are the same.
+If you set `viewMode` to `0`, the crop box can extend outside the canvas, while a value of `1`, `2`, or `3` will restrict the crop box to the size of the canvas. `viewMode` of `2` or `3` will additionally restrict the canvas to the container. There is no difference between `2` and `3` when the proportions of the canvas and the container are the same.
 
 
 #### Drag Mode:
