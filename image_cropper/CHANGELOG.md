@@ -1,3 +1,7 @@
+## 7.0.1
+
+* correct document
+
 ## 7.0.0
 
 * refactor plugin to use new JS library, `cropperjs` instead of `croppie`
@@ -53,7 +57,36 @@
         ),
       ],
     );
-    ``` 
+    ```
+    
+    **Web integration**:
+    
+    ***Before***:
+    ```
+    <head>
+        ....
+
+        <!-- Croppie -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" />
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+
+        ....
+    </head>
+    ```
+    
+    ***After***:
+    ```
+    <head>
+        ....
+
+        <!-- cropperjs -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+
+        ....
+    </head>
+    ```
 
 ## 6.0.0
 
