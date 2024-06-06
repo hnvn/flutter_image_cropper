@@ -128,11 +128,12 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       minContainerWidth: webSettings.minContainerWidth ?? 200,
       minContainerHeight: webSettings.minContainerHeight ?? 100,
       minCropBoxWidth: webSettings.minCropBoxWidth ?? 0,
-      minCropBoxHeight: webSettings.minCropBoxHeight ?? 0,      
+      minCropBoxHeight: webSettings.minCropBoxHeight ?? 0,
     );
     final cropper = Cropper(image, options);
 
-    final viewType = 'cropper-view-$sourcePath';
+    final viewType =
+        'plugins.hunghd.vn/cropper-view-${Uri.encodeComponent(sourcePath)}';
 
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(viewType, (int viewId) => div);
