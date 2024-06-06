@@ -1,3 +1,8 @@
+## 5.0.0
+
+* refactor plugin to use `Cropperjs` instead of `croppie`
+* **BREAKING CHANGES**: `WebUiSettings` is totally re-implemented. See plugin document for more details
+
 ## 4.0.0
 
 * upgrade JS package to v0.7
