@@ -25,10 +25,10 @@
       ],
       uiSettings: [
         AndroidUiSettings(
-          title: 'Cropper',
+          toolbarTitle: 'Cropper',
         ),
         IOSUiSettings(
-            title: 'Cropper',
+          title: 'Cropper',
         ),
       ],
     );
@@ -40,7 +40,7 @@
       sourcePath: imageFile.path,
       uiSettings: [
         AndroidUiSettings(
-          title: 'Cropper',
+          toolbarTitle: 'Cropper',
           cropStyle: CropStyle.circle,
           aspectRatioPresets: [
             CropAspectRatioPreset.square,
