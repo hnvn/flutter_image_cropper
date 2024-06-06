@@ -12,6 +12,7 @@
 
 export 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart'
     show
+        CropAspectRatioPresetData,
         CropAspectRatioPreset,
         CropStyle,
         ImageCompressFormat,

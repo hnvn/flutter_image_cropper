@@ -6,7 +6,15 @@ import '../utils.dart';
 /// A set of preset values can be used to setup the menu of crop aspect ratio
 /// options in the cropper view.
 ///
-enum CropAspectRatioPreset {
+
+abstract class CropAspectRatioPresetData {
+  /// name should be unique
+  String get name;
+
+  (int ratioX, int ratioY)? get data;
+}
+
+enum CropAspectRatioPreset implements CropAspectRatioPresetData {
   original,
   square,
   ratio3x2,
@@ -14,19 +22,87 @@ enum CropAspectRatioPreset {
   ratio4x3,
   ratio5x4,
   ratio7x5,
-  ratio16x9
+  ratio16x9;
+
+  @override
+  String get name {
+    switch (this) {
+      case CropAspectRatioPreset.original:
+        return 'original';
+      case CropAspectRatioPreset.square:
+        return 'square';
+      case CropAspectRatioPreset.ratio3x2:
+        return '3x2';
+      case CropAspectRatioPreset.ratio4x3:
+        return '4x3';
+      case CropAspectRatioPreset.ratio5x3:
+        return '5x3';
+      case CropAspectRatioPreset.ratio5x4:
+        return '5x4';
+      case CropAspectRatioPreset.ratio7x5:
+        return '7x5';
+      case CropAspectRatioPreset.ratio16x9:
+        return '16x9';
+    }
+  }
+
+  @override
+  (int ratioX, int ratioY)? get data {
+    switch (this) {
+      case CropAspectRatioPreset.original:
+        return null;
+      case CropAspectRatioPreset.square:
+        return (1, 1);
+      case CropAspectRatioPreset.ratio3x2:
+        return (3, 2);
+      case CropAspectRatioPreset.ratio4x3:
+        return (4, 3);
+      case CropAspectRatioPreset.ratio5x3:
+        return (5, 3);
+      case CropAspectRatioPreset.ratio5x4:
+        return (5, 4);
+      case CropAspectRatioPreset.ratio7x5:
+        return (7, 5);
+      case CropAspectRatioPreset.ratio16x9:
+        return (16, 9);
+    }
+  }
 }
 
 ///
 /// Crop style options. There're two supported styles, rectangle and circle.
 /// These style will changes the shape of crop bounds, rectangle or circle bounds.
 ///
-enum CropStyle { rectangle, circle }
+enum CropStyle {
+  rectangle,
+  circle;
+
+  String get name {
+    switch (this) {
+      case CropStyle.rectangle:
+        return 'rectangle';
+      case CropStyle.circle:
+        return 'circle';
+    }
+  }
+}
 
 ///
 /// Supported image compression formats
 ///
-enum ImageCompressFormat { jpg, png }
+enum ImageCompressFormat {
+  jpg,
+  png;
+
+  String get name {
+    switch (this) {
+      case ImageCompressFormat.jpg:
+        return 'jpg';
+      case ImageCompressFormat.png:
+        return 'png';
+    }
+  }
+}
 
 class CropAspectRatio {
   final double ratioX;
@@ -51,51 +127,6 @@ class CropAspectRatio {
 ///
 abstract class PlatformUiSettings {
   Map<String, dynamic> toMap();
-}
-
-String aspectRatioPresetName(CropAspectRatioPreset? preset) {
-  switch (preset) {
-    case CropAspectRatioPreset.original:
-      return 'original';
-    case CropAspectRatioPreset.square:
-      return 'square';
-    case CropAspectRatioPreset.ratio3x2:
-      return '3x2';
-    case CropAspectRatioPreset.ratio4x3:
-      return '4x3';
-    case CropAspectRatioPreset.ratio5x3:
-      return '5x3';
-    case CropAspectRatioPreset.ratio5x4:
-      return '5x4';
-    case CropAspectRatioPreset.ratio7x5:
-      return '7x5';
-    case CropAspectRatioPreset.ratio16x9:
-      return '16x9';
-    default:
-      return 'original';
-  }
-}
-
-String cropStyleName(CropStyle style) {
-  switch (style) {
-    case CropStyle.rectangle:
-      return 'rectangle';
-    case CropStyle.circle:
-      return 'circle';
-    default:
-      return 'rectangle';
-  }
-}
-
-String compressFormatName(ImageCompressFormat format) {
-  switch (format) {
-    case ImageCompressFormat.jpg:
-      return 'jpg';
-    case ImageCompressFormat.png:
-      return 'png';
-    default:
-      return 'jpg';
-  }
 }
 
 ///
@@ -156,9 +187,16 @@ class AndroidUiSettings extends PlatformUiSettings {
   /// set to true to hide the bottom controls (shown by default)
   final bool? hideBottomControls;
 
+  /// controls the style of crop bounds, it can be rectangle or
+  /// circle style (default is [CropStyle.rectangle]).
+  final CropStyle cropStyle;
+
+  /// controls the list of aspect ratios in the crop menu view.
+  final List<CropAspectRatioPresetData> aspectRatioPresets;
+
   /// desired aspect ratio is applied (from the list of given aspect ratio presets)
   /// when starting the cropper
-  final CropAspectRatioPreset? initAspectRatio;
+  final CropAspectRatioPresetData? initAspectRatio;
 
   AndroidUiSettings({
     this.toolbarTitle,
@@ -178,6 +216,14 @@ class AndroidUiSettings extends PlatformUiSettings {
     this.lockAspectRatio,
     this.hideBottomControls,
     this.initAspectRatio,
+    this.cropStyle = CropStyle.rectangle,
+    this.aspectRatioPresets = const [
+      CropAspectRatioPreset.original,
+      CropAspectRatioPreset.square,
+      CropAspectRatioPreset.ratio3x2,
+      CropAspectRatioPreset.ratio4x3,
+      CropAspectRatioPreset.ratio16x9
+    ],
   });
 
   @override
@@ -199,8 +245,18 @@ class AndroidUiSettings extends PlatformUiSettings {
         'android.show_crop_grid': this.showCropGrid,
         'android.lock_aspect_ratio': this.lockAspectRatio,
         'android.hide_bottom_controls': this.hideBottomControls,
-        'android.init_aspect_ratio':
-            aspectRatioPresetName(this.initAspectRatio),
+        'android.init_aspect_ratio': this.initAspectRatio?.name,
+        'android.crop_style': this.cropStyle.name,
+        'android.aspect_ratio_presets': aspectRatioPresets
+            .map<Map<String, dynamic>>((item) => {
+                  'name': item.name,
+                  if (item.data != null)
+                    'data': {
+                      'ratio_x': item.data!.$1,
+                      'ratio_y': item.data!.$2,
+                    },
+                })
+            .toList(),
       };
 }
 
@@ -290,6 +346,13 @@ class IOSUiSettings extends PlatformUiSettings {
   /// Setting this will override the Default which is a localized string for "Cancel".
   final String? cancelButtonTitle;
 
+  /// controls the style of crop bounds, it can be rectangle or
+  /// circle style (default is [CropStyle.rectangle]).
+  final CropStyle cropStyle;
+
+  /// controls the list of aspect ratios in the crop menu view.
+  final List<CropAspectRatioPresetData> aspectRatioPresets;
+
   IOSUiSettings({
     this.minimumAspectRatio,
     this.rectX,
@@ -309,6 +372,14 @@ class IOSUiSettings extends PlatformUiSettings {
     this.title,
     this.doneButtonTitle,
     this.cancelButtonTitle,
+    this.cropStyle = CropStyle.rectangle,
+    this.aspectRatioPresets = const [
+      CropAspectRatioPreset.original,
+      CropAspectRatioPreset.square,
+      CropAspectRatioPreset.ratio3x2,
+      CropAspectRatioPreset.ratio4x3,
+      CropAspectRatioPreset.ratio16x9
+    ],
   });
 
   @override
@@ -334,6 +405,17 @@ class IOSUiSettings extends PlatformUiSettings {
         'ios.title': this.title,
         'ios.done_button_title': this.doneButtonTitle,
         'ios.cancel_button_title': this.cancelButtonTitle,
+        'ios.crop_style': this.cropStyle.name,
+        'ios.aspect_ratio_presets': aspectRatioPresets
+            .map<Map<String, dynamic>>((item) => {
+                  'name': item.name,
+                  if (item.data != null)
+                    'data': {
+                      'ratio_x': item.data!.$1,
+                      'ratio_y': item.data!.$2,
+                    },
+                })
+            .toList(),
       };
 }
 
@@ -403,8 +485,8 @@ class WebUiSettings extends PlatformUiSettings {
   /// Note: Only available when the aspectRatio option is set to NaN.
   final num? initialAspectRatio;
 
-  /// Define the fixed aspect ratio of the crop box. By default, the crop box has a free ratio.
-  final num? aspectRatio;
+  // /// Define the fixed aspect ratio of the crop box. By default, the crop box has a free ratio.
+  // final num? aspectRatio;
 
   /// Check if the current image is a cross-origin image.
   ///
@@ -561,7 +643,7 @@ class WebUiSettings extends PlatformUiSettings {
     this.viewwMode,
     this.dragMode,
     this.initialAspectRatio,
-    this.aspectRatio,
+    // this.aspectRatio,
     this.checkCrossOrigin,
     this.checkOrientation,
     this.modal,

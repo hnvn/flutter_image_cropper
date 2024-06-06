@@ -15,6 +15,7 @@ import com.yalantis.ucrop.view.CropImageView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -27,8 +28,8 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
 
     private final Activity activity;
     private final SharedPreferences preferences;
+    private final FileUtils fileUtils;
     private MethodChannel.Result pendingResult;
-    private FileUtils fileUtils;
 
     public ImageCropperDelegate(Activity activity) {
         this.activity = activity;
@@ -42,21 +43,21 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Integer maxHeight = call.argument("max_height");
         Double ratioX = call.argument("ratio_x");
         Double ratioY = call.argument("ratio_y");
-        String cropStyle = call.argument("crop_style");
         String compressFormat = call.argument("compress_format");
         Integer compressQuality = call.argument("compress_quality");
-        ArrayList<String> aspectRatioPresets = call.argument("aspect_ratio_presets");
+        ArrayList<Map<?, ?>> aspectRatioPresets = call.argument("android.aspect_ratio_presets");
+        String cropStyle = call.argument("android.crop_style");
         String initAspectRatio = call.argument("android.init_aspect_ratio");
 
         pendingResult = result;
 
-    File outputDir = activity.getCacheDir();
-    File outputFile;
-	if("png".equals(compressFormat)){
-        outputFile = new File(outputDir, "image_cropper_" + (new Date()).getTime() + ".png");
-	} else {
-		outputFile = new File(outputDir, "image_cropper_" + (new Date()).getTime() + ".jpg");
-	}
+        File outputDir = activity.getCacheDir();
+        File outputFile;
+        if ("png".equals(compressFormat)) {
+            outputFile = new File(outputDir, "image_cropper_" + (new Date()).getTime() + ".png");
+        } else {
+            outputFile = new File(outputDir, "image_cropper_" + (new Date()).getTime() + ".jpg");
+        }
         Uri sourceUri = Uri.fromFile(new File(sourcePath));
         Uri destinationUri = Uri.fromFile(outputFile);
 
@@ -65,22 +66,23 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         options.setCompressionFormat("png".equals(compressFormat) ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG);
         options.setCompressionQuality(compressQuality != null ? compressQuality : 90);
         options.setMaxBitmapSize(10000);
-        
+
         // UI customization settings
         if ("circle".equals(cropStyle)) {
             options.setCircleDimmedLayer(true);
         }
         setupUiCustomizedOptions(options, call);
 
-        if (aspectRatioPresets != null) {
+        if (aspectRatioPresets != null && initAspectRatio != null) {
             ArrayList<AspectRatio> aspectRatioList = new ArrayList<>();
             int defaultIndex = 0;
             for (int i = 0; i < aspectRatioPresets.size(); i++) {
-                String preset = aspectRatioPresets.get(i);
+                Map<?, ?> preset = aspectRatioPresets.get(i);
                 if (preset != null) {
-                    AspectRatio aspectRatio = parseAspectRatioName(preset);
+                    AspectRatio aspectRatio = parseAspectRatio(preset);
+                    final String aspectRatioName = aspectRatio.getAspectRatioTitle();
                     aspectRatioList.add(aspectRatio);
-                    if (preset.equals(initAspectRatio)) {
+                    if (initAspectRatio.equals(aspectRatioName)) {
                         defaultIndex = i;
                     }
                 }
@@ -240,27 +242,18 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         return Color.HSVToColor(hsv);
     }
 
-    private AspectRatio parseAspectRatioName(String name) {
-        if ("square".equals(name)) {
-            return new AspectRatio(null, 1.0f, 1.0f);
-        } else if ("original".equals(name)) {
-            return new AspectRatio(activity.getString(com.yalantis.ucrop.R.string.ucrop_label_original).toUpperCase(),
+    private AspectRatio parseAspectRatio(Map<?, ?> preset) {
+        final String name = preset.containsKey("name") ? preset.get("name").toString() : null;
+        final Object data = preset.containsKey("data") ? preset.get("data") : null;
+        final Integer ratioX = data instanceof Map ? Integer.parseInt(((Map<?, ?>) data).get("ratio_x").toString()) : null;
+        final Integer ratioY = data instanceof Map ? Integer.parseInt(((Map<?, ?>) data).get("ratio_y").toString()) : null;
+
+        if ("original".equals(name) || ratioX == null) {
+            return new AspectRatio(activity.getString(com.yalantis.ucrop.R.string.ucrop_label_original),
                     CropImageView.SOURCE_IMAGE_ASPECT_RATIO, 1.0f);
-        } else if ("3x2".equals(name)) {
-            return new AspectRatio(null, 3.0f, 2.0f);
-        } else if ("4x3".equals(name)) {
-            return new AspectRatio(null, 4.0f, 3.0f);
-        } else if ("5x3".equals(name)) {
-            return new AspectRatio(null, 5.0f, 3.0f);
-        } else if ("5x4".equals(name)) {
-            return new AspectRatio(null, 5.0f, 4.0f);
-        } else if ("7x5".equals(name)) {
-            return new AspectRatio(null, 7.0f, 5.0f);
-        } else if ("16x9".equals(name)) {
-            return new AspectRatio(null, 16.0f, 9.0f);
         } else {
-            return new AspectRatio(activity.getString(com.yalantis.ucrop.R.string.ucrop_label_original).toUpperCase(),
-                    CropImageView.SOURCE_IMAGE_ASPECT_RATIO, 1.0f);
+            return new AspectRatio(name, ratioX * 1.0f, ratioY * 1.0f);
         }
+
     }
 }

@@ -16,8 +16,8 @@
 }
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
-      methodChannelWithName:@"plugins.hunghd.vn/image_cropper"
-            binaryMessenger:[registrar messenger]];
+                                     methodChannelWithName:@"plugins.hunghd.vn/image_cropper"
+                                     binaryMessenger:[registrar messenger]];
     UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
     FLTImageCropperPlugin* instance = [[FLTImageCropperPlugin alloc] initWithViewController:viewController];
     [registrar addMethodCallDelegate:instance channel:channel];
@@ -32,75 +32,95 @@
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-  if ([@"cropImage" isEqualToString:call.method]) {
-      _result = result;
-      _arguments = call.arguments;
-      NSString *sourcePath = call.arguments[@"source_path"];
-      NSNumber *ratioX = call.arguments[@"ratio_x"];
-      NSNumber *ratioY = call.arguments[@"ratio_y"];
-      NSString *cropStyle = call.arguments[@"crop_style"];
-      NSArray *aspectRatioPresets = call.arguments[@"aspect_ratio_presets"];
-      NSNumber *compressQuality = call.arguments[@"compress_quality"];
-      NSString *compressFormat = call.arguments[@"compress_format"];
-      
-      UIImage *image = [UIImage imageWithContentsOfFile:sourcePath];
-      TOCropViewController *cropViewController;
-      
-      if ([@"circle" isEqualToString:cropStyle]) {
-        cropViewController = [[TOCropViewController alloc] initWithCroppingStyle:TOCropViewCroppingStyleCircular image:image];
-      } else {
-        cropViewController = [[TOCropViewController alloc] initWithImage:image];
-      }
-      
-      cropViewController.delegate = self;
-      
-      if (compressQuality && [compressQuality isKindOfClass:[NSNumber class]]) {
-          _compressQuality = compressQuality.intValue * 1.0f / 100;
-      } else {
-          _compressQuality = 0.9f;
-      }
-      if (compressFormat && [compressFormat isKindOfClass:[NSString class]]) {
-          _compressFormat = compressFormat;
-      } else {
-          _compressFormat = @"jpg";
-      }
-      
-      NSMutableArray *allowedAspectRatios = [NSMutableArray new];
-      for (NSString *preset in aspectRatioPresets) {
-          if (preset) {
-              [allowedAspectRatios addObject:@([self parseAspectRatioPresetFromName:preset])];
-          }
-      }
-      cropViewController.allowedAspectRatios = allowedAspectRatios;
-      
-      if (ratioX != (id)[NSNull null] && ratioY != (id)[NSNull null]) {
-          cropViewController.customAspectRatio = CGSizeMake([ratioX floatValue], [ratioY floatValue]);
-          cropViewController.resetAspectRatioEnabled = NO;
-          cropViewController.aspectRatioPickerButtonHidden = YES;
-          cropViewController.aspectRatioLockDimensionSwapEnabled = YES;
-          cropViewController.aspectRatioLockEnabled = YES;
-      }
-      
-      [self setupUiCustomizedOptions:call.arguments forViewController:cropViewController];
-
-      UIWindow *window = [UIApplication sharedApplication].delegate.window;
-      if (!window && @available(iOS 13.0, *)) {
-          for (UIWindowScene* scene in [UIApplication sharedApplication].connectedScenes) {
-              if (scene.activationState == UISceneActivationStateForegroundActive) {
-                  for (UIWindow *w in scene.windows) {
-                      if (w.isKeyWindow) {
-                          window = w;
-                          break;
-                      }
-                  }
-              }
-          }
-      }
-
-      [window.rootViewController presentViewController:cropViewController animated:YES completion:nil];
-  } else {
-      result(FlutterMethodNotImplemented);
-  }
+    if ([@"cropImage" isEqualToString:call.method]) {
+        _result = result;
+        _arguments = call.arguments;
+        NSString *sourcePath = call.arguments[@"source_path"];
+        NSNumber *ratioX = call.arguments[@"ratio_x"];
+        NSNumber *ratioY = call.arguments[@"ratio_y"];
+        NSString *cropStyle = call.arguments[@"ios.crop_style"];
+        NSArray *aspectRatioPresets = call.arguments[@"ios.aspect_ratio_presets"];
+        NSNumber *compressQuality = call.arguments[@"compress_quality"];
+        NSString *compressFormat = call.arguments[@"compress_format"];
+        
+        UIImage *image = [UIImage imageWithContentsOfFile:sourcePath];
+        TOCropViewController *cropViewController;
+        
+        if ([@"circle" isEqualToString:cropStyle]) {
+            cropViewController = [[TOCropViewController alloc] initWithCroppingStyle:TOCropViewCroppingStyleCircular image:image];
+        } else {
+            cropViewController = [[TOCropViewController alloc] initWithImage:image];
+        }
+        
+        cropViewController.delegate = self;
+        
+        if (compressQuality && [compressQuality isKindOfClass:[NSNumber class]]) {
+            _compressQuality = compressQuality.intValue * 1.0f / 100;
+        } else {
+            _compressQuality = 0.9f;
+        }
+        if (compressFormat && [compressFormat isKindOfClass:[NSString class]]) {
+            _compressFormat = compressFormat;
+        } else {
+            _compressFormat = @"jpg";
+        }
+        
+        NSMutableArray *allowedAspectRatios = [NSMutableArray new];
+        NSString* customAspectRatioName;
+        NSDictionary* customAspectRatioData;
+        for (NSDictionary *preset in aspectRatioPresets) {
+            if (preset) {
+                TOCropViewControllerAspectRatioPreset presetValue = [self parseAspectRatioPresetFromDict:preset];
+                if (presetValue == TOCropViewControllerAspectRatioPresetCustom) {
+                    customAspectRatioName = preset[@"name"];
+                    customAspectRatioData = preset[@"data"];
+                } else {
+                    [allowedAspectRatios addObject:@(presetValue)];
+                }
+            }
+        }
+        if (customAspectRatioName && customAspectRatioData) {
+            NSNumber* ratioX = customAspectRatioData[@"ratio_x"];
+            NSNumber* ratioY = customAspectRatioData[@"ratio_y"];
+            if (ratioX && ratioY) {
+                cropViewController.customAspectRatioName = customAspectRatioName;
+                cropViewController.customAspectRatio = CGSizeMake([ratioX floatValue], [ratioY floatValue]);
+            }
+        }
+        cropViewController.allowedAspectRatios = allowedAspectRatios;
+        
+        [self setupUiCustomizedOptions:call.arguments forViewController:cropViewController];
+        
+        if (ratioX != (id)[NSNull null] && ratioY != (id)[NSNull null]) {
+            cropViewController.customAspectRatio = CGSizeMake([ratioX floatValue], [ratioY floatValue]);
+            cropViewController.resetAspectRatioEnabled = NO;
+            cropViewController.aspectRatioPickerButtonHidden = YES;
+            cropViewController.aspectRatioLockDimensionSwapEnabled = YES;
+            cropViewController.aspectRatioLockEnabled = YES;
+        }
+        
+        UIWindow *window = [UIApplication sharedApplication].delegate.window;
+        if (!window) {
+            if (@available(iOS 13.0, *)) {
+                for (UIWindowScene* scene in [UIApplication sharedApplication].connectedScenes) {
+                    if (scene.activationState == UISceneActivationStateForegroundActive) {
+                        for (UIWindow *w in scene.windows) {
+                            if (w.isKeyWindow) {
+                                window = w;
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else {
+                return;
+            }
+        }
+        
+        [window.rootViewController presentViewController:cropViewController animated:YES completion:nil];
+    } else {
+        result(FlutterMethodNotImplemented);
+    }
 }
 
 - (void)setupUiCustomizedOptions:(id)options forViewController:(TOCropViewController*)controller {
@@ -173,7 +193,8 @@
     }
 }
 
-- (TOCropViewControllerAspectRatioPreset)parseAspectRatioPresetFromName:(NSString*)name {
+- (TOCropViewControllerAspectRatioPreset)parseAspectRatioPresetFromDict:(NSDictionary*)dict {
+    NSString* name = dict[@"name"];
     if ([@"square" isEqualToString:name]) {
         return TOCropViewControllerAspectRatioPresetSquare;
     } else if ([@"original" isEqualToString:name]) {
@@ -191,7 +212,7 @@
     } else if ([@"16x9" isEqualToString:name]) {
         return TOCropViewControllerAspectRatioPreset16x9;
     } else {
-        return TOCropViewControllerAspectRatioPresetOriginal;
+        return TOCropViewControllerAspectRatioPresetCustom;
     }
 }
 
@@ -234,7 +255,7 @@
         }
         
         [cropViewController dismissViewControllerAnimated:YES completion:nil];
-
+        
         _result = nil;
         _arguments = nil;
     }

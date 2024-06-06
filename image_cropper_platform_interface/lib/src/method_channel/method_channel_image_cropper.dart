@@ -30,16 +30,6 @@ class MethodChannelImageCropper extends ImageCropperPlatform {
   /// * aspectRatio: controls the aspect ratio of crop bounds. If this values is set,
   /// the cropper is locked and user can't change the aspect ratio of crop bounds.
   ///
-  /// * aspectRatioPresets: controls the list of aspect ratios in the crop menu view.
-  /// In Android, you can set the initialized aspect ratio when starting the cropper
-  /// by setting the value of [AndroidUiSettings.initAspectRatio]. Default is a list of
-  /// [CropAspectRatioPreset.original], [CropAspectRatioPreset.square],
-  /// [CropAspectRatioPreset.ratio3x2], [CropAspectRatioPreset.ratio4x3] and
-  /// [CropAspectRatioPreset.ratio16x9].
-  ///
-  /// * cropStyle: controls the style of crop bounds, it can be rectangle or
-  /// circle style (default is [CropStyle.rectangle]).
-  ///
   /// * compressFormat: the format of result image, png or jpg (default is [ImageCompressFormat.jpg])
   ///
   /// * compressQuality: the value [0 - 100] to control the quality of image compression
@@ -57,14 +47,6 @@ class MethodChannelImageCropper extends ImageCropperPlatform {
     int? maxWidth,
     int? maxHeight,
     CropAspectRatio? aspectRatio,
-    List<CropAspectRatioPreset> aspectRatioPresets = const [
-      CropAspectRatioPreset.original,
-      CropAspectRatioPreset.square,
-      CropAspectRatioPreset.ratio3x2,
-      CropAspectRatioPreset.ratio4x3,
-      CropAspectRatioPreset.ratio16x9
-    ],
-    CropStyle cropStyle = CropStyle.rectangle,
     ImageCompressFormat compressFormat = ImageCompressFormat.jpg,
     int compressQuality = 90,
     List<PlatformUiSettings>? uiSettings,
@@ -80,10 +62,7 @@ class MethodChannelImageCropper extends ImageCropperPlatform {
       'max_height': maxHeight,
       'ratio_x': aspectRatio?.ratioX,
       'ratio_y': aspectRatio?.ratioY,
-      'aspect_ratio_presets':
-          aspectRatioPresets.map<String>(aspectRatioPresetName).toList(),
-      'crop_style': cropStyleName(cropStyle),
-      'compress_format': compressFormatName(compressFormat),
+      'compress_format': compressFormat.name,
       'compress_quality': compressQuality,
     };
 

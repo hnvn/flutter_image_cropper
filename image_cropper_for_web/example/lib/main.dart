@@ -303,7 +303,6 @@ class _HomePageState extends State<_HomePage> {
             width: (screenWidth * 0.9).round(),
             height: (screenHeight * 0.8).round(),
           ),
-          aspectRatio: 1.0,
         );
       } else {
         settings = WebUiSettings(
@@ -313,13 +312,11 @@ class _HomePageState extends State<_HomePage> {
             width: 520,
             height: 520,
           ),
-          aspectRatio: 1.0,
         );
       }
       final croppedFile = await ImageCropper().cropImage(
         sourcePath: _uploadedBlobUrl!,
-        compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 100,
+        // aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
         uiSettings: [settings],
       );
       if (croppedFile != null) {
