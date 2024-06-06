@@ -1,3 +1,60 @@
+## 7.0.0
+
+* refactor plugin to use new JS library, `cropperjs` instead of `croppie`
+* support Wasm
+* support customize `CropAspectRatioPreset`
+* **BREAKING CHANGES**:
+
+    - **WebUiSettings**: is totally re-implemented, please see plugin document for more details
+    - **cropImage()**: move `cropStyle` and `aspectRatioPresets` into `AndroidUiSettings` and `IOUiSettings` for sake of clean and clarity.
+    
+    **Migration guides**:
+    
+    ***Before***:
+    ```
+    File croppedFile = await ImageCropper().cropImage(
+      sourcePath: imageFile.path,
+      cropStyle: CropStyle.circle,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.original,
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+          title: 'Cropper',
+        ),
+        IOSUiSettings(
+            title: 'Cropper',
+        ),
+      ],
+    );
+    ```
+    
+    ***After***:
+    ```
+    File croppedFile = await ImageCropper().cropImage(
+      sourcePath: imageFile.path,
+      uiSettings: [
+        AndroidUiSettings(
+          title: 'Cropper',
+          cropStyle: CropStyle.circle,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.square,
+            CropAspectRatioPreset.original,
+          ],
+        ),
+        IOSUiSettings(
+          title: 'Cropper',
+          cropStyle: CropStyle.circle,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.square,
+            CropAspectRatioPreset.original,
+          ],
+        ),
+      ],
+    );
+    ``` 
+
 ## 6.0.0
 
 * Android: upgrade `uCrop` to v2.2.9
