@@ -298,7 +298,7 @@ class _HomePageState extends State<_HomePage> {
         final screenHeight = MediaQuery.of(context).size.height;
         settings = WebUiSettings(
           context: context,
-          presentStyle: CropperPresentStyle.page,
+          presentStyle: WebPresentStyle.page,
           size: CropperSize(
             width: (screenWidth * 0.9).round(),
             height: (screenHeight * 0.8).round(),
@@ -307,7 +307,7 @@ class _HomePageState extends State<_HomePage> {
       } else {
         settings = WebUiSettings(
           context: context,
-          presentStyle: CropperPresentStyle.dialog,
+          presentStyle: WebPresentStyle.dialog,
           size: const CropperSize(
             width: 520,
             height: 520,

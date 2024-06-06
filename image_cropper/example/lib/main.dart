@@ -309,7 +309,7 @@ class _HomePageState extends State<HomePage> {
           ),
           WebUiSettings(
             context: context,
-            presentStyle: CropperPresentStyle.dialog,
+            presentStyle: WebPresentStyle.dialog,
             size: const CropperSize(
               width: 520,
               height: 520,

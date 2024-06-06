@@ -419,19 +419,19 @@ class IOSUiSettings extends PlatformUiSettings {
       };
 }
 
-typedef CropperDialogBuilder = Dialog Function(
+typedef WebDialogBuilder = Dialog Function(
   Widget cropper,
   Future<String?> Function() crop,
   void Function(RotationAngle) rotate,
 );
 
-typedef CropperRouteBuilder = PageRoute<String> Function(
+typedef WebRouteBuilder = PageRoute<String> Function(
   Widget cropper,
   Future<String?> Function() crop,
   void Function(RotationAngle) rotate,
 );
 
-enum CropperPresentStyle { dialog, page }
+enum WebPresentStyle { dialog, page }
 
 class CropperSize {
   const CropperSize({
@@ -616,17 +616,17 @@ class WebUiSettings extends PlatformUiSettings {
 
   /// Presentation style of cropper, either a dialog or a page (route)
   /// Default = dialog
-  final CropperPresentStyle presentStyle;
+  final WebPresentStyle presentStyle;
 
   /// Current BuildContext
   /// The context is required to show cropper dialog or route
   final BuildContext context;
 
   /// Builder to customize the cropper [Dialog]
-  final CropperDialogBuilder? customDialogBuilder;
+  final WebDialogBuilder? customDialogBuilder;
 
   /// Builder to customize the cropper [PageRoute]
-  final CropperRouteBuilder? customRouteBuilder;
+  final WebRouteBuilder? customRouteBuilder;
 
   /// Barrier color for displayed [Dialog]
   final Color? barrierColor;
@@ -634,9 +634,12 @@ class WebUiSettings extends PlatformUiSettings {
   /// Translations to display
   final WebTranslations? translations;
 
+  /// Control theme customization
+  final WebThemeData? themeData;
+
   WebUiSettings({
     required this.context,
-    this.presentStyle = CropperPresentStyle.dialog,
+    this.presentStyle = WebPresentStyle.dialog,
     this.customDialogBuilder,
     this.customRouteBuilder,
     this.size,
@@ -667,6 +670,7 @@ class WebUiSettings extends PlatformUiSettings {
     this.minCropBoxHeight,
     this.translations,
     this.barrierColor,
+    this.themeData,
   });
 
   @override
@@ -722,20 +726,84 @@ class WebTranslations {
         cropButton = 'Crop';
 }
 
+class WebThemeData {
+  final IconData? rotateLeftIcon;
+  final IconData? rotateRightIcon;
+  final IconData? doneIcon;
+  final Color? rotateIconColor;
+  final double? scaleSliderMinValue;
+  final double? scaleSliderMaxValue;
+  final int? scaleSliderDivisions;
+
+  const WebThemeData({
+    this.rotateLeftIcon,
+    this.rotateRightIcon,
+    this.doneIcon,
+    this.rotateIconColor,
+    this.scaleSliderMinValue,
+    this.scaleSliderMaxValue,
+    this.scaleSliderDivisions,
+  });
+
+  WebThemeData copyWith({
+    IconData? rotateLeftIcon,
+    IconData? rotateRightIcon,
+    IconData? doneIcon,
+    Color? rotateIconColor,
+    double? scaleSliderMinValue,
+    double? scaleSliderMaxValue,
+    int? scaleSliderDivisions,
+  }) {
+    return WebThemeData(
+      rotateLeftIcon: rotateLeftIcon ?? this.rotateLeftIcon,
+      rotateRightIcon: rotateRightIcon ?? this.rotateRightIcon,
+      doneIcon: doneIcon ?? this.doneIcon,
+      rotateIconColor: rotateIconColor ?? this.rotateIconColor,
+      scaleSliderMinValue: scaleSliderMinValue ?? this.scaleSliderMinValue,
+      scaleSliderMaxValue: scaleSliderMaxValue ?? this.scaleSliderMaxValue,
+      scaleSliderDivisions: scaleSliderDivisions ?? this.scaleSliderDivisions,
+    );
+  }
+
+  @override
+  bool operator ==(covariant WebThemeData other) {
+    if (identical(this, other)) return true;
+
+    return other.rotateLeftIcon == rotateLeftIcon &&
+        other.rotateRightIcon == rotateRightIcon &&
+        other.doneIcon == doneIcon &&
+        other.rotateIconColor == rotateIconColor &&
+        other.scaleSliderMinValue == scaleSliderMinValue &&
+        other.scaleSliderMaxValue == scaleSliderMaxValue &&
+        other.scaleSliderDivisions == scaleSliderDivisions;
+  }
+
+  @override
+  int get hashCode {
+    return rotateLeftIcon.hashCode ^
+        rotateRightIcon.hashCode ^
+        doneIcon.hashCode ^
+        rotateIconColor.hashCode ^
+        scaleSliderMinValue.hashCode ^
+        scaleSliderMaxValue.hashCode ^
+        scaleSliderDivisions.hashCode;
+  }
+}
+
 enum WebDragMode {
   crop,
   move,
-  none,
-}
+  none;
 
-String dragModeToString(WebDragMode mode) {
-  switch (mode) {
-    case WebDragMode.crop:
-      return 'crop';
-    case WebDragMode.move:
-      return 'move';
-    case WebDragMode.none:
-      return 'none';
+  String get value {
+    switch (this) {
+      case WebDragMode.crop:
+        return 'crop';
+      case WebDragMode.move:
+        return 'move';
+      case WebDragMode.none:
+        return 'none';
+    }
   }
 }
 
@@ -743,18 +811,18 @@ enum WebViewMode {
   mode_0,
   mode_1,
   mode_2,
-  mode_3,
-}
+  mode_3;
 
-int viewModeToNumber(WebViewMode mode) {
-  switch (mode) {
-    case WebViewMode.mode_0:
-      return 0;
-    case WebViewMode.mode_1:
-      return 1;
-    case WebViewMode.mode_2:
-      return 2;
-    case WebViewMode.mode_3:
-      return 3;
+  int get value {
+    switch (this) {
+      case WebViewMode.mode_0:
+        return 0;
+      case WebViewMode.mode_1:
+        return 1;
+      case WebViewMode.mode_2:
+        return 2;
+      case WebViewMode.mode_3:
+        return 3;
+    }
   }
 }

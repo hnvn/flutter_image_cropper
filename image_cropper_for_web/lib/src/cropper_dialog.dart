@@ -10,6 +10,7 @@ class CropperDialog extends StatelessWidget {
   final double cropperContainerWidth;
   final double cropperContainerHeight;
   final WebTranslations translations;
+  final WebThemeData? themeData;
 
   const CropperDialog({
     Key? key,
@@ -20,6 +21,7 @@ class CropperDialog extends StatelessWidget {
     required this.cropperContainerWidth,
     required this.cropperContainerHeight,
     required this.translations,
+    this.themeData,
   }) : super(key: key);
 
   @override
@@ -81,7 +83,9 @@ class CropperDialog extends StatelessWidget {
         SizedBox(
           width: cropperContainerWidth,
           height: cropperContainerHeight,
-          child: cropper,
+          child: ClipRect(
+            child: cropper,
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(
@@ -97,6 +101,7 @@ class CropperDialog extends StatelessWidget {
               scale(value);
             },
             translations: translations,
+            themeData: themeData,
           ),
         ),
       ],

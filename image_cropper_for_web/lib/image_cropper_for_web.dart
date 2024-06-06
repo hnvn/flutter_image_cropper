@@ -73,6 +73,8 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     }
 
     final context = webSettings.context;
+    final cropperWidth = webSettings.size?.width ?? 500;
+    final cropperHeight = webSettings.size?.height ?? 500;
 
     final div = web.HTMLDivElement();
     final image = web.HTMLImageElement()
@@ -82,12 +84,10 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     div.appendChild(image);
 
     final options = CropperOptions(
-      dragMode: webSettings.dragMode != null
-          ? dragModeToString(webSettings.dragMode!)
-          : 'crop',
-      viewMode: webSettings.viewwMode != null
-          ? viewModeToNumber(webSettings.viewwMode!)
-          : 0,
+      dragMode:
+          webSettings.dragMode != null ? webSettings.dragMode!.value : 'crop',
+      viewMode:
+          webSettings.viewwMode != null ? webSettings.viewwMode!.value : 0,
       initialAspectRatio: webSettings.initialAspectRatio,
       aspectRatio:
           aspectRatio != null ? aspectRatio.ratioX / aspectRatio.ratioY : null,
@@ -143,9 +143,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       cropper.scale(value);
     }
 
-    final cropperWidth = webSettings.size?.width ?? 500;
-    final cropperHeight = webSettings.size?.height ?? 500;
-    if (webSettings.presentStyle == CropperPresentStyle.page) {
+    if (webSettings.presentStyle == WebPresentStyle.page) {
       PageRoute<String> pageRoute;
       if (webSettings.customRouteBuilder != null) {
         pageRoute =
@@ -161,6 +159,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
             cropperContainerHeight: cropperHeight * 1.0,
             translations:
                 webSettings?.translations ?? const WebTranslations.en(),
+            themeData: webSettings?.themeData,
           ),
         );
       }
@@ -181,6 +180,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
           cropperContainerWidth: cropperWidth * 1.0,
           cropperContainerHeight: cropperHeight * 1.0,
           translations: webSettings.translations ?? const WebTranslations.en(),
+          themeData: webSettings.themeData,
         );
       }
       final result = await showDialog<String?>(

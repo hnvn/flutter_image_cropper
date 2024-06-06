@@ -12,6 +12,7 @@ class CropperPage extends StatelessWidget {
   final double cropperContainerWidth;
   final double cropperContainerHeight;
   final WebTranslations translations;
+  final WebThemeData? themeData;
 
   const CropperPage({
     Key? key,
@@ -22,6 +23,7 @@ class CropperPage extends StatelessWidget {
     required this.cropperContainerWidth,
     required this.cropperContainerHeight,
     required this.translations,
+    this.themeData,
   }) : super(key: key);
 
   @override
@@ -35,7 +37,7 @@ class CropperPage extends StatelessWidget {
               final result = await crop();
               Navigator.of(context).pop(result);
             },
-            icon: const Icon(Icons.done),
+            icon: Icon(themeData?.doneIcon ?? Icons.done),
           ),
         ],
       ),
@@ -48,7 +50,7 @@ class CropperPage extends StatelessWidget {
               child: SizedBox(
                 width: cropperContainerWidth,
                 height: cropperContainerHeight,
-                child: cropper,
+                child: ClipRect(child: cropper),
               ),
             ),
           ),
@@ -65,6 +67,7 @@ class CropperPage extends StatelessWidget {
                 scale(value);
               },
               translations: translations,
+              themeData: themeData,
             ),
           ),
         ],

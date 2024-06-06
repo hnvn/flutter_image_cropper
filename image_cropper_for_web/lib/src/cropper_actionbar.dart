@@ -5,12 +5,14 @@ class CropperActionBar extends StatefulWidget {
   final Function(RotationAngle) onRotate;
   final Function(num) onScale;
   final WebTranslations translations;
+  final WebThemeData? themeData;
 
   const CropperActionBar({
     super.key,
     required this.onRotate,
     required this.onScale,
     required this.translations,
+    this.themeData,
   });
 
   @override
@@ -32,14 +34,22 @@ class _CropperActionBarState extends State<CropperActionBar> {
             widget.onRotate(RotationAngle.counterClockwise90);
           },
           tooltip: widget.translations.rotateLeftTooltip,
-          icon: const Icon(Icons.rotate_90_degrees_ccw_rounded),
+          style: widget.themeData?.rotateIconColor != null
+              ? IconButton.styleFrom(
+                  foregroundColor: widget.themeData?.rotateIconColor,
+                )
+              : null,
+          icon: Icon(
+            widget.themeData?.rotateLeftIcon ??
+                Icons.rotate_90_degrees_ccw_rounded,
+          ),
         ),
         Expanded(
           child: Slider(
             value: _scaleValue,
-            min: 1.0,
-            max: 3.0,
-            divisions: 4,
+            min: widget.themeData?.scaleSliderMinValue ?? 1.0,
+            max: widget.themeData?.scaleSliderMaxValue ?? 3.0,
+            divisions: widget.themeData?.scaleSliderDivisions,
             label: _scaleValue.toStringAsFixed(1),
             onChanged: (value) {
               setState(() {
@@ -54,7 +64,13 @@ class _CropperActionBarState extends State<CropperActionBar> {
             widget.onRotate(RotationAngle.clockwise90);
           },
           tooltip: widget.translations.rotateRightTooltip,
-          icon: const Icon(Icons.rotate_90_degrees_cw_outlined),
+          style: widget.themeData?.rotateIconColor != null
+              ? IconButton.styleFrom(
+                  foregroundColor: widget.themeData?.rotateIconColor,
+                )
+              : null,
+          icon: Icon(widget.themeData?.rotateRightIcon ??
+              Icons.rotate_90_degrees_cw_outlined),
         )
       ],
     );
