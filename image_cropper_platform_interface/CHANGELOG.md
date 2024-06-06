@@ -1,3 +1,9 @@
+## 6.0.0
+
+* refactor `WebUiSettings` class to support new JS library
+* move `cropStyle` and `aspectRatioPresets` into `AndroidUiSettings` and `IOSUiSettings` for sake of clean and clarity
+* refactor `CropAspectRatioPreset` to support customized aspect ratio preset
+
 ## 5.0.0
 
 * upgrade `http` to v1.0.0

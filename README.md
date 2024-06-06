@@ -294,7 +294,7 @@ CroppedFile croppedFile = await ImageCropper().cropImage(
         aspectRatioPresets: [
           CropAspectRatioPreset.original,
           CropAspectRatioPreset.square,
-          CropAspectRatioPresetCustom(),
+          CropAspectRatioPresetCustom(), // Important: iOS support only one custom aspect ratio in preset list
         ],
       ),
       WebUiSettings(
