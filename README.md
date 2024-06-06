@@ -90,11 +90,11 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 * **uiSettings**: controls UI customization on specific platform (android, ios, web,...)
 
-  * Android: see [Android customization](#android).
+  * Android: see [Android customization](#android-1).
 
-  * iOS: see [iOS customization](#ios).
+  * iOS: see [iOS customization](#ios-1).
 
-  * Web: see [Web customization](#web).
+  * Web: see [Web customization](#web-1).
 
 ### Note
 
