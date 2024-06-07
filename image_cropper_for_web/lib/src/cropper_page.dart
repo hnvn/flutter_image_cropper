@@ -58,11 +58,13 @@ class _CropperPageState extends State<CropperPage> {
           if (_processing)
             const Padding(
               padding: EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: 24.0,
-                height: 24.0,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.0,
+              child: Center(
+                child: SizedBox(
+                  width: 24.0,
+                  height: 24.0,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.0,
+                  ),
                 ),
               ),
             )
