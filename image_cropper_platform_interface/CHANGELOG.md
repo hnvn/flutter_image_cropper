@@ -1,3 +1,7 @@
+## 6.0.1
+
+* add `backIcon` property in `WebThemeData` to support customization of `AppBar.leading` in `CropperPage`
+
 ## 6.0.0
 
 * refactor `WebUiSettings` class to support new JS library
