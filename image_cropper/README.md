@@ -78,9 +78,9 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 ### Optional parameters
 
-* **maxWidth**: maximum cropped image width. Note: this field is ignored on Web.
+* **maxWidth**: maximum cropped image width.
 
-* **maxHeight**: maximum cropped image height. Note: this field is ignored on Web.
+* **maxHeight**: maximum cropped image height.
 
 * **aspectRatio**: controls the aspect ratio of crop bounds. If this values is set, the cropper is locked and user can't change the aspect ratio of crop bounds.
 
@@ -100,7 +100,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 * The result file is saved in `NSTemporaryDirectory` on iOS and application Cache directory on Android, so it can be lost later, you are responsible for storing it somewhere permanent (if needed).
 
-* The implementation on Web is much different compared to the implementation on mobile app. It causes some configuration fields not working (`maxWidth`, `maxHeight`, `compressFormat` and `compressQuality`) on Web.
+* The implementation on Web is much different compared to the implementation on mobile app. It causes some configuration fields not working (`compressFormat` and `compressQuality`) on Web.
 
 * `WebUiSettings` is required for Web.
 
@@ -233,38 +233,60 @@ If you set `viewMode` to `0`, the crop box can extend outside the canvas, while 
 
 #### Note:
 
-If using `WebDialogBuilder` and `WebRouteBuilder` to customize cropper dialog and route, the customization codes need to call `crop()` function to trigger crop feature and then returning the cropped result data to the plugin by using `Navigator.of(context).pop(result)`. 
+If using `WebDialogBuilder` and `WebRouteBuilder` to customize cropper dialog and route, the customization codes must to call following functions:
+ - `initCropper()` to initialize `Cropper` object.
+ - `crop()` to trigger crop feature and then returning the cropped result data to the plugin by using `Navigator.of(context).pop(result)`. 
 
 ````dart
 
- WebUiSettings(
-   ...
-   customDialogBuilder: (cropper, crop, rotate) {
-      return Dialog(
-       child: Builder(
-         builder: (context) {
-          return Column(
-            children: [
-              ...
-              cropper,
-              ...
-              TextButton(
-                onPressed: () async {
-                  /// it is important to call crop() function and return
-                  /// result data to plugin, for example:
-                  final result = await crop();
-                  Navigator.of(context).pop(result);
-                },
-                child: Text('Crop'),
-              )
-            ]
-          );
-        },
-       ),
-     );
-   },
-   ...
- )
+  class CropperDialog extends StatefulWidget {
+    ...
+  }  
+
+  class _CropperDialogState extends State<CropperDialog> {
+    @override
+    void initState() {
+      super.initState();
+      /// IMPORTANT: must to call this function
+      widget.initCropper();
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      Dialog(
+        child: Column(
+          children: [
+            ...
+            cropper,
+            ...
+            TextButton(
+              onPressed: () async {
+                /// IMPORTANT: to call crop() function and return
+                /// result data to plugin, for example:
+                final result = await crop();
+                Navigator.of(context).pop(result);
+              },
+              child: Text('Crop'),
+            )
+          ]
+        ),
+      );
+    }
+  }
+
+  WebUiSettings(
+    ...
+    customDialogBuilder: (cropper, initCropper, crop, rotate, scale) {
+      return CropperDialog(
+        cropper: cropper,
+        initCropper: initCropper,
+        crop: crop,
+        rotate: rotate,
+        scale: scale,
+      );
+    },
+    ...
+  )
 
 ````
 
@@ -294,7 +316,7 @@ CroppedFile croppedFile = await ImageCropper().cropImage(
         aspectRatioPresets: [
           CropAspectRatioPreset.original,
           CropAspectRatioPreset.square,
-          CropAspectRatioPresetCustom(), // Important: iOS supports only one custom aspect ratio in preset list
+          CropAspectRatioPresetCustom(), // IMPORTANT: iOS supports only one custom aspect ratio in preset list
         ],
       ),
       WebUiSettings(

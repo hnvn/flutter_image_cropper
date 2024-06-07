@@ -1,3 +1,11 @@
+## 7.0.2
+
+* Web:
+  - fix bug cropper not get correct container's size
+  - improve cropper UI
+* correct document
+
+
 ## 7.0.1
 
 * correct document
