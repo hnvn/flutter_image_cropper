@@ -1,3 +1,7 @@
+## 7.0.3
+
+* Web: improve cropper UI
+
 ## 7.0.2
 
 * Web:
