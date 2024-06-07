@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:js_interop';
 
 import 'package:web/web.dart' as web;
-import 'dart:ui' as ui;
+import 'dart:ui_web' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -23,6 +23,8 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     ImageCropperPlatform.instance = ImageCropperPlugin();
   }
 
+  static int _nextIFrameId = 0;
+
   ///
   /// Launch cropper UI for an image.
   ///
@@ -31,9 +33,9 @@ class ImageCropperPlugin extends ImageCropperPlatform {
   ///
   /// * sourcePath: the absolute path of an image file.
   ///
-  /// * maxWidth: maximum cropped image width. (IGNORED)
+  /// * maxWidth: maximum cropped image width.
   ///
-  /// * maxHeight: maximum cropped image height. (IGNORED)
+  /// * maxHeight: maximum cropped image height.
   ///
   /// * aspectRatio: controls the aspect ratio of crop bounds. If this values is set,
   /// the cropper is locked and user can't change the aspect ratio of crop bounds.
@@ -77,6 +79,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     final cropperHeight = webSettings.size?.height ?? 500;
 
     final div = web.HTMLDivElement()
+      ..id = 'cropperView_${_nextIFrameId++}'
       ..style.width = '100%'
       ..style.height = '100%';
     final image = web.HTMLImageElement()
@@ -115,12 +118,18 @@ class ImageCropperPlugin extends ImageCropperPlatform {
       minCropBoxWidth: webSettings.minCropBoxWidth ?? 0,
       minCropBoxHeight: webSettings.minCropBoxHeight ?? 0,
     );
-    final cropper = Cropper(image, options);
+    Cropper? cropper;
+    initializer() => Future.delayed(
+          const Duration(milliseconds: 200),
+          () {
+            assert(cropper == null, 'cropper was already initialized');
+            cropper = Cropper(image, options);
+          },
+        );
 
     final viewType =
         'plugins.hunghd.vn/cropper-view-${Uri.encodeComponent(sourcePath)}';
 
-    // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(viewType, (int viewId) => div);
 
     final cropperWidget = HtmlElementView(
@@ -129,31 +138,48 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     );
 
     Future<String?> doCrop() async {
-      final result = cropper.getCroppedCanvas();
-      final completer = Completer<String>();
-      result.toBlob((web.Blob blob) {
-        completer.complete(web.URL.createObjectURL(blob));
-      }.toJS);
-      return completer.future;
+      if (cropper != null) {
+        final result = (maxWidth != null || maxHeight != null)
+            ? cropper!.getCroppedCanvas(GetCroppedCanvasOptions(
+                maxWidth: maxWidth,
+                maxHeight: maxHeight,
+              ))
+            : cropper!.getCroppedCanvas();
+        final completer = Completer<String>();
+        result.toBlob((web.Blob blob) {
+          completer.complete(web.URL.createObjectURL(blob));
+        }.toJS);
+        return completer.future;
+      } else {
+        return Future.error('cropper has not been initialized');
+      }
     }
 
     void doRotate(RotationAngle angle) {
-      cropper.rotate(rotationAngleToNumber(angle));
+      if (cropper == null) throw 'cropper has not been initialized';
+      cropper?.rotate(rotationAngleToNumber(angle));
     }
 
     void doScale(num value) {
-      cropper.scale(value);
+      if (cropper == null) throw 'cropper has not been initialized';
+      cropper?.scale(value);
     }
 
     if (webSettings.presentStyle == WebPresentStyle.page) {
       PageRoute<String> pageRoute;
       if (webSettings.customRouteBuilder != null) {
-        pageRoute =
-            webSettings.customRouteBuilder!(cropperWidget, doCrop, doRotate);
+        pageRoute = webSettings.customRouteBuilder!(
+          cropperWidget,
+          initializer,
+          doCrop,
+          doRotate,
+          doScale,
+        );
       } else {
         pageRoute = MaterialPageRoute(
           builder: (c) => CropperPage(
             cropper: cropperWidget,
+            initCropper: initializer,
             crop: doCrop,
             rotate: doRotate,
             scale: doScale,
@@ -171,11 +197,17 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     } else {
       Widget cropperDialog;
       if (webSettings.customDialogBuilder != null) {
-        cropperDialog =
-            webSettings.customDialogBuilder!(cropperWidget, doCrop, doRotate);
+        cropperDialog = webSettings.customDialogBuilder!(
+          cropperWidget,
+          initializer,
+          doCrop,
+          doRotate,
+          doScale,
+        );
       } else {
         cropperDialog = CropperDialog(
           cropper: cropperWidget,
+          initCropper: initializer,
           crop: doCrop,
           rotate: doRotate,
           scale: doScale,

@@ -214,6 +214,7 @@ class _HomePageState extends State<_HomePage> {
           },
           backgroundColor: Colors.redAccent,
           tooltip: 'Delete',
+          heroTag: null,
           child: const Icon(Icons.delete),
         ),
         if (_croppedBlobUrl == null)
@@ -225,6 +226,7 @@ class _HomePageState extends State<_HomePage> {
               },
               backgroundColor: const Color(0xFFBC764A),
               tooltip: 'Crop',
+              heroTag: null,
               child: const Icon(Icons.crop),
             ),
           )

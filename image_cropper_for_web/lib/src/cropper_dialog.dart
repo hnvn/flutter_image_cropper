@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper_for_web/src/cropper_actionbar.dart';
 import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
 
-class CropperDialog extends StatelessWidget {
+class CropperDialog extends StatefulWidget {
   final Widget cropper;
+  final Function() initCropper;
   final Future<String?> Function() crop;
   final void Function(RotationAngle) rotate;
   final void Function(num) scale;
@@ -15,6 +16,7 @@ class CropperDialog extends StatelessWidget {
   const CropperDialog({
     Key? key,
     required this.cropper,
+    required this.initCropper,
     required this.crop,
     required this.rotate,
     required this.scale,
@@ -25,13 +27,26 @@ class CropperDialog extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CropperDialog> createState() => _CropperDialogState();
+}
+
+class _CropperDialogState extends State<CropperDialog> {
+  bool _processing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.initCropper();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Container(
-        width: cropperContainerWidth + 2 * 24.0,
+        width: widget.cropperContainerWidth + 2 * 24.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
         ),
@@ -68,7 +83,7 @@ class CropperDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            translations.title,
+            widget.translations.title,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ],
@@ -81,10 +96,10 @@ class CropperDialog extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          width: cropperContainerWidth,
-          height: cropperContainerHeight,
+          width: widget.cropperContainerWidth,
+          height: widget.cropperContainerHeight,
           child: ClipRect(
-            child: cropper,
+            child: widget.cropper,
           ),
         ),
         Padding(
@@ -95,13 +110,13 @@ class CropperDialog extends StatelessWidget {
           ),
           child: CropperActionBar(
             onRotate: (angle) {
-              rotate(angle);
+              widget.rotate(angle);
             },
             onScale: (value) {
-              scale(value);
+              widget.scale(value);
             },
-            translations: translations,
-            themeData: themeData,
+            translations: widget.translations,
+            themeData: widget.themeData,
           ),
         ),
       ],
@@ -109,23 +124,53 @@ class CropperDialog extends StatelessWidget {
   }
 
   Widget _footer(BuildContext context) {
-    return ButtonBar(
-      buttonPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-      children: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(translations.cancelButton),
+    if (_processing) {
+      return const Align(
+        alignment: Alignment.centerRight,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
+          child: SizedBox(
+            width: 24.0,
+            height: 24.0,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.0,
+            ),
+          ),
         ),
-        ElevatedButton(
-          onPressed: () async {
-            final result = await crop();
-            Navigator.of(context).pop(result);
-          },
-          child: Text(translations.cropButton),
-        ),
-      ],
-    );
+      );
+    } else {
+      return ButtonBar(
+        buttonPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+        children: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(widget.translations.cancelButton),
+          ),
+          ElevatedButton(
+            onPressed: () => _doCrop(),
+            child: Text(widget.translations.cropButton),
+          ),
+        ],
+      );
+    }
+  }
+
+  Future<void> _doCrop() async {
+    if (_processing) return;
+    setState(() {
+      _processing = true;
+    });
+    try {
+      final result = await widget.crop();
+      Navigator.of(context).pop(result);
+      return;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    setState(() {
+      _processing = false;
+    });
   }
 }

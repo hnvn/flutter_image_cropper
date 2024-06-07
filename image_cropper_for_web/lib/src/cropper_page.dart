@@ -4,8 +4,9 @@ import 'package:image_cropper_platform_interface/image_cropper_platform_interfac
 
 import 'cropper_actionbar.dart';
 
-class CropperPage extends StatelessWidget {
+class CropperPage extends StatefulWidget {
   final Widget cropper;
+  final Function() initCropper;
   final Future<String?> Function() crop;
   final void Function(RotationAngle) rotate;
   final void Function(num) scale;
@@ -17,6 +18,7 @@ class CropperPage extends StatelessWidget {
   const CropperPage({
     Key? key,
     required this.cropper,
+    required this.initCropper,
     required this.crop,
     required this.rotate,
     required this.scale,
@@ -27,26 +29,48 @@ class CropperPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CropperPage> createState() => _CropperPageState();
+}
+
+class _CropperPageState extends State<CropperPage> {
+  bool _processing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.initCropper();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(translations.title),
-        leading: themeData?.backIcon != null
+        title: Text(widget.translations.title),
+        leading: widget.themeData?.backIcon != null
             ? IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: Icon(themeData!.backIcon!),
+                icon: Icon(widget.themeData!.backIcon!),
               )
             : null,
         actions: [
-          IconButton(
-            onPressed: () async {
-              final result = await crop();
-              Navigator.of(context).pop(result);
-            },
-            icon: Icon(themeData?.doneIcon ?? Icons.done),
-          ),
+          if (_processing)
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 24.0,
+                height: 24.0,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.0,
+                ),
+              ),
+            )
+          else
+            IconButton(
+              onPressed: () => _doCrop(),
+              icon: Icon(widget.themeData?.doneIcon ?? Icons.done),
+            ),
         ],
       ),
       body: Column(
@@ -56,9 +80,9 @@ class CropperPage extends StatelessWidget {
           Expanded(
             child: Center(
               child: SizedBox(
-                width: cropperContainerWidth,
-                height: cropperContainerHeight,
-                child: ClipRect(child: cropper),
+                width: widget.cropperContainerWidth,
+                height: widget.cropperContainerHeight,
+                child: ClipRect(child: widget.cropper),
               ),
             ),
           ),
@@ -69,17 +93,34 @@ class CropperPage extends StatelessWidget {
             ),
             child: CropperActionBar(
               onRotate: (angle) {
-                rotate(angle);
+                widget.rotate(angle);
               },
               onScale: (value) {
-                scale(value);
+                widget.scale(value);
               },
-              translations: translations,
-              themeData: themeData,
+              translations: widget.translations,
+              themeData: widget.themeData,
             ),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _doCrop() async {
+    if (_processing) return;
+    setState(() {
+      _processing = true;
+    });
+    try {
+      final result = await widget.crop();
+      Navigator.of(context).pop(result);
+      return;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    setState(() {
+      _processing = false;
+    });
   }
 }

@@ -421,14 +421,18 @@ class IOSUiSettings extends PlatformUiSettings {
 
 typedef WebDialogBuilder = Dialog Function(
   Widget cropper,
+  void Function() initCropper,
   Future<String?> Function() crop,
   void Function(RotationAngle) rotate,
+  void Function(num) scale,
 );
 
 typedef WebRouteBuilder = PageRoute<String> Function(
   Widget cropper,
+  void Function() initCropper,
   Future<String?> Function() crop,
   void Function(RotationAngle) rotate,
+  void Function(num) scale,
 );
 
 enum WebPresentStyle { dialog, page }
