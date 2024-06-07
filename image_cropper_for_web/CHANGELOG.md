@@ -1,3 +1,7 @@
+## 5.0.2
+
+* improve cropper UI
+
 ## 5.0.1
 
 * fix bug cropper not get correct container's size
