@@ -730,6 +730,7 @@ class WebThemeData {
   final IconData? rotateLeftIcon;
   final IconData? rotateRightIcon;
   final IconData? doneIcon;
+  final IconData? backIcon;
   final Color? rotateIconColor;
   final double? scaleSliderMinValue;
   final double? scaleSliderMaxValue;
@@ -739,6 +740,7 @@ class WebThemeData {
     this.rotateLeftIcon,
     this.rotateRightIcon,
     this.doneIcon,
+    this.backIcon,
     this.rotateIconColor,
     this.scaleSliderMinValue,
     this.scaleSliderMaxValue,
@@ -749,6 +751,7 @@ class WebThemeData {
     IconData? rotateLeftIcon,
     IconData? rotateRightIcon,
     IconData? doneIcon,
+    IconData? backIcon,
     Color? rotateIconColor,
     double? scaleSliderMinValue,
     double? scaleSliderMaxValue,
@@ -758,6 +761,7 @@ class WebThemeData {
       rotateLeftIcon: rotateLeftIcon ?? this.rotateLeftIcon,
       rotateRightIcon: rotateRightIcon ?? this.rotateRightIcon,
       doneIcon: doneIcon ?? this.doneIcon,
+      backIcon: backIcon ?? this.backIcon,
       rotateIconColor: rotateIconColor ?? this.rotateIconColor,
       scaleSliderMinValue: scaleSliderMinValue ?? this.scaleSliderMinValue,
       scaleSliderMaxValue: scaleSliderMaxValue ?? this.scaleSliderMaxValue,

@@ -31,6 +31,14 @@ class CropperPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(translations.title),
+        leading: themeData?.backIcon != null
+            ? IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(themeData!.backIcon!),
+              )
+            : null,
         actions: [
           IconButton(
             onPressed: () async {
