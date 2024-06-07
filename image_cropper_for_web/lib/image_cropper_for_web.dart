@@ -76,7 +76,9 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     final cropperWidth = webSettings.size?.width ?? 500;
     final cropperHeight = webSettings.size?.height ?? 500;
 
-    final div = web.HTMLDivElement();
+    final div = web.HTMLDivElement()
+      ..style.width = '100%'
+      ..style.height = '100%';
     final image = web.HTMLImageElement()
       ..src = sourcePath
       ..style.maxWidth = '100%'

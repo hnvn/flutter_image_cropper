@@ -303,6 +303,7 @@ class _HomePageState extends State<_HomePage> {
             width: (screenWidth * 0.9).round(),
             height: (screenHeight * 0.8).round(),
           ),
+          themeData: const WebThemeData(backIcon: Icons.arrow_back_ios_new),
         );
       } else {
         settings = WebUiSettings(
