@@ -1,3 +1,7 @@
+## 6.0.2
+
+* Web: fix bug cropper not get correct container's size
+
 ## 6.0.1
 
 * add `backIcon` property in `WebThemeData` to support customization of `AppBar.leading` in `CropperPage`
