@@ -1,3 +1,7 @@
+## 6.0.3
+
+* Web: fix the issue of `WebDialogBuilder`, should return `Widget` instead of `Dialog`
+
 ## 6.0.2
 
 * Web: fix bug cropper not get correct container's size

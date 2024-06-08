@@ -419,7 +419,7 @@ class IOSUiSettings extends PlatformUiSettings {
       };
 }
 
-typedef WebDialogBuilder = Dialog Function(
+typedef WebDialogBuilder = Widget Function(
   Widget cropper,
   void Function() initCropper,
   Future<String?> Function() crop,
