@@ -1,3 +1,7 @@
+## 5.0.3
+
+* update to the latest `image_cropper_platform_interface`
+
 ## 5.0.2
 
 * improve cropper UI
