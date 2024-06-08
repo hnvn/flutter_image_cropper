@@ -1,3 +1,7 @@
+## 7.0.4
+
+* Web: update dependencies
+
 ## 7.0.3
 
 * Web: improve cropper UI
