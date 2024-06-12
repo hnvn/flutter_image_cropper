@@ -1,3 +1,7 @@
+## 7.0.5
+
+* Android: Removes references to Flutter v1 android embedding classes.
+
 ## 7.0.4
 
 * Web: update dependencies
