@@ -1,3 +1,7 @@
+## 7.0.5
+
+* Web: support config type of output image (jpg or png)
+
 ## 7.0.4
 
 * Web: update dependencies
