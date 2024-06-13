@@ -40,7 +40,7 @@ class ImageCropperPlugin extends ImageCropperPlatform {
   /// * aspectRatio: controls the aspect ratio of crop bounds. If this values is set,
   /// the cropper is locked and user can't change the aspect ratio of crop bounds.
   ///
-  /// * compressFormat: the format of result image, png or jpg (IGNORED)
+  /// * compressFormat: the format of result image, png or jpg
   ///
   /// * compressQuality: the value [0 - 100] to control the quality of image compression (IGNORED)
   ///
@@ -139,16 +139,33 @@ class ImageCropperPlugin extends ImageCropperPlatform {
 
     Future<String?> doCrop() async {
       if (cropper != null) {
-        final result = (maxWidth != null || maxHeight != null)
-            ? cropper!.getCroppedCanvas(GetCroppedCanvasOptions(
-                maxWidth: maxWidth,
-                maxHeight: maxHeight,
-              ))
+        final croppedOptions = (maxWidth != null ||
+                maxHeight != null ||
+                compressFormat == ImageCompressFormat.jpg)
+            ? GetCroppedCanvasOptions()
+            : null;
+        if (maxWidth != null) {
+          croppedOptions!.maxWidth = maxWidth;
+        }
+        if (maxHeight != null) {
+          croppedOptions!.maxHeight = maxHeight;
+        }
+        if (compressFormat == ImageCompressFormat.jpg) {
+          croppedOptions!.fillColor = '#fff';
+        }
+        final result = croppedOptions != null
+            ? cropper!.getCroppedCanvas(croppedOptions)
             : cropper!.getCroppedCanvas();
         final completer = Completer<String>();
-        result.toBlob((web.Blob blob) {
-          completer.complete(web.URL.createObjectURL(blob));
-        }.toJS);
+        final mimeType = compressFormat == ImageCompressFormat.png
+            ? 'image/png'
+            : 'image/jpeg';
+        result.toBlob(
+          (web.Blob blob) {
+            completer.complete(web.URL.createObjectURL(blob));
+          }.toJS,
+          mimeType,
+        );
         return completer.future;
       } else {
         return Future.error('cropper has not been initialized');
