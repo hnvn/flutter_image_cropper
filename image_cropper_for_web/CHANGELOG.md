@@ -1,3 +1,7 @@
+## 5.0.4
+
+* support image compress type (jpg or png)
+
 ## 5.0.3
 
 * update to the latest `image_cropper_platform_interface`

@@ -20,9 +20,9 @@ class ImageCropper {
   ///
   /// * sourcePath: the absolute path of an image file.
   ///
-  /// * maxWidth: maximum cropped image width. Note: this field is ignored on Web.
+  /// * maxWidth: maximum cropped image width.
   ///
-  /// * maxHeight: maximum cropped image height. Note: this field is ignored on Web
+  /// * maxHeight: maximum cropped image height.
   ///
   /// * aspectRatio: controls the aspect ratio of crop bounds. If this values is set,
   /// the cropper is locked and user can't change the aspect ratio of crop bounds.

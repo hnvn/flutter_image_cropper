@@ -1,6 +1,10 @@
-## 7.0.5
+## 7.0.6 
 
 * Android: Removes references to Flutter v1 android embedding classes.
+
+## 7.0.5
+
+* Web: support config type of output image (jpg or png)
 
 ## 7.0.4
 

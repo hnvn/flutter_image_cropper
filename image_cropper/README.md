@@ -84,7 +84,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 
 * **aspectRatio**: controls the aspect ratio of crop bounds. If this values is set, the cropper is locked and user can't change the aspect ratio of crop bounds.
 
-* **compressFormat**: the format of result image, png or jpg (default is ImageCompressFormat.jpg). Note: this field is ignored on Web.
+* **compressFormat**: the format of result image, png or jpg (default is ImageCompressFormat.jpg).
 
 * **compressQuality**: number between 0 and 100 to control the quality of image compression. Note: this field is ignored on Web.
 
