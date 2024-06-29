@@ -1,3 +1,7 @@
+## 5.1.0
+
+* ugrapde `platform_intefrace` dependency
+
 ## 5.0.4
 
 * support image compress type (jpg or png)
