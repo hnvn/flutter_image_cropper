@@ -2,9 +2,6 @@
 
 * upgrade `platform_interface` dependency
 * increase Dart SDK constraints (`>=3.3.0`)
-
-## 7.0.6 
-
 * Android: Removes references to Flutter v1 android embedding classes.
 
 ## 7.0.5
