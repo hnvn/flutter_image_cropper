@@ -1,3 +1,8 @@
+## 6.1.0
+
+* replace deprecated API (`UnmodifiableUint8ListView` by `asUnmodifiableView`)
+* increase Dart SDK constraints (`>=3.3.0`)
+
 ## 6.0.3
 
 * Web: fix the issue of `WebDialogBuilder`, should return `Widget` instead of `Dialog`
