@@ -10,7 +10,6 @@
 @implementation FLTImageCropperPlugin {
     FlutterResult _result;
     NSDictionary *_arguments;
-    UIViewController *_viewController;
     float _compressQuality;
     NSString *_compressFormat;
 }
@@ -18,17 +17,8 @@
     FlutterMethodChannel* channel = [FlutterMethodChannel
                                      methodChannelWithName:@"plugins.hunghd.vn/image_cropper"
                                      binaryMessenger:[registrar messenger]];
-    UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-    FLTImageCropperPlugin* instance = [[FLTImageCropperPlugin alloc] initWithViewController:viewController];
+    FLTImageCropperPlugin* instance = [[FLTImageCropperPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
-}
-
-- (instancetype)initWithViewController:(UIViewController *)viewController {
-    self = [super init];
-    if (self) {
-        _viewController = viewController;
-    }
-    return self;
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -116,8 +106,13 @@
                 return;
             }
         }
-        
-        [window.rootViewController presentViewController:cropViewController animated:YES completion:nil];
+
+        UIViewController *topController = window.rootViewController;
+        while (topController.presentedViewController) {
+            topController = topController.presentedViewController;
+        }
+
+        [topController presentViewController:cropViewController animated:YES completion:nil];
     } else {
         result(FlutterMethodNotImplemented);
     }
