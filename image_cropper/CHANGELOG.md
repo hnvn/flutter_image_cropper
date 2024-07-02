@@ -1,3 +1,7 @@
+## 7.1.1
+
+* iOS: Prefer presented view controller if preset to Root view controller
+
 ## 7.1.0
 
 * upgrade `platform_interface` dependency
@@ -37,9 +41,9 @@
 
     - **WebUiSettings**: is totally re-implemented, please see plugin document for more details
     - **cropImage()**: move `cropStyle` and `aspectRatioPresets` into `AndroidUiSettings` and `IOUiSettings` for sake of clean and clarity.
-    
+
     **Migration guides**:
-    
+
     ***Before***:
     ```
     File croppedFile = await ImageCropper().cropImage(
@@ -59,7 +63,7 @@
       ],
     );
     ```
-    
+
     ***After***:
     ```
     File croppedFile = await ImageCropper().cropImage(
@@ -84,9 +88,9 @@
       ],
     );
     ```
-    
+
     **Web integration**:
-    
+
     ***Before***:
     ```
     <head>
@@ -100,7 +104,7 @@
         ....
     </head>
     ```
-    
+
     ***After***:
     ```
     <head>
