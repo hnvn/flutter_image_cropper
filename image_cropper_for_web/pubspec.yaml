@@ -4,8 +4,8 @@ repository: https://github.com/hnvn/flutter_image_cropper
 version: 5.1.0
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
-  flutter: '>=3.3.0'
+  sdk: '>=3.22.2 <4.0.0'
+  flutter: '>=3.22.2'
 
 dependencies:
   flutter:
