@@ -4,8 +4,8 @@ version: 7.1.0
 homepage: https://github.com/hnvn/flutter_image_cropper
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
-  flutter: '>=3.3.0'
+  sdk: '>=3.22.2 <4.0.0'
+  flutter: '>=3.22.2'
 
 flutter:
   plugin:
