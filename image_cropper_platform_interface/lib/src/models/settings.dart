@@ -293,6 +293,10 @@ class IOSUiSettings extends PlatformUiSettings {
   /// (default is false)
   final bool rotateClockwiseButtonHidden;
 
+  /// Embed the presented TOCropViewController in a UINavigationController.
+  /// (default is false)
+  final bool embedInNavigationController;
+
   /// If this controller is embedded in UINavigationController its navigation bar
   /// is hidden by default. Set this property to false to show the navigation bar.
   /// This must be set before this controller is presented.
@@ -362,6 +366,7 @@ class IOSUiSettings extends PlatformUiSettings {
     this.showActivitySheetOnDone,
     this.showCancelConfirmationDialog = false,
     this.rotateClockwiseButtonHidden = false,
+    this.embedInNavigationController = false,
     this.hidesNavigationBar,
     this.rotateButtonsHidden = false,
     this.resetButtonHidden = false,
@@ -393,6 +398,7 @@ class IOSUiSettings extends PlatformUiSettings {
         'ios.show_cancel_confirmation_dialog':
             this.showCancelConfirmationDialog,
         'ios.rotate_clockwise_button_hidden': this.rotateClockwiseButtonHidden,
+        'ios.embed_in_navigation_controller': this.embedInNavigationController,
         'ios.hides_navigation_bar': this.hidesNavigationBar,
         'ios.rotate_button_hidden': this.rotateButtonsHidden,
         'ios.reset_button_hidden': this.resetButtonHidden,

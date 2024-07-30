@@ -32,6 +32,7 @@
         NSArray *aspectRatioPresets = call.arguments[@"ios.aspect_ratio_presets"];
         NSNumber *compressQuality = call.arguments[@"compress_quality"];
         NSString *compressFormat = call.arguments[@"compress_format"];
+        BOOL embedInNavigationController = call.arguments[@"ios.embed_in_navigation_controller"];
 
         UIImage *image = [UIImage imageWithContentsOfFile:sourcePath];
         TOCropViewController *cropViewController;
@@ -112,7 +113,15 @@
             topController = topController.presentedViewController;
         }
 
-        [topController presentViewController:cropViewController animated:YES completion:nil];
+        if (embedInNavigationController) {
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController: cropViewController];
+            navigationController.modalTransitionStyle = cropViewController.modalTransitionStyle;
+            navigationController.modalPresentationStyle = cropViewController.modalPresentationStyle;
+            navigationController.transitioningDelegate = cropViewController.transitioningDelegate;
+            [topController presentViewController:navigationController animated:YES completion:nil];
+        } else {
+            [topController presentViewController:cropViewController animated:YES completion:nil];
+        }
   } else {
       result(FlutterMethodNotImplemented);
   }
