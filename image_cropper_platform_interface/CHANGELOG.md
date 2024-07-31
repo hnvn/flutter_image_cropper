@@ -1,5 +1,6 @@
-## 6.1.1
+## 7.0.0
 
+* relax flutter version constraints
 * iOS: introduce `iOSUiSettings.embedInNavigationController` to support add2app environments
 
 ## 6.1.0
