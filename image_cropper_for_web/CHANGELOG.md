@@ -1,5 +1,7 @@
-## 5.1.0
+## 6.0.0
 
+* upgrade `web` dependency
+* relax flutter version constraints
 * ugrapde `platform_intefrace` dependency
 
 ## 5.0.4
