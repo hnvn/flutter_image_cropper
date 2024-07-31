@@ -1,5 +1,7 @@
-## 7.1.1
+## 8.0.0
 
+* upgrade `web` dependency  
+* relax flutter version constraints
 * iOS: Prefer presented view controller if preset to Root view controller
 * iOS: introduce `iOSUiSettings.embedInNavigationController` to support add2app environments
 
