@@ -1,11 +1,10 @@
 name: image_cropper_for_web
 description: A Flutter plugin for Web supports cropping images
 repository: https://github.com/hnvn/flutter_image_cropper
-version: 5.1.0
+version: 6.0.0
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
-  flutter: '>=3.3.0'
 
 dependencies:
   flutter:
@@ -13,9 +12,9 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
 
-  image_cropper_platform_interface: ^6.1.1
+  image_cropper_platform_interface: ^7.0.0
 
-  web: ^0.5.1
+  web: ^1.0.0
 
 
 dev_dependencies:
