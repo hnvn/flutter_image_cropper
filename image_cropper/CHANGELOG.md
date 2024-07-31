@@ -1,3 +1,7 @@
+## 8.0.1
+
+* use `>=0.5.0 < 2.0.0` version range for package:web
+
 ## 8.0.0
 
 * upgrade `web` dependency  
