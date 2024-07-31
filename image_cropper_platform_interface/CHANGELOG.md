@@ -1,3 +1,7 @@
+## 6.1.1
+
+* iOS: introduce `iOSUiSettings.embedInNavigationController` to support add2app environments
+
 ## 6.1.0
 
 * replace deprecated API (`UnmodifiableUint8ListView` by `asUnmodifiableView`)

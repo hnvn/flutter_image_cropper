@@ -10,7 +10,6 @@
 @implementation FLTImageCropperPlugin {
     FlutterResult _result;
     NSDictionary *_arguments;
-    UIViewController *_viewController;
     float _compressQuality;
     NSString *_compressFormat;
 }
@@ -18,17 +17,8 @@
     FlutterMethodChannel* channel = [FlutterMethodChannel
                                      methodChannelWithName:@"plugins.hunghd.vn/image_cropper"
                                      binaryMessenger:[registrar messenger]];
-    UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-    FLTImageCropperPlugin* instance = [[FLTImageCropperPlugin alloc] initWithViewController:viewController];
+    FLTImageCropperPlugin* instance = [[FLTImageCropperPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
-}
-
-- (instancetype)initWithViewController:(UIViewController *)viewController {
-    self = [super init];
-    if (self) {
-        _viewController = viewController;
-    }
-    return self;
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -42,18 +32,19 @@
         NSArray *aspectRatioPresets = call.arguments[@"ios.aspect_ratio_presets"];
         NSNumber *compressQuality = call.arguments[@"compress_quality"];
         NSString *compressFormat = call.arguments[@"compress_format"];
-        
+        BOOL embedInNavigationController = call.arguments[@"ios.embed_in_navigation_controller"];
+
         UIImage *image = [UIImage imageWithContentsOfFile:sourcePath];
         TOCropViewController *cropViewController;
-        
+
         if ([@"circle" isEqualToString:cropStyle]) {
             cropViewController = [[TOCropViewController alloc] initWithCroppingStyle:TOCropViewCroppingStyleCircular image:image];
         } else {
             cropViewController = [[TOCropViewController alloc] initWithImage:image];
         }
-        
+
         cropViewController.delegate = self;
-        
+
         if (compressQuality && [compressQuality isKindOfClass:[NSNumber class]]) {
             _compressQuality = compressQuality.intValue * 1.0f / 100;
         } else {
@@ -64,7 +55,7 @@
         } else {
             _compressFormat = @"jpg";
         }
-        
+
         NSMutableArray *allowedAspectRatios = [NSMutableArray new];
         NSString* customAspectRatioName;
         NSDictionary* customAspectRatioData;
@@ -88,9 +79,9 @@
             }
         }
         cropViewController.allowedAspectRatios = allowedAspectRatios;
-        
+
         [self setupUiCustomizedOptions:call.arguments forViewController:cropViewController];
-        
+
         if (ratioX != (id)[NSNull null] && ratioY != (id)[NSNull null]) {
             cropViewController.customAspectRatio = CGSizeMake([ratioX floatValue], [ratioY floatValue]);
             cropViewController.resetAspectRatioEnabled = NO;
@@ -98,7 +89,7 @@
             cropViewController.aspectRatioLockDimensionSwapEnabled = YES;
             cropViewController.aspectRatioLockEnabled = YES;
         }
-        
+
         UIWindow *window = [UIApplication sharedApplication].delegate.window;
         if (!window) {
             if (@available(iOS 13.0, *)) {
@@ -116,11 +107,24 @@
                 return;
             }
         }
-        
-        [window.rootViewController presentViewController:cropViewController animated:YES completion:nil];
-    } else {
-        result(FlutterMethodNotImplemented);
-    }
+
+        UIViewController *topController = window.rootViewController;
+        while (topController.presentedViewController && !topController.presentedViewController.isBeingDismissed) {
+            topController = topController.presentedViewController;
+        }
+
+        if (embedInNavigationController) {
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController: cropViewController];
+            navigationController.modalTransitionStyle = cropViewController.modalTransitionStyle;
+            navigationController.modalPresentationStyle = cropViewController.modalPresentationStyle;
+            navigationController.transitioningDelegate = cropViewController.transitioningDelegate;
+            [topController presentViewController:navigationController animated:YES completion:nil];
+        } else {
+            [topController presentViewController:cropViewController animated:YES completion:nil];
+        }
+  } else {
+      result(FlutterMethodNotImplemented);
+  }
 }
 
 - (void)setupUiCustomizedOptions:(id)options forViewController:(TOCropViewController*)controller {
@@ -142,7 +146,7 @@
     NSString *title = options[@"ios.title"];
     NSString *doneButtonTitle = options[@"ios.done_button_title"];
     NSString *cancelButtonTitle = options[@"ios.cancel_button_title"];
-    
+
     if (minimumAspectRatio && [minimumAspectRatio isKindOfClass:[NSNumber class]]) {
         controller.minimumAspectRatio = minimumAspectRatio.floatValue;
     }
@@ -221,19 +225,19 @@
 - (void)cropViewController:(TOCropViewController *)cropViewController didCropToImage:(UIImage *)image withRect:(CGRect)cropRect angle:(NSInteger)angle
 {
     image = [self normalizedImage:image];
-    
+
     NSNumber *maxWidth = [_arguments objectForKey:@"max_width"];
     NSNumber *maxHeight = [_arguments objectForKey:@"max_height"];
-    
+
     if (maxWidth != (id)[NSNull null] && maxHeight != (id)[NSNull null]) {
         image = [self scaledImage:image maxWidth:maxWidth maxHeight:maxHeight];
     }
-    
+
     NSString *guid = [[NSProcessInfo processInfo] globallyUniqueString];
-    
+
     NSData *data;
     NSString *tmpFile;
-    
+
     if ([@"png" isEqualToString:_compressFormat]) {
         data = UIImagePNGRepresentation(image);
         tmpFile = [NSString stringWithFormat:@"image_cropper_%@.png", guid];
@@ -241,10 +245,10 @@
         data = UIImageJPEGRepresentation(image, _compressQuality);
         tmpFile = [NSString stringWithFormat:@"image_cropper_%@.jpg", guid];
     }
-    
+
     NSString *tmpDirectory = NSTemporaryDirectory();
     NSString *tmpPath = [tmpDirectory stringByAppendingPathComponent:tmpFile];
-    
+
     if (_result) {
         if ([[NSFileManager defaultManager] createFileAtPath:tmpPath contents:data attributes:nil]) {
             _result(tmpPath);
@@ -253,9 +257,9 @@
                                         message:@"Temporary file could not be created"
                                         details:nil]);
         }
-        
+
         [cropViewController dismissViewControllerAnimated:YES completion:nil];
-        
+
         _result = nil;
         _arguments = nil;
     }
@@ -264,7 +268,7 @@
 - (void)cropViewController:(TOCropViewController *)cropViewController didFinishCancelled:(BOOL)cancelled {
     [cropViewController dismissViewControllerAnimated:YES completion:nil];
     _result(nil);
-    
+
     _result = nil;
     _arguments = nil;
 }
@@ -276,7 +280,7 @@
 // TODO(goderbauer): investigate how to preserve EXIF data.
 - (UIImage *)normalizedImage:(UIImage *)image {
     if (image.imageOrientation == UIImageOrientationUp) return image;
-    
+
     UIGraphicsBeginImageContextWithOptions(image.size, NO, image.scale);
     [image drawInRect:(CGRect){0, 0, image.size}];
     UIImage *normalizedImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -289,21 +293,21 @@
                maxHeight:(NSNumber *)maxHeight {
     double originalWidth = image.size.width;
     double originalHeight = image.size.height;
-    
+
     bool hasMaxWidth = maxWidth != (id)[NSNull null];
     bool hasMaxHeight = maxHeight != (id)[NSNull null];
-    
+
     double width = hasMaxWidth ? MIN([maxWidth doubleValue], originalWidth) : originalWidth;
     double height = hasMaxHeight ? MIN([maxHeight doubleValue], originalHeight) : originalHeight;
-    
+
     bool shouldDownscaleWidth = hasMaxWidth && [maxWidth doubleValue] < originalWidth;
     bool shouldDownscaleHeight = hasMaxHeight && [maxHeight doubleValue] < originalHeight;
     bool shouldDownscale = shouldDownscaleWidth || shouldDownscaleHeight;
-    
+
     if (shouldDownscale) {
         double downscaledWidth = (height / originalHeight) * originalWidth;
         double downscaledHeight = (width / originalWidth) * originalHeight;
-        
+
         if (width < height) {
             if (!hasMaxWidth) {
                 width = downscaledWidth;
@@ -324,13 +328,13 @@
             }
         }
     }
-    
+
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(width, height), NO, 1.0);
     [image drawInRect:CGRectMake(0, 0, width, height)];
-    
+
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return scaledImage;
 }
 
