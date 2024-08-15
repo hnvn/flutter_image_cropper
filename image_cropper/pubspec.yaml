@@ -24,11 +24,17 @@ dependencies:
     sdk: flutter
   # image_cropper_platform_interface: ^7.1.0
   image_cropper_platform_interface: 
-    path: ../image_cropper_platform_interface
+    git:
+      url: https://github.com/renatogp/flutter_image_cropper
+      ref: master
+      path: image_cropper_platform_interface
     
   # image_cropper_for_web: ^6.0.1
   image_cropper_for_web: 
-    path: ../image_cropper_for_web
+    git:
+      url: https://github.com/renatogp/flutter_image_cropper
+      ref: master
+      path: image_cropper_for_web
 
 dev_dependencies:
   flutter_test:

@@ -16,7 +16,10 @@ dependencies:
   image_picker: ^1.1.2
   image_picker_for_web: ^3.0.4
   image_cropper:
-    path: ../../image_cropper
+    git:
+      url: https://github.com/renatogp/flutter_image_cropper
+      ref: master
+      path: image_cropper
 
   cupertino_icons: ^1.0.2
 

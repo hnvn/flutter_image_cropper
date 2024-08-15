@@ -15,7 +15,10 @@ dependencies:
     sdk: flutter
 
   image_cropper_platform_interface:
-    path: ../image_cropper_platform_interface
+    git:
+      url: https://github.com/renatogp/flutter_image_cropper
+      ref: master
+      path: image_cropper_platform_interface
 
   web: ">=0.5.0 <2.0.0"
 
