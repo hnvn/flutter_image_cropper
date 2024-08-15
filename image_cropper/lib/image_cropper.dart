@@ -18,6 +18,7 @@ export 'package:image_cropper_platform_interface/image_cropper_platform_interfac
         ImageCompressFormat,
         CropAspectRatio,
         CroppedFile,
+        CropInfo,
         RotationAngle,
         PlatformUiSettings,
         AndroidUiSettings,

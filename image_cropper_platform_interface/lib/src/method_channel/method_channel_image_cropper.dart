@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 
 import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
+import '../models/cropped_file/base.dart';
 
 const MethodChannel _channel = MethodChannel('plugins.hunghd.vn/image_cropper');
 
@@ -74,7 +75,12 @@ class MethodChannelImageCropper extends ImageCropperPlatform {
 
     final String? resultPath =
         await _channel.invokeMethod('cropImage', arguments);
-    return resultPath == null ? null : CroppedFile(resultPath);
+
+    if (resultPath == null) return null;
+
+    var splitResult = resultPath.split("|\\|");
+
+    return CroppedFile(splitResult[0]);
   }
 
   ///
@@ -128,4 +134,52 @@ class MethodChannelImageCropper extends ImageCropperPlatform {
     final String? resultPath = await _channel.invokeMethod('recoverImage');
     return resultPath == null ? null : CroppedFile(resultPath);
   }
+
+  @override
+  Future<CropInfo?> cropImageWithCoordinates({
+    required String sourcePath,
+    int? maxWidth,
+    int? maxHeight,
+    CropAspectRatio? aspectRatio,
+    ImageCompressFormat compressFormat = ImageCompressFormat.jpg,
+    int compressQuality = 90,
+    List<PlatformUiSettings>? uiSettings,
+  }) async {
+    assert(await File(sourcePath).exists());
+    assert(maxWidth == null || maxWidth > 0);
+    assert(maxHeight == null || maxHeight > 0);
+    assert(compressQuality >= 0 && compressQuality <= 100);
+
+    final arguments = <String, dynamic>{
+      'source_path': sourcePath,
+      'max_width': maxWidth,
+      'max_height': maxHeight,
+      'ratio_x': aspectRatio?.ratioX,
+      'ratio_y': aspectRatio?.ratioY,
+      'compress_format': compressFormat.name,
+      'compress_quality': compressQuality,
+    };
+
+    if (uiSettings != null) {
+      for (final settings in uiSettings) {
+        arguments.addAll(settings.toMap());
+      }
+    }
+
+    final String? resultPath =
+        await _channel.invokeMethod('cropImage', arguments);
+
+        if (resultPath == null) return null;
+
+    var splitResult = resultPath.split("|\\|");
+
+     return CropInfo(
+      path: splitResult[0],
+      x: double.parse(splitResult[1]),
+      y: double.parse(splitResult[2]),
+      width: double.parse(splitResult[3]),
+      height: double.parse(splitResult[4]),
+    );
+  }
 }
+

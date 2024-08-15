@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+import java.util.Locale;
+
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
@@ -127,9 +129,25 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         if (requestCode == UCrop.REQUEST_CROP) {
             if (resultCode == RESULT_OK) {
                 final Uri resultUri = UCrop.getOutput(data);
+
+                final int x = data.getIntExtra(UCrop.EXTRA_OUTPUT_OFFSET_X, -1);
+                final int y = data.getIntExtra(UCrop.EXTRA_OUTPUT_OFFSET_Y, -1);
+                final int width = UCrop.getOutputImageWidth(data);
+                final int height = UCrop.getOutputImageHeight(data);
+
                 final String imagePath = fileUtils.getPathFromUri(activity, resultUri);
                 cacheImage(imagePath);
-                finishWithSuccess(imagePath);
+                // finishWithSuccess(imagePath);
+
+                finishWithSuccess(String.format(
+                        Locale.US,
+                        "%s|\\|%d|\\|%d|\\|%d|\\|%d",
+                        fileUtils.getPathFromUri(activity, resultUri),
+                        x,
+                        y,
+                        width,
+                        height
+                ));
                 return true;
             } else if (resultCode == UCrop.RESULT_ERROR) {
                 final Throwable cropError = UCrop.getError(data);

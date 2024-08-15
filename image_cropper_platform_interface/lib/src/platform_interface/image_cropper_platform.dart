@@ -6,6 +6,7 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import '../../image_cropper_platform_interface.dart';
 import '../method_channel/method_channel_image_cropper.dart';
+import '../models/cropped_file/base.dart';
 
 /// The interface that implementations of image_cropper must implement.
 ///
@@ -70,6 +71,18 @@ abstract class ImageCropperPlatform extends PlatformInterface {
     List<PlatformUiSettings>? uiSettings,
   }) {
     throw UnimplementedError('cropImage() has not been implemented.');
+  }
+
+  Future<CropInfo?> cropImageWithCoordinates({
+    required String sourcePath,
+    int? maxWidth,
+    int? maxHeight,
+    CropAspectRatio? aspectRatio,
+    ImageCompressFormat compressFormat = ImageCompressFormat.jpg,
+    int compressQuality = 90,
+    List<PlatformUiSettings>? uiSettings,
+  }) {
+    throw UnimplementedError('cropImageWithCoordinates() has not been implemented.');
   }
 
   ///

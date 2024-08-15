@@ -9,6 +9,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart' show immutable;
 
+
+
 /// The interface for a CroppedFile.
 ///
 /// A CroppedFile is a container that wraps the path of a selected

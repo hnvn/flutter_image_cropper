@@ -72,6 +72,27 @@ class ImageCropper {
   }
 
   ///
+  Future<CropInfo?> cropImageWithCoordinates({
+    required String sourcePath,
+    int? maxWidth,
+    int? maxHeight,
+    CropAspectRatio? aspectRatio,
+    ImageCompressFormat compressFormat = ImageCompressFormat.jpg,
+    int compressQuality = 90,
+    List<PlatformUiSettings>? uiSettings,
+  }) {
+    return platform.cropImageWithCoordinates(
+      sourcePath: sourcePath,
+      maxWidth: maxWidth,
+      maxHeight: maxHeight,
+      aspectRatio: aspectRatio,
+      compressFormat: compressFormat,
+      compressQuality: compressQuality,
+      uiSettings: uiSettings,
+    );
+  }
+
+  ///
   /// Retrieve cropped image lost due to activity termination (Android only).
   /// This method works similarly to [retrieveLostData] method from [image_picker]
   /// library. Unlike [retrieveLostData], does not throw an error on other platforms,
