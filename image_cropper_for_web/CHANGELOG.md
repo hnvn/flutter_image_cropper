@@ -1,3 +1,7 @@
+## 6.0.2
+
+* correct constraints of flutter version (>= 3.22.0)
+
 ## 6.0.1
 
 * use >=0.5.0 < 2.0.0 version range for package:web.
