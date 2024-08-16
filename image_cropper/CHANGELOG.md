@@ -1,3 +1,8 @@
+## 8.0.2
+
+* Android: fix deprecated API
+* web: correct constraints of flutter version (>=3.22.0)
+
 ## 8.0.1
 
 * use `>=0.5.0 < 2.0.0` version range for package:web
