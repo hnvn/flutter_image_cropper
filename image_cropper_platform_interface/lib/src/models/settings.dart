@@ -734,6 +734,13 @@ class WebTranslations {
         rotateRightTooltip = 'Rotate 90 degree clockwise',
         cancelButton = 'Cancel',
         cropButton = 'Crop';
+
+  const WebTranslations.es()
+      : title = 'Recortar y rotar',
+        rotateLeftTooltip = 'Rotar 90 grados a la izquierda',
+        rotateRightTooltip = 'Rotar 90 grados a la derecha',
+        cancelButton = 'Cancelar',
+        cropButton = 'Recortar';
 }
 
 class WebThemeData {
