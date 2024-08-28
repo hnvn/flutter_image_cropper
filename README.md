@@ -144,7 +144,7 @@ From v1.2.0, you need to migrate your android project to v2 embedding ([detail](
 <summary>Click to view detail</summary>
 <br/>
 
-**Image Cropper** provides a helper class called `IOUiSettings` that wraps all properties can be used to customize UI in **TOCropViewController** library. 
+**Image Cropper** provides a helper class called `IOSUiSettings` that wraps all properties can be used to customize UI in **TOCropViewController** library. 
 
 | Property                              | Description                                                                                                                                                                                                                                                                                                                                 | Type                            |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
