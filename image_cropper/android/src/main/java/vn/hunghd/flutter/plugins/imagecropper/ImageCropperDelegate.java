@@ -49,6 +49,8 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         ArrayList<Map<?, ?>> aspectRatioPresets = call.argument("android.aspect_ratio_presets");
         String cropStyle = call.argument("android.crop_style");
         String initAspectRatio = call.argument("android.init_aspect_ratio");
+        boolean lockGestureRotation = call.argument("android.lock_gesture_rotation");
+
 
         pendingResult = result;
 
@@ -66,7 +68,9 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         // uCrop.withMaxResultSize(1000, 1000);
         options.setCompressionFormat("png".equals(compressFormat) ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG);
         options.setCompressionQuality(compressQuality != null ? compressQuality : 90);
-        options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.NONE, UCropActivity.SCALE);
+        if(lockGestureRotation){
+            options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.NONE, UCropActivity.SCALE);
+        }
         options.setMaxBitmapSize(10000);
 
         // UI customization settings
