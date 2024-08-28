@@ -66,7 +66,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         // uCrop.withMaxResultSize(1000, 1000);
         options.setCompressionFormat("png".equals(compressFormat) ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG);
         options.setCompressionQuality(compressQuality != null ? compressQuality : 90);
-        options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.ROTATE, UCropActivity.ALL));
+        options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.ROTATE, UCropActivity.ALL);
         options.setMaxBitmapSize(10000);
 
         // UI customization settings
