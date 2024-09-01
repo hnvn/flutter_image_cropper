@@ -198,6 +198,9 @@ class AndroidUiSettings extends PlatformUiSettings {
   /// when starting the cropper
   final CropAspectRatioPresetData? initAspectRatio;
 
+  /// Locks rotation of the image when gestures are used (default is false)
+  final bool lockGestureRotation;
+
   AndroidUiSettings({
     this.toolbarTitle,
     this.toolbarColor,
@@ -217,6 +220,7 @@ class AndroidUiSettings extends PlatformUiSettings {
     this.hideBottomControls,
     this.initAspectRatio,
     this.cropStyle = CropStyle.rectangle,
+    this.lockGestureRotation = false,
     this.aspectRatioPresets = const [
       CropAspectRatioPreset.original,
       CropAspectRatioPreset.square,
@@ -247,6 +251,7 @@ class AndroidUiSettings extends PlatformUiSettings {
         'android.hide_bottom_controls': this.hideBottomControls,
         'android.init_aspect_ratio': this.initAspectRatio?.name,
         'android.crop_style': this.cropStyle.name,
+        'android.lock_gesture_rotation': this.lockGestureRotation,
         'android.aspect_ratio_presets': aspectRatioPresets
             .map<Map<String, dynamic>>((item) => {
                   'name': item.name,
