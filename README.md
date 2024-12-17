@@ -46,7 +46,7 @@ JavaScript image cropper.
 <activity
     android:name="com.yalantis.ucrop.UCropActivity"
     android:screenOrientation="portrait"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+    android:theme="@style/Ucrop.CropTheme"/>
 ````
 
 #### Note:

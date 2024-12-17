@@ -1,3 +1,23 @@
+## 8.1.0
+
+* Android: workaround edge-to-adge issue on Android 15
+
+  ***Before***:
+  ```
+    <activity
+        android:name="com.yalantis.ucrop.UCropActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+  ```
+
+  ***After***:
+  ```
+    <activity
+        android:name="com.yalantis.ucrop.UCropActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Ucrop.CropTheme"/> <!-- This line is updated -->
+  ```
+
 ## 8.0.2
 
 * Android: fix deprecated API
