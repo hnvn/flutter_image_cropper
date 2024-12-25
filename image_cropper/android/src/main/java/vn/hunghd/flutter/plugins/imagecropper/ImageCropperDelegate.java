@@ -8,10 +8,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import androidx.preference.PreferenceManager;
 
-//by me for status bar 
 import android.os.Build;
 import android.view.WindowInsetsController;
-///
 
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.model.AspectRatio;
@@ -188,14 +186,14 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
             options.setToolbarColor(toolbarColor);
         }
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-    // For Android 12 (API 31) and beyond
-    WindowInsetsController insetsController = activity.getWindow().getInsetsController();
-    if (insetsController != null) {
-        insetsController.setSystemBarsAppearance(WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+              // For Android 12 (API 31) and beyond
+          WindowInsetsController insetsController = activity.getWindow().getInsetsController();
+          if (insetsController != null) {
+             insetsController.setSystemBarsAppearance(WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
                  WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
-        activity.getWindow().setStatusBarColor(statusBarColor != null ? statusBarColor : Color.TRANSPARENT);
-    }
-}
+             activity.getWindow().setStatusBarColor(statusBarColor != null ? statusBarColor : Color.TRANSPARENT);
+          }
+        }
         else{
         if (statusBarColor != null) {
             options.setStatusBarColor(statusBarColor);
@@ -203,7 +201,6 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
             options.setStatusBarColor(darkenColor(toolbarColor));
         }
         }
-        
         if (toolbarWidgetColor != null) {
             options.setToolbarWidgetColor(toolbarWidgetColor);
         }
