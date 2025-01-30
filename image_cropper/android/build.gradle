@@ -28,7 +28,7 @@ android {
     if (project.android.hasProperty("namespace")) {
         namespace 'vn.hunghd.flutter.plugins.imagecropper'
     }
-    compileSdkVersion 35
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 16
