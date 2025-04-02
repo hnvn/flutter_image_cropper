@@ -31,7 +31,7 @@ class _CropperActionBarState extends State<CropperActionBar> {
             iconButtonTheme: IconButtonThemeData(
               style: ButtonStyle(
                 foregroundColor:
-                    MaterialStateColor.resolveWith((states) => iconColor),
+                    WidgetStateColor.resolveWith((states) => iconColor),
               ),
             ),
           )
