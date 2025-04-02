@@ -1,3 +1,8 @@
+## 9.1.0
+
+* Web: fix bug on Flutter WASM [#567](https://github.com/hnvn/flutter_image_cropper/pull/567)
+* Android: fix deprecated API [#546](https://github.com/hnvn/flutter_image_cropper/pull/546)
+
 ## 9.0.0
 
 * iOS: add support for Swift Package Manager (PR [#555](https://github.com/hnvn/flutter_image_cropper/pull/555))
