@@ -1,21 +1,56 @@
+## 9.1.0
+
+* Web: fix bug on Flutter WASM [#567](https://github.com/hnvn/flutter_image_cropper/pull/567)
+* Android: fix deprecated API [#546](https://github.com/hnvn/flutter_image_cropper/pull/546)
+
+## 9.0.0
+
+* iOS: add support for Swift Package Manager (PR [#555](https://github.com/hnvn/flutter_image_cropper/pull/555))
+* Android: refactored edge-to-edge workaround solution by removing related code from the plugin and integrating it directly into the app.
+
+***Migration guide***
+  - Add follwowing code to file `android/app/src/main/res/values/styles.xml`
+  ```xml
+  <resources>
+    ....
+    <style name="Ucrop.CropTheme" parent="Theme.AppCompat.Light.NoActionBar"/> <!--add this line-->
+  </resources>
+  ```
+  - Create new file `android/app/src/main/res/values-v35/styles.xml` and add the following code to it:
+  ```xml
+  <?xml version="1.0" encoding="utf-8"?>
+  <resources>
+    <style name="Ucrop.CropTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+  </resources>
+  ```
+  - Modify the decleration of `UCropActivity` in your `AndroidManifest.xml` (if you have not modified it yet)
+  ```xml
+  <activity
+    android:name="com.yalantis.ucrop.UCropActivity"
+    android:screenOrientation="portrait"
+    android:theme="@style/Ucrop.CropTheme"/> <!--this line is updated-->
+  ```
+
 ## 8.1.0
 
 * Android: workaround edge-to-adge issue on Android 15
 
   ***Before***:
-  ```
+  ```xml
     <activity
-        android:name="com.yalantis.ucrop.UCropActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+      android:name="com.yalantis.ucrop.UCropActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
   ```
 
   ***After***:
-  ```
+  ```xml
     <activity
-        android:name="com.yalantis.ucrop.UCropActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/Ucrop.CropTheme"/> <!-- This line is updated -->
+      android:name="com.yalantis.ucrop.UCropActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/Ucrop.CropTheme"/> <!-- This line is updated -->
   ```
 
 ## 8.0.2

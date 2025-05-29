@@ -1,3 +1,7 @@
+## 6.1.0
+
+* update to the latest `image_cropper_platform_interface`
+
 ## 6.0.2
 
 * correct constraints of flutter version (>= 3.22.0)
