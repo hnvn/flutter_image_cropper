@@ -38,7 +38,11 @@ android {
         disable 'InvalidPackage'
     }
     dependencies {
-        implementation 'com.github.yalantis:ucrop:2.2.10'
+        // NOTE: Custom image cropper ucrop dependency
+        implementation("com.github.jens-muenker:uCrop-n-Edit:4.1.0") {
+            exclude group: "com.github.yalantis", module: "ucrop"
+        }
+
         implementation 'androidx.preference:preference:1.2.1'
     }
 }
