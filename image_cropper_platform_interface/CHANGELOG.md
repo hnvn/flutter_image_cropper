@@ -1,3 +1,7 @@
+## 7.1.0
+
+* fix bug on Flutter WASM [#567](https://github.com/hnvn/flutter_image_cropper/pull/567)
+
 ## 7.0.0
 
 * relax flutter version constraints

@@ -44,14 +44,39 @@ JavaScript image cropper.
 
 ````xml
 <activity
-    android:name="com.yalantis.ucrop.UCropActivity"
-    android:screenOrientation="portrait"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+  android:name="com.yalantis.ucrop.UCropActivity"
+  android:screenOrientation="portrait"
+  android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 ````
 
 #### Note:
-From v1.2.0, you need to migrate your android project to v2 embedding ([detail](https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects))
+- From v1.2.0, you need to migrate your android project to v2 embedding ([detail](https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects))
 
+- The native plugin (uCrop) does not yet support Edge-to-Edge mode in Android 15. To work around this issue, please add the following code to your Android project (inside the android folder):
+  - Add follwowing code to file `android/app/src/main/res/values/styles.xml`
+  ```xml
+  <resources>
+    ....
+    <style name="Ucrop.CropTheme" parent="Theme.AppCompat.Light.NoActionBar"/> <!--add this line-->
+  </resources>
+  ```
+  - Create new file `android/app/src/main/res/values-v35/styles.xml` and add the following code to it:
+  ```xml
+  <?xml version="1.0" encoding="utf-8"?>
+  <resources>
+    <style name="Ucrop.CropTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+  </resources>
+  ```
+  - Modify the decleration of `UCropActivity` in your `AndroidManifest.xml`:
+  ```xml
+  <activity
+    android:name="com.yalantis.ucrop.UCropActivity"
+    android:screenOrientation="portrait"
+    android:theme="@style/Ucrop.CropTheme"/> <!--this line is updated-->
+  ```
+ 
 ### iOS
 - No configuration required
 

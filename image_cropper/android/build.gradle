@@ -28,7 +28,7 @@ android {
     if (project.android.hasProperty("namespace")) {
         namespace 'vn.hunghd.flutter.plugins.imagecropper'
     }
-    compileSdkVersion 34
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 16
@@ -38,7 +38,7 @@ android {
         disable 'InvalidPackage'
     }
     dependencies {
-        implementation 'com.github.yalantis:ucrop:2.2.9'
+        implementation 'com.github.yalantis:ucrop:2.2.10'
         implementation 'androidx.preference:preference:1.2.1'
     }
 }
