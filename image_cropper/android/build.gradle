@@ -38,7 +38,7 @@ android {
         disable 'InvalidPackage'
     }
     dependencies {
-        implementation 'com.github.yalantis:ucrop:2.2.10'
+        implementation 'com.github.yalantis:ucrop:2.2.11'
         implementation 'androidx.preference:preference:1.2.1'
     }
 }
