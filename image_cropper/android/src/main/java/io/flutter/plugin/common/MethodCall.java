@@ -7,7 +7,7 @@ import java.util.Map;
  * This will be replaced by the actual Flutter SDK when integrated into a Flutter app.
  */
 public class MethodCall {
-    private final String method;
+    public final String method;
     private final Object arguments;
 
     public MethodCall(String method, Object arguments) {
