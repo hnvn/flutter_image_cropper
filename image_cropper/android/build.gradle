@@ -23,6 +23,14 @@ rootProject.allprojects {
 
 apply plugin: 'com.android.library'
 
+def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
+
+def plugins = new Properties()
+def pluginsFile = new File(flutterProjectRoot.toFile(), '.flutter-plugins')
+if (pluginsFile.exists()) {
+    pluginsFile.withReader('UTF-8') { reader -> plugins.load(reader) }
+}
+
 android {
     // Conditional for compatibility with AGP <4.2.
     if (project.android.hasProperty("namespace")) {
@@ -42,3 +50,5 @@ android {
         implementation 'androidx.preference:preference:1.2.1'
     }
 }
+
+

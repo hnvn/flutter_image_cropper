@@ -195,10 +195,12 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
           }
         }
         else{
+        // Note: setStatusBarColor is not available in UCrop 2.2.11
+        // Status bar color will be handled by the system
         if (statusBarColor != null) {
-            options.setStatusBarColor(statusBarColor);
+            activity.getWindow().setStatusBarColor(statusBarColor);
         } else if (toolbarColor != null) {
-            options.setStatusBarColor(darkenColor(toolbarColor));
+            activity.getWindow().setStatusBarColor(darkenColor(toolbarColor));
         }
         }
         if (toolbarWidgetColor != null) {
