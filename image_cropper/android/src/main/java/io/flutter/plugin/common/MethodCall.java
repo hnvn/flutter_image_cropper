@@ -8,25 +8,31 @@ import java.util.Map;
  */
 public class MethodCall {
     public final String method;
-    private final Object arguments;
+    public final Object arguments;
 
     public MethodCall(String method, Object arguments) {
         this.method = method;
         this.arguments = arguments;
     }
 
-    public String method() {
-        return method;
-    }
-
+    @SuppressWarnings("unchecked")
     public <T> T argument(String key) {
+        if (arguments == null) {
+            return null;
+        }
         if (arguments instanceof Map) {
-            return (T) ((Map<String, Object>) arguments).get(key);
+            return (T) ((Map<?, ?>) arguments).get(key);
         }
         return null;
     }
 
-    public <T> T arguments() {
-        return (T) arguments;
+    public boolean hasArgument(String key) {
+        if (arguments == null) {
+            return false;
+        }
+        if (arguments instanceof Map) {
+            return ((Map<?, ?>) arguments).containsKey(key);
+        }
+        return false;
     }
 }

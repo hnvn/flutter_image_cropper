@@ -5,12 +5,23 @@ package io.flutter.plugin.common;
  * This will be replaced by the actual Flutter SDK when integrated into a Flutter app.
  */
 public class MethodChannel {
+    private final BinaryMessenger messenger;
+    private final String name;
 
     public MethodChannel(BinaryMessenger messenger, String name) {
-        // Stub constructor
+        this.messenger = messenger;
+        this.name = name;
     }
 
     public void setMethodCallHandler(MethodCallHandler handler) {
+        // Stub implementation
+    }
+
+    public void invokeMethod(String method, Object arguments) {
+        // Stub implementation
+    }
+
+    public void invokeMethod(String method, Object arguments, Result callback) {
         // Stub implementation
     }
 

@@ -5,5 +5,15 @@ package io.flutter.plugin.common;
  * This will be replaced by the actual Flutter SDK when integrated into a Flutter app.
  */
 public interface BinaryMessenger {
-    // Stub interface - actual implementation provided by Flutter SDK
+    void send(String channel, java.nio.ByteBuffer message);
+    void send(String channel, java.nio.ByteBuffer message, BinaryReply callback);
+    void setMessageHandler(String channel, BinaryMessageHandler handler);
+
+    interface BinaryReply {
+        void reply(java.nio.ByteBuffer reply);
+    }
+
+    interface BinaryMessageHandler {
+        void onMessage(java.nio.ByteBuffer message, BinaryReply reply);
+    }
 }
