@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          background: const Color(0xFFFDF5EC),
+          surface: const Color(0xFFFDF5EC),
           primary: const Color(0xFFD0996F),
         ),
       ),
@@ -224,10 +224,12 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: DottedBorder(
-                    radius: const Radius.circular(12.0),
-                    borderType: BorderType.RRect,
-                    dashPattern: const [8, 4],
-                    color: Theme.of(context).highlightColor.withOpacity(0.4),
+                    options: RectDottedBorderOptions(
+                      dashPattern: const [8, 4],
+                      color: Theme.of(context)
+                          .highlightColor
+                          .withValues(alpha: 0.4),
+                    ),
                     child: Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
