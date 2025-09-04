@@ -48,6 +48,5 @@ android {
     dependencies {
         implementation 'com.github.yalantis:ucrop:2.2.11'
         implementation 'androidx.preference:preference:1.2.1'
-        compileOnly 'io.flutter:flutter_embedding_debug:1.0.0-4f9d92fbbae4f4e66a14ed7bbf1c6486bb1e6b16'
     }
 }
