@@ -1,4 +1,4 @@
-package vn.hunghd.flutter.plugins.imagecropper;
+package vn.hunghd.flutter.plugins.image_cropper;
 
 
 import android.app.Activity;

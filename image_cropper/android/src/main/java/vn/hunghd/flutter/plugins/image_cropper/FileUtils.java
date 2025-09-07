@@ -17,7 +17,7 @@
  * https://raw.githubusercontent.com/iPaulPro/aFileChooser/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
  */
 
-package vn.hunghd.flutter.plugins.imagecropper;
+package vn.hunghd.flutter.plugins.image_cropper;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;

@@ -1,4 +1,4 @@
-package vn.hunghd.flutter.plugins.imagecropper;
+package vn.hunghd.flutter.plugins.image_cropper;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import androidx.preference.PreferenceManager;
 
-import android.os.Build;
 import android.view.WindowInsetsController;
 
 import com.yalantis.ucrop.UCrop;
@@ -27,7 +26,7 @@ import io.flutter.plugin.common.PluginRegistry;
 import static android.app.Activity.RESULT_OK;
 
 public class ImageCropperDelegate implements PluginRegistry.ActivityResultListener {
-    static final String FILENAME_CACHE_KEY = "imagecropper.FILENAME_CACHE_KEY";
+    static final String FILENAME_CACHE_KEY = "image_cropper.FILENAME_CACHE_KEY";
 
     private final Activity activity;
     private final SharedPreferences preferences;
