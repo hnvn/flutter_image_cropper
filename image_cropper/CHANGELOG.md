@@ -6,6 +6,7 @@
 * **BREAKING CHANGES**:
 
  - Android: `compileSdkVersion` is set to 36
+ - Android: if you previously followed the migration guide in v9.0.0 to work around the edge-to-edge issue, please revert those changes (remove file `values-v35/styles.xml`)
 
 ## 9.1.0
 
