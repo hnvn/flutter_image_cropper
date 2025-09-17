@@ -1,3 +1,7 @@
+## 10.0.0+1
+
+* correct README docuemnt for Android (removed workaround note because uCrop now fully supports edge-to-edge feature)
+
 ## 10.0.0
 
 * Android: upgrade `uCrop` 2.2.11, it fully supports edge-to-edge now
