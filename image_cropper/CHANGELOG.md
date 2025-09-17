@@ -1,3 +1,12 @@
+## 10.0.0
+
+* Android: upgrade `uCrop` 2.2.11, it fully supports edge-to-edge now
+* Android: `statusBarColor` is deprecated and no longer in use, introduce new properties `statusBarLight` and `navBarLight`
+
+* **BREAKING CHANGES**:
+
+ - Android: `compileSdkVersion` is set to 36
+
 ## 9.1.0
 
 * Web: fix bug on Flutter WASM [#567](https://github.com/hnvn/flutter_image_cropper/pull/567)

@@ -140,10 +140,11 @@ JavaScript image cropper.
 **Image Cropper** provides a helper class called `AndroidUiSettings` that wraps all properties can be used to customize UI in **uCrop** library. 
 
 | Property                    | Description                                                                                                | Type                            |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------- |
+|-----------------------------|------------------------------------------------------------------------------------------------------------|---------------------------------|
 | `toolbarTitle`              | desired text for Toolbar title                                                                             | String                          |
 | `toolbarColor`              | desired color of the Toolbar                                                                               | Color                           |
-| `statusBarColor`            | desired color of status                                                                                    | Color                           |
+| `statusBarLight`            | set to true for light status bar (dark icons), false for dark status bar (light icons)                     | bool                            |
+| `navBarLight`               | set to true for light navigation bar (dark icons), false for dark navigation bar (light icons)             | bool                            |
 | `toolbarWidgetColor`        | desired color of Toolbar text and buttons (default is darker orange)                                       | Color                           |
 | `backgroundColor`           | desired background color that should be applied to the root view                                           | Color                           |
 | `activeControlsWidgetColor` | desired resolved color of the active and selected widget and progress wheel middle line (default is white) | Color                           |
