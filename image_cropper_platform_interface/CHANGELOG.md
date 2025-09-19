@@ -1,3 +1,7 @@
+## 7.2.0
+
+* Android: `statusBarColor` is deprecated and no longer in use, introduce new properties `statusBarLight` and `navBarLight`
+
 ## 7.1.0
 
 * fix bug on Flutter WASM [#567](https://github.com/hnvn/flutter_image_cropper/pull/567)
