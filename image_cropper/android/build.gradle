@@ -5,11 +5,10 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-		maven { url 'https://jitpack.io' }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.4'
+        classpath 'com.android.tools.build:gradle:8.13.0'
     }
 }
 
@@ -17,7 +16,7 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
-		maven { url 'https://jitpack.io' }
+		maven { url = uri('https://jitpack.io') }
     }
 }
 
@@ -28,7 +27,7 @@ android {
     if (project.android.hasProperty("namespace")) {
         namespace 'vn.hunghd.flutter.plugins.imagecropper'
     }
-    compileSdkVersion 33
+    compileSdkVersion 36
 
     defaultConfig {
         minSdkVersion 16
@@ -38,7 +37,7 @@ android {
         disable 'InvalidPackage'
     }
     dependencies {
-        implementation 'com.github.yalantis:ucrop:2.2.11'
+        implementation 'com.github.Yalantis:ucrop:2.2.11'
         implementation 'androidx.preference:preference:1.2.1'
     }
 }
