@@ -1,3 +1,12 @@
+## 11.0.0
+
+* iOS: upgrade `TOCropViewController` to v2.8.0
+
+**BREAKING CHANGES**:
+
+ - iOS: upgrade development target to 12
+ - Flutter constraint to minimum of 3.28 (due to constraint of `image_cropper_platform_interface`)
+
 ## 10.0.0+1
 
 * correct README document for Android (removed workaround note because uCrop now fully supports edge-to-edge feature)
@@ -7,7 +16,7 @@
 * Android: upgrade `uCrop` 2.2.11, it fully supports edge-to-edge now
 * Android: `statusBarColor` is deprecated and no longer in use, introduce new properties `statusBarLight` and `navBarLight`
 
-* **BREAKING CHANGES**:
+**BREAKING CHANGES**:
 
  - Android: `compileSdkVersion` is set to 36
  - Android: if you previously followed the migration guide in v9.0.0 to work around the edge-to-edge issue, please revert those changes (remove file `values-v35/styles.xml`)
@@ -118,7 +127,8 @@
 * refactor plugin to use new JS library, `cropperjs` instead of `croppie`
 * support Wasm
 * support customize `CropAspectRatioPreset`
-* **BREAKING CHANGES**:
+
+**BREAKING CHANGES**:
 
     - **WebUiSettings**: is totally re-implemented, please see plugin document for more details
     - **cropImage()**: move `cropStyle` and `aspectRatioPresets` into `AndroidUiSettings` and `IOUiSettings` for sake of clean and clarity.
@@ -279,7 +289,8 @@ WebUiSettings(
 ## 2.0.0
 
 * Support Web
-* **BREAKING CHANGE**:
+
+**BREAKING CHANGE**:
   - change result data type from `File` to `CroppedFile`.
   - remove `androidUiSettings` and `iosUiSettings` parameter in `cropImage` method, they are replaced by `uiSettings`
 
