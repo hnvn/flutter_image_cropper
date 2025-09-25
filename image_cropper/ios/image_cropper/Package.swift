@@ -11,7 +11,7 @@ let package = Package(
         .library(name: "image-cropper", targets: ["image_cropper"])
     ],
     dependencies: [
-        .package(url: "https://github.com/TimOliver/TOCropViewController.git", from: "2.7.4"),
+        .package(url: "https://github.com/TimOliver/TOCropViewController.git", from: "2.8.0"),
     ],
     targets: [
         .target(
