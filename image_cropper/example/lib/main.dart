@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'custom_image_cropper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -97,7 +98,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: !kIsWeb ? AppBar(title: Text(widget.title)) : null,
+      appBar: !kIsWeb ? AppBar(
+        toolbarHeight: kToolbarHeight + 10,
+        title: Text(widget.title),
+      ) : null,
       body: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -280,42 +284,12 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _cropImage() async {
     if (_pickedFile != null) {
-      final croppedFile = await ImageCropper().cropImage(
+      final croppedFile = await CustomImageCropper.cropImage(
         sourcePath: _pickedFile!.path,
-        compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 100,
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'Cropper',
-            toolbarColor: Colors.deepOrange,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.square,
-            lockAspectRatio: false,
-            aspectRatioPresets: [
-              CropAspectRatioPreset.original,
-              CropAspectRatioPreset.square,
-              CropAspectRatioPreset.ratio4x3,
-              CropAspectRatioPresetCustom(),
-            ],
-          ),
-          IOSUiSettings(
-            title: 'Cropper',
-            aspectRatioPresets: [
-              CropAspectRatioPreset.original,
-              CropAspectRatioPreset.square,
-              CropAspectRatioPreset.ratio4x3,
-              CropAspectRatioPresetCustom(),
-            ],
-          ),
-          WebUiSettings(
-            context: context,
-            presentStyle: WebPresentStyle.dialog,
-            size: const CropperSize(
-              width: 520,
-              height: 520,
-            ),
-          ),
-        ],
+        context: context,
+        toolbarColor: const Color(0xFFBC764A),
+        statusBarColor: const Color(0xFFBC764A),
+        toolbarWidgetColor: Colors.white,
       );
       if (croppedFile != null) {
         setState(() {
