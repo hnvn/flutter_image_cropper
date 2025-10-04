@@ -6,10 +6,8 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
-import androidx.preference.PreferenceManager;
 
-import android.os.Build;
-import android.view.WindowInsetsController;
+import androidx.preference.PreferenceManager;
 
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.model.AspectRatio;
@@ -136,7 +134,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
                 return true;
             } else if (resultCode == UCrop.RESULT_ERROR) {
                 final Throwable cropError = UCrop.getError(data);
-                finishWithError("crop_error", cropError.getLocalizedMessage(), cropError);
+                finishWithError(cropError.getLocalizedMessage(), cropError);
                 return true;
             } else if (pendingResult != null) {
                 pendingResult.success(null);
@@ -154,17 +152,18 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         }
     }
 
-    private void finishWithError(String errorCode, String errorMessage, Throwable throwable) {
+    private void finishWithError(String errorMessage, Throwable throwable) {
         if (pendingResult != null) {
-            pendingResult.error(errorCode, errorMessage, throwable);
+            pendingResult.error("crop_error", errorMessage, throwable);
             clearMethodCallAndResult();
         }
     }
 
-    private UCrop.Options setupUiCustomizedOptions(UCrop.Options options, MethodCall call) {
+    private void setupUiCustomizedOptions(UCrop.Options options, MethodCall call) {
         String title = call.argument("android.toolbar_title");
         Integer toolbarColor = call.argument("android.toolbar_color");
-        Integer statusBarColor = call.argument("android.statusbar_color");
+        Boolean statusBarLight = call.argument("android.status_bar_light");
+        Boolean navBarLight = call.argument("android.nav_bar_light");
         Integer toolbarWidgetColor = call.argument("android.toolbar_widget_color");
         Integer backgroundColor = call.argument("android.background_color");
         Integer activeControlsWidgetColor = call.argument("android.active_controls_widget_color");
@@ -185,21 +184,11 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         if (toolbarColor != null) {
             options.setToolbarColor(toolbarColor);
         }
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-              // For Android 12 (API 31) and beyond
-          WindowInsetsController insetsController = activity.getWindow().getInsetsController();
-          if (insetsController != null) {
-             insetsController.setSystemBarsAppearance(WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
-             activity.getWindow().setStatusBarColor(statusBarColor != null ? statusBarColor : Color.TRANSPARENT);
-          }
+        if (statusBarLight != null) {
+            options.setStatusBarLight(statusBarLight);
         }
-        else{
-        if (statusBarColor != null) {
-            options.setStatusBarColor(statusBarColor);
-        } else if (toolbarColor != null) {
-            options.setStatusBarColor(darkenColor(toolbarColor));
-        }
+        if (navBarLight != null) {
+            options.setNavigationBarLight(navBarLight);
         }
         if (toolbarWidgetColor != null) {
             options.setToolbarWidgetColor(toolbarWidgetColor);
@@ -240,8 +229,6 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         if (hideBottomControls != null) {
             options.setHideBottomControls(hideBottomControls);
         }
-
-        return options;
     }
 
 

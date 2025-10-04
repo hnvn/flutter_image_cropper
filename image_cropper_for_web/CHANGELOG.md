@@ -1,3 +1,7 @@
+## 7.0.0
+
+* update to the latest `image_cropper_platform_interface`
+
 ## 6.1.0
 
 * update to the latest `image_cropper_platform_interface`

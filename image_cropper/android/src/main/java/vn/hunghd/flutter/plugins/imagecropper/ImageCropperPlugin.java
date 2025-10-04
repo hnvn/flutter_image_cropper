@@ -3,6 +3,8 @@ package vn.hunghd.flutter.plugins.imagecropper;
 
 import android.app.Activity;
 
+import androidx.annotation.NonNull;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -11,7 +13,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry;
 
 /**
  * ImageCropperPlugin
@@ -27,13 +28,12 @@ public class ImageCropperPlugin implements MethodCallHandler, FlutterPlugin, Act
         channel.setMethodCallHandler(this);
     }
 
-    public ImageCropperDelegate setupActivity(Activity activity) {
+    public void setupActivity(Activity activity) {
         delegate = new ImageCropperDelegate(activity);
-        return delegate;
     }
 
     @Override
-    public void onMethodCall(MethodCall call, Result result) {
+    public void onMethodCall(MethodCall call, @NonNull Result result) {
 
         if (call.method.equals("cropImage")) {
             delegate.startCrop(call, result);
@@ -59,7 +59,7 @@ public class ImageCropperPlugin implements MethodCallHandler, FlutterPlugin, Act
     //////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void onDetachedFromEngine(FlutterPluginBinding flutterPluginBinding) {
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         // no need to clear channel
     }
 
@@ -76,7 +76,7 @@ public class ImageCropperPlugin implements MethodCallHandler, FlutterPlugin, Act
     }
 
     @Override
-    public void onReattachedToActivityForConfigChanges(ActivityPluginBinding activityPluginBinding) {
+    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding activityPluginBinding) {
         onAttachedToActivity(activityPluginBinding);
     }
 
