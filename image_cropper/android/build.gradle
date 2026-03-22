@@ -33,6 +33,11 @@ android {
         minSdkVersion 16
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    buildTypes {
+        release {
+            consumerProguardFiles 'consumer-proguard-rules.pro'
+        }
+    }
     lintOptions {
         disable 'InvalidPackage'
     }
