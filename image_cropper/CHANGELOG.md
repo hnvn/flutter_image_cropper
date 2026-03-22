@@ -1,3 +1,11 @@
+## 12.0.0
+
+* iOS:
+ - upgrade `TOCropViewController` to v3.1.1 (new Liquid Glass UI)
+ - support `UISceneDelegate` [#608](https://github.com/hnvn/flutter_image_cropper/pull/608)
+
+* Android: fix Android release build compile error [#599](https://github.com/hnvn/flutter_image_cropper/pull/599)
+
 ## 11.0.0
 
 * iOS: upgrade `TOCropViewController` to v2.8.0
