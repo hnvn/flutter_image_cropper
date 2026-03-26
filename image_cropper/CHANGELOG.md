@@ -1,3 +1,6 @@
+## 12.1.0
+ - fix issue of `TOCropViewController` on Swift Package
+
 ## 12.0.0
 
 * iOS:
