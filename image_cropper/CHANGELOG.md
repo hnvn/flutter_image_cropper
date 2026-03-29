@@ -1,3 +1,7 @@
+## 12.1.1
+
+- fix issue of fixed (locked) aspect ratio on iOS
+
 ## 12.1.0
  - fix issue of `TOCropViewController` on Swift Package
 
