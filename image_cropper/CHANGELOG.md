@@ -1,3 +1,7 @@
+## 12.1.2
+
+- fix issue of `TOCropViewController` on Swift Package and CocoaPods by using universal header imports [#609](https://github.com/hnvn/flutter_image_cropper/issues/609) (thanks to [@Digvijaysinh2204](https://github.com/Digvijaysinh2204))
+
 ## 12.1.1
 
 - fix issue of fixed (locked) aspect ratio on iOS
