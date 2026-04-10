@@ -1,3 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vn.hunghd.flutter.plugins.imagecropper">
+
+	<application>
+        <!-- Handle cropping of picture taken by phone -->
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Ucrop.CropTheme" />
+	</application>
 </manifest>
