@@ -1,3 +1,7 @@
+## 12.2.1
+
+- iOS: upgrade `TOCropViewController` to v3.1.2
+
 ## 12.2.0
 
 - fix issue on iOS: `Lexical or Preprocessor Issue (Xcode): 'TOCropViewController/TOCropViewConstants.h' file not found`
