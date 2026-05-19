@@ -176,6 +176,7 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Integer cropGridStrokeWidth = call.argument("android.crop_grid_stroke_width");
         Boolean showCropGrid = call.argument("android.show_crop_grid");
         Boolean lockAspectRatio = call.argument("android.lock_aspect_ratio");
+        Boolean freeStyleCropEnabled = call.argument("android.free_style_crop_enabled");
         Boolean hideBottomControls = call.argument("android.hide_bottom_controls");
 
         if (title != null) {
@@ -223,7 +224,13 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         if (showCropGrid != null) {
             options.setShowCropGrid(showCropGrid);
         }
-        if (lockAspectRatio != null) {
+        // When freeStyleCropEnabled is provided it wins, so callers can
+        // get "locked aspect + draggable corners" (matching iOS). When
+        // it is null we keep the old behaviour: !lockAspectRatio implies
+        // freestyle. When both are null we leave uCrop's default alone.
+        if (freeStyleCropEnabled != null) {
+            options.setFreeStyleCropEnabled(freeStyleCropEnabled);
+        } else if (lockAspectRatio != null) {
             options.setFreeStyleCropEnabled(!lockAspectRatio);
         }
         if (hideBottomControls != null) {

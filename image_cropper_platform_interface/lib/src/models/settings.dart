@@ -192,6 +192,16 @@ class AndroidUiSettings extends PlatformUiSettings {
   /// (locked by default)
   final bool? lockAspectRatio;
 
+  /// set to true to let the user resize the crop frame by dragging its
+  /// corners (maps to uCrop's `setFreeStyleCropEnabled`). This is
+  /// independent of [lockAspectRatio]: when both are true, the corners
+  /// stay draggable but the box keeps the locked aspect ratio — matching
+  /// the iOS `TOCropViewController` behaviour.
+  ///
+  /// When `null`, the existing behaviour is preserved: native freestyle
+  /// is enabled iff [lockAspectRatio] is `false`.
+  final bool? freeStyleCropEnabled;
+
   /// set to true to hide the bottom controls (shown by default)
   final bool? hideBottomControls;
 
@@ -226,6 +236,7 @@ class AndroidUiSettings extends PlatformUiSettings {
     this.cropGridStrokeWidth,
     this.showCropGrid,
     this.lockAspectRatio,
+    this.freeStyleCropEnabled,
     this.hideBottomControls,
     this.initAspectRatio,
     this.cropStyle = CropStyle.rectangle,
@@ -257,6 +268,7 @@ class AndroidUiSettings extends PlatformUiSettings {
         'android.crop_grid_stroke_width': this.cropGridStrokeWidth,
         'android.show_crop_grid': this.showCropGrid,
         'android.lock_aspect_ratio': this.lockAspectRatio,
+        'android.free_style_crop_enabled': this.freeStyleCropEnabled,
         'android.hide_bottom_controls': this.hideBottomControls,
         'android.init_aspect_ratio': this.initAspectRatio?.name,
         'android.crop_style': this.cropStyle.name,

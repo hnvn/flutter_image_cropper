@@ -1,3 +1,7 @@
+## Unreleased
+
+- Android: add `freeStyleCropEnabled` to `AndroidUiSettings` so callers can opt into uCrop's draggable corner handles independently of `lockAspectRatio`. Lets Android match iOS' "locked aspect ratio + resizable corners" UX. Defaults to `null`, preserving the previous `!lockAspectRatio` behaviour.
+
 ## 12.2.0
 
 - fix issue on iOS: `Lexical or Preprocessor Issue (Xcode): 'TOCropViewController/TOCropViewConstants.h' file not found`
