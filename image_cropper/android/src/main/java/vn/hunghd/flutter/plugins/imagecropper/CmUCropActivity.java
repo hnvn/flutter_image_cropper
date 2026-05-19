@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
+import com.yalantis.ucrop.callback.CropBoundsChangeListener;
 import com.yalantis.ucrop.callback.OverlayViewChangeListener;
 import com.yalantis.ucrop.view.OverlayView;
 import com.yalantis.ucrop.view.UCropView;
@@ -43,7 +44,20 @@ public class CmUCropActivity extends UCropActivity {
             return;
         }
         final OverlayView overlay = ucropView.getOverlayView();
-        overlay.post(() -> setupShrinkOnlyMode(overlay, ucropView));
+        overlay.post(() -> waitForCropBoundsThenSetup(overlay, ucropView));
+    }
+
+    /**
+     * Waits until uCrop has laid out a non-empty crop rect (happens after the
+     * bitmap loads) before capturing the max bounds and attaching touch hooks.
+     */
+    private void waitForCropBoundsThenSetup(final OverlayView overlay, final UCropView ucropView) {
+        final RectF cropRect = overlay.getCropViewRect();
+        if (cropRect.width() < 1f || cropRect.height() < 1f) {
+            overlay.post(() -> waitForCropBoundsThenSetup(overlay, ucropView));
+            return;
+        }
+        setupShrinkOnlyMode(overlay, ucropView);
     }
 
     private void setupShrinkOnlyMode(final OverlayView overlay, final UCropView ucropView) {
@@ -57,7 +71,23 @@ public class CmUCropActivity extends UCropActivity {
         }
         mMinCropSizePx = getResources().getDimensionPixelSize(
                 com.yalantis.ucrop.R.dimen.ucrop_default_crop_rect_min_size);
-        ucropView.getCropImageView().setCropBoundsChangeListener(ratio -> mTargetAspectRatio = ratio);
+        // Chain — do NOT replace UCropView's listener; it calls
+        // overlay.setTargetAspectRatio() which draws the crop frame.
+        final CropBoundsChangeListener existing =
+                ucropView.getCropImageView().getCropBoundsChangeListener();
+        ucropView.getCropImageView().setCropBoundsChangeListener(
+                new CropBoundsChangeListener() {
+                    @Override
+                    public void onCropAspectRatioChanged(final float cropRatio) {
+                        mTargetAspectRatio = cropRatio;
+                        if (mMaxCropRect.width() < 1f || mMaxCropRect.height() < 1f) {
+                            mMaxCropRect.set(overlay.getCropViewRect());
+                        }
+                        if (existing != null) {
+                            existing.onCropAspectRatioChanged(cropRatio);
+                        }
+                    }
+                });
         try {
             mCornerIndexField = OverlayView.class.getDeclaredField("mCurrentTouchCornerIndex");
             mCornerIndexField.setAccessible(true);
@@ -98,11 +128,7 @@ public class CmUCropActivity extends UCropActivity {
             clampAndSync(overlay, cropRect, mActiveCorner);
             return true;
         }
-        final boolean handled = overlay.onTouchEvent(event);
-        if (action == MotionEvent.ACTION_MOVE) {
-            clampAndSync(overlay, cropRect, mActiveCorner);
-        }
-        return handled;
+        return overlay.onTouchEvent(event);
     }
 
     private void clampAndSync(
