@@ -104,17 +104,28 @@ public class CmUCropActivity extends UCropActivity {
             final MotionEvent event) {
         final int action = event.getAction() & MotionEvent.ACTION_MASK;
         if (action == MotionEvent.ACTION_DOWN) {
-            final boolean handled = overlay.onTouchEvent(event);
+            overlay.onTouchEvent(event);
             mActiveCorner = readActiveCorner(overlay);
-            return handled;
+            // uCrop uses corner index 4 for "drag the whole frame". iOS instead
+            // lets the user pan/zoom the image under a fixed crop window — pass
+            // interior touches through to GestureCropImageView.
+            if (mActiveCorner == 4) {
+                resetActiveCorner(overlay, -1);
+                mActiveCorner = -1;
+                return false;
+            }
+            return mActiveCorner >= 0 && mActiveCorner <= 3;
+        }
+        if (mActiveCorner < 0 || mActiveCorner > 3) {
+            return false;
         }
         if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
-            final boolean handled = overlay.onTouchEvent(event);
+            overlay.onTouchEvent(event);
             clampAndSync(overlay, cropRect, mActiveCorner);
             mActiveCorner = -1;
-            return handled;
+            return true;
         }
-        if (action == MotionEvent.ACTION_MOVE && mActiveCorner >= 0 && mActiveCorner <= 3) {
+        if (action == MotionEvent.ACTION_MOVE) {
             float touchX = event.getX();
             float touchY = event.getY();
             if (mAspectRatioLocked) {
@@ -128,13 +139,16 @@ public class CmUCropActivity extends UCropActivity {
             clampAndSync(overlay, cropRect, mActiveCorner);
             return true;
         }
-        return overlay.onTouchEvent(event);
+        return false;
     }
 
     private void clampAndSync(
             final OverlayView overlay,
             final RectF cropRect,
             final int corner) {
+        if (corner < 0 || corner > 3) {
+            return;
+        }
         final RectF crop = overlay.getCropViewRect();
         CropTouchMath.clampCropRectInsideMax(
                 crop,
@@ -163,6 +177,17 @@ public class CmUCropActivity extends UCropActivity {
             return mCornerIndexField.getInt(overlay);
         } catch (IllegalAccessException ignored) {
             return -1;
+        }
+    }
+
+    private void resetActiveCorner(final OverlayView overlay, final int index) {
+        if (mCornerIndexField == null) {
+            return;
+        }
+        try {
+            mCornerIndexField.setInt(overlay, index);
+        } catch (IllegalAccessException ignored) {
+            // no-op
         }
     }
 }

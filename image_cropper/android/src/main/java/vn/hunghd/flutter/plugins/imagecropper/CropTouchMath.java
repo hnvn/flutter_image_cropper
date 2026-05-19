@@ -76,7 +76,9 @@ final class CropTouchMath {
             final float aspectRatio,
             final boolean lockAspectRatio,
             final int minSizePx) {
-        if (fitsInside(crop, max)) {
+        // Shrink-only limits size, not position — the user may move the frame
+        // anywhere on the image (iOS pans the image; uCrop uses corner index 4).
+        if (fitsSizeInside(crop, max)) {
             return;
         }
         float width = Math.min(crop.width(), max.width());
@@ -123,28 +125,12 @@ final class CropTouchMath {
                         crop.centerY() + height / 2f);
                 break;
         }
-        if (crop.left < max.left) {
-            crop.offset(max.left - crop.left, 0f);
-        }
-        if (crop.top < max.top) {
-            crop.offset(0f, max.top - crop.top);
-        }
-        if (crop.right > max.right) {
-            crop.offset(max.right - crop.right, 0f);
-        }
-        if (crop.bottom > max.bottom) {
-            crop.offset(0f, max.bottom - crop.bottom);
-        }
         normalizeMinSize(crop, minSizePx);
     }
 
-    private static boolean fitsInside(final RectF inner, final RectF outer) {
-        return inner.width() <= outer.width() + 0.5f
-                && inner.height() <= outer.height() + 0.5f
-                && inner.left >= outer.left - 0.5f
-                && inner.top >= outer.top - 0.5f
-                && inner.right <= outer.right + 0.5f
-                && inner.bottom <= outer.bottom + 0.5f;
+    private static boolean fitsSizeInside(final RectF crop, final RectF max) {
+        return crop.width() <= max.width() + 0.5f
+                && crop.height() <= max.height() + 0.5f;
     }
 
     private static void normalizeMinSize(final RectF rect, final int minSizePx) {
