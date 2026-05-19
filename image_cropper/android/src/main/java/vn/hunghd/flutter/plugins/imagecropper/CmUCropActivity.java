@@ -8,6 +8,7 @@ import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
 import com.yalantis.ucrop.callback.CropBoundsChangeListener;
 import com.yalantis.ucrop.callback.OverlayViewChangeListener;
+import com.yalantis.ucrop.view.GestureCropImageView;
 import com.yalantis.ucrop.view.OverlayView;
 import com.yalantis.ucrop.view.UCropView;
 
@@ -15,8 +16,8 @@ import java.lang.reflect.Field;
 
 /**
  * UCrop activity that matches iOS TOCropViewController when aspect ratio is
- * locked: corners are draggable, the ratio is preserved, and the crop frame may
- * only shrink from its initial size — never expand.
+ * locked: pan/zoom the image under a fixed crop window, corner handles shrink
+ * the frame (never expand past the initial size).
  */
 public class CmUCropActivity extends UCropActivity {
 
@@ -30,7 +31,12 @@ public class CmUCropActivity extends UCropActivity {
     private boolean mShrinkOnly;
     private int mMinCropSizePx;
     private Field mCornerIndexField;
+    private Field mPreviousTouchXField;
+    private Field mPreviousTouchYField;
     private int mActiveCorner = -1;
+    private boolean mPanForwarding;
+    private OverlayView mOverlay;
+    private GestureCropImageView mCropImageView;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -43,14 +49,11 @@ public class CmUCropActivity extends UCropActivity {
         if (ucropView == null) {
             return;
         }
-        final OverlayView overlay = ucropView.getOverlayView();
-        overlay.post(() -> waitForCropBoundsThenSetup(overlay, ucropView));
+        mOverlay = ucropView.getOverlayView();
+        mCropImageView = ucropView.getCropImageView();
+        mOverlay.post(() -> waitForCropBoundsThenSetup(mOverlay, ucropView));
     }
 
-    /**
-     * Waits until uCrop has laid out a non-empty crop rect (happens after the
-     * bitmap loads) before capturing the max bounds and attaching touch hooks.
-     */
     private void waitForCropBoundsThenSetup(final OverlayView overlay, final UCropView ucropView) {
         final RectF cropRect = overlay.getCropViewRect();
         if (cropRect.width() < 1f || cropRect.height() < 1f) {
@@ -71,8 +74,6 @@ public class CmUCropActivity extends UCropActivity {
         }
         mMinCropSizePx = getResources().getDimensionPixelSize(
                 com.yalantis.ucrop.R.dimen.ucrop_default_crop_rect_min_size);
-        // Chain — do NOT replace UCropView's listener; it calls
-        // overlay.setTargetAspectRatio() which draws the crop frame.
         final CropBoundsChangeListener existing =
                 ucropView.getCropImageView().getCropBoundsChangeListener();
         ucropView.getCropImageView().setCropBoundsChangeListener(
@@ -88,14 +89,24 @@ public class CmUCropActivity extends UCropActivity {
                         }
                     }
                 });
+        initOverlayReflection(overlay);
+        final RectF cropRect = overlay.getCropViewRect();
+        overlay.setOnTouchListener((view, event) -> handleOverlayTouch(overlay, cropRect, event));
+    }
+
+    private void initOverlayReflection(final OverlayView overlay) {
         try {
             mCornerIndexField = OverlayView.class.getDeclaredField("mCurrentTouchCornerIndex");
             mCornerIndexField.setAccessible(true);
+            mPreviousTouchXField = OverlayView.class.getDeclaredField("mPreviousTouchX");
+            mPreviousTouchXField.setAccessible(true);
+            mPreviousTouchYField = OverlayView.class.getDeclaredField("mPreviousTouchY");
+            mPreviousTouchYField.setAccessible(true);
         } catch (NoSuchFieldException ignored) {
             mCornerIndexField = null;
+            mPreviousTouchXField = null;
+            mPreviousTouchYField = null;
         }
-        final RectF cropRect = overlay.getCropViewRect();
-        overlay.setOnTouchListener((view, event) -> handleOverlayTouch(overlay, cropRect, event));
     }
 
     private boolean handleOverlayTouch(
@@ -103,18 +114,27 @@ public class CmUCropActivity extends UCropActivity {
             final RectF cropRect,
             final MotionEvent event) {
         final int action = event.getAction() & MotionEvent.ACTION_MASK;
+        if (mPanForwarding) {
+            if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+                mPanForwarding = false;
+            }
+            return forwardToCropImage(event);
+        }
         if (action == MotionEvent.ACTION_DOWN) {
             overlay.onTouchEvent(event);
             mActiveCorner = readActiveCorner(overlay);
-            // uCrop uses corner index 4 for "drag the whole frame". iOS instead
-            // lets the user pan/zoom the image under a fixed crop window — pass
-            // interior touches through to GestureCropImageView.
-            if (mActiveCorner == 4) {
-                resetActiveCorner(overlay, -1);
-                mActiveCorner = -1;
-                return false;
+            if (mActiveCorner >= 0 && mActiveCorner <= 3) {
+                return true;
             }
-            return mActiveCorner >= 0 && mActiveCorner <= 3;
+            // iOS: drag inside the crop window pans the image, not the frame.
+            // uCrop maps that to corner index 4 — we forward to GestureCropImageView
+            // instead so the crop rect stays put and the photo moves underneath.
+            if (isTouchInsideCrop(overlay, event.getX(), event.getY())) {
+                cancelOverlayDragState(overlay);
+                mPanForwarding = true;
+                return forwardToCropImage(event);
+            }
+            return false;
         }
         if (mActiveCorner < 0 || mActiveCorner > 3) {
             return false;
@@ -140,6 +160,42 @@ public class CmUCropActivity extends UCropActivity {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Forwards overlay touches to {@link GestureCropImageView}. Siblings in
+     * {@link UCropView} do not receive events when the overlay returns false.
+     */
+    private boolean forwardToCropImage(final MotionEvent event) {
+        if (mCropImageView == null || mOverlay == null) {
+            return false;
+        }
+        final float offsetX = mOverlay.getLeft() - mCropImageView.getLeft();
+        final float offsetY = mOverlay.getTop() - mCropImageView.getTop();
+        final MotionEvent mapped = MotionEvent.obtain(event);
+        mapped.offsetLocation(offsetX, offsetY);
+        final boolean handled = mCropImageView.dispatchTouchEvent(mapped);
+        mapped.recycle();
+        return handled;
+    }
+
+    private boolean isTouchInsideCrop(
+            final OverlayView overlay,
+            final float x,
+            final float y) {
+        return overlay.getCropViewRect().contains(x, y);
+    }
+
+    private void cancelOverlayDragState(final OverlayView overlay) {
+        resetActiveCorner(overlay, -1);
+        if (mPreviousTouchXField != null && mPreviousTouchYField != null) {
+            try {
+                mPreviousTouchXField.setFloat(overlay, -1f);
+                mPreviousTouchYField.setFloat(overlay, -1f);
+            } catch (IllegalAccessException ignored) {
+                // no-op
+            }
+        }
     }
 
     private void clampAndSync(
