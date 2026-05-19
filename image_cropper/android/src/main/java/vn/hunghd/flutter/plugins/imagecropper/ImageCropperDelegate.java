@@ -99,7 +99,13 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
             cropper.withAspectRatio(ratioX.floatValue(), ratioY.floatValue());
         }
 
-        activity.startActivityForResult(cropper.getIntent(activity), UCrop.REQUEST_CROP);
+        final Boolean shrinkOnly = call.argument("android.free_style_crop_shrink_only");
+        final Intent cropIntent = cropper.getIntent(activity);
+        if (Boolean.TRUE.equals(shrinkOnly)) {
+            cropIntent.putExtra(CmUCropActivity.EXTRA_FREE_STYLE_CROP_SHRINK_ONLY, true);
+            cropIntent.setClass(activity, CmUCropActivity.class);
+        }
+        activity.startActivityForResult(cropIntent, UCrop.REQUEST_CROP);
     }
 
     public void recoverImage(MethodCall call, MethodChannel.Result result) {
@@ -176,6 +182,9 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Integer cropGridStrokeWidth = call.argument("android.crop_grid_stroke_width");
         Boolean showCropGrid = call.argument("android.show_crop_grid");
         Boolean lockAspectRatio = call.argument("android.lock_aspect_ratio");
+        // Local fork addition: lets callers turn freestyle resize on/off
+        // independently of lockAspectRatio so we can match TOCropView's
+        // "ratio locked, corners draggable" UX. See vendor/image_cropper/README.md.
         Boolean freeStyleCropEnabled = call.argument("android.free_style_crop_enabled");
         Boolean hideBottomControls = call.argument("android.hide_bottom_controls");
 
@@ -224,10 +233,9 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         if (showCropGrid != null) {
             options.setShowCropGrid(showCropGrid);
         }
-        // When freeStyleCropEnabled is provided it wins, so callers can
-        // get "locked aspect + draggable corners" (matching iOS). When
-        // it is null we keep the old behaviour: !lockAspectRatio implies
-        // freestyle. When both are null we leave uCrop's default alone.
+        // Explicit freeStyleCropEnabled wins (local fork addition);
+        // otherwise fall back to upstream behaviour where !lockAspectRatio
+        // implies freestyle. Either flag null = no native call.
         if (freeStyleCropEnabled != null) {
             options.setFreeStyleCropEnabled(freeStyleCropEnabled);
         } else if (lockAspectRatio != null) {

@@ -192,15 +192,19 @@ class AndroidUiSettings extends PlatformUiSettings {
   /// (locked by default)
   final bool? lockAspectRatio;
 
-  /// set to true to let the user resize the crop frame by dragging its
-  /// corners (maps to uCrop's `setFreeStyleCropEnabled`). This is
-  /// independent of [lockAspectRatio]: when both are true, the corners
-  /// stay draggable but the box keeps the locked aspect ratio — matching
-  /// the iOS `TOCropViewController` behaviour.
+  /// set to true to let the user drag the crop frame's corners to resize
+  /// it (independent of [lockAspectRatio]). Maps to uCrop's
+  /// `setFreeStyleCropEnabled`. When `null` the existing behaviour
+  /// (`!lockAspectRatio`) is preserved for backward compatibility.
   ///
-  /// When `null`, the existing behaviour is preserved: native freestyle
-  /// is enabled iff [lockAspectRatio] is `false`.
+  /// Allows the iOS-equivalent "ratio locked, but corners draggable" UX
+  /// on Android — local fork addition; see vendor/image_cropper/README.md.
   final bool? freeStyleCropEnabled;
+
+  /// When `true`, uses [CmUCropActivity] so the crop frame can shrink by
+  /// dragging corners but cannot grow beyond its initial size (iOS parity).
+  /// Only meaningful when [freeStyleCropEnabled] is also `true`.
+  final bool? freeStyleCropShrinkOnly;
 
   /// set to true to hide the bottom controls (shown by default)
   final bool? hideBottomControls;
@@ -237,6 +241,7 @@ class AndroidUiSettings extends PlatformUiSettings {
     this.showCropGrid,
     this.lockAspectRatio,
     this.freeStyleCropEnabled,
+    this.freeStyleCropShrinkOnly,
     this.hideBottomControls,
     this.initAspectRatio,
     this.cropStyle = CropStyle.rectangle,
@@ -269,6 +274,7 @@ class AndroidUiSettings extends PlatformUiSettings {
         'android.show_crop_grid': this.showCropGrid,
         'android.lock_aspect_ratio': this.lockAspectRatio,
         'android.free_style_crop_enabled': this.freeStyleCropEnabled,
+        'android.free_style_crop_shrink_only': this.freeStyleCropShrinkOnly,
         'android.hide_bottom_controls': this.hideBottomControls,
         'android.init_aspect_ratio': this.initAspectRatio?.name,
         'android.crop_style': this.cropStyle.name,
