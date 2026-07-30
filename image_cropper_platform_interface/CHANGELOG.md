@@ -1,3 +1,8 @@
+## Unreleased
+
+* add `freeStyleCropEnabled` to `AndroidUiSettings` (serialised as `android.free_style_crop_enabled`). Pairs with the matching change in `image_cropper`'s Android delegate.
+* add `freeStyleCropShrinkOnly` (serialised as `android.free_style_crop_shrink_only`).
+
 ## 8.0.0
 
 * update Flutter constraint to minimum of 3.28.0 (to support `toARGB32()`)

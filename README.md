@@ -132,6 +132,9 @@ JavaScript image cropper.
 | `cropGridStrokeWidth`       | desired width of crop grid lines in pixels                                                                 | int                             |
 | `showCropGrid`              | set to true if you want to see a crop grid/guidelines on top of an image                                   | bool                            |
 | `lockAspectRatio`           | set to true if you want to lock the aspect ratio of crop bounds with a fixed value (locked by default)     | bool                            |
+| `freeStyleCropEnabled`      | set to true to let the user resize the crop frame by dragging its corners. Independent of `lockAspectRatio`. When `null`, freestyle is enabled iff `lockAspectRatio` is `false`. | bool                            |
+| `freeStyleCropShrinkOnly`   | shrink-only crop frame (iOS parity); requires `freeStyleCropEnabled: true` | bool                            |
+| `freeStyleCropEnabled`      | set to true to let the user resize the crop frame by dragging its corners. Independent of `lockAspectRatio` — set both to `true` to match iOS' "locked ratio + draggable corners" behaviour. When `null`, freestyle is enabled iff `lockAspectRatio` is `false` (legacy default). | bool                            |
 | `hideBottomControls`        | set to true to hide the bottom controls (shown by default)                                                 | bool                            |
 | `initAspectRatio`           | desired aspect ratio is applied (from the list of given aspect ratio presets) when starting the cropper    | CropAspectRatioPreset           |
 | `cropStyle`                 | controls the style of crop bounds, it can be rectangle or circle style (default is `CropStyle.rectangle`). | CropStyle                       |

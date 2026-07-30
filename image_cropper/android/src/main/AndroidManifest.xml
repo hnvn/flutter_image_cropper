@@ -1,3 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vn.hunghd.flutter.plugins.imagecropper">
+
+    <application>
+        <!-- Shrink-only crop UX (iOS parity). Launched by ImageCropperDelegate when
+             android.free_style_crop_shrink_only is true. -->
+        <activity
+            android:name="vn.hunghd.flutter.plugins.imagecropper.CmUCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    </application>
 </manifest>
