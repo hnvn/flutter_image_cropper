@@ -1,3 +1,8 @@
+## Unreleased
+
+- Android: add `freeStyleCropEnabled` to `AndroidUiSettings` so callers can opt into uCrop's draggable corner handles independently of `lockAspectRatio`. Lets Android match iOS' "locked aspect ratio + resizable corners" UX. Defaults to `null`, preserving the previous `!lockAspectRatio` behaviour.
+- Android: add `freeStyleCropShrinkOnly` and `CmUCropActivity` so the crop frame can shrink but not expand past its initial size (iOS parity).
+
 ## 12.2.1
 
 - iOS: upgrade `TOCropViewController` to v3.1.2
