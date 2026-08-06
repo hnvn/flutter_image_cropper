@@ -51,7 +51,6 @@ class MethodChannelImageCropper extends ImageCropperPlatform {
     int compressQuality = 90,
     List<PlatformUiSettings>? uiSettings,
   }) async {
-    assert(await File(sourcePath).exists());
     assert(maxWidth == null || maxWidth > 0);
     assert(maxHeight == null || maxHeight > 0);
     assert(compressQuality >= 0 && compressQuality <= 100);
