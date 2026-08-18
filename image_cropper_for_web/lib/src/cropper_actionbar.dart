@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart';
 
 class CropperActionBar extends StatefulWidget {
