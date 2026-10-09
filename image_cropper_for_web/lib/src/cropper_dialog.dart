@@ -14,7 +14,7 @@ class CropperDialog extends StatefulWidget {
   final WebThemeData? themeData;
 
   const CropperDialog({
-    Key? key,
+    super.key,
     required this.cropper,
     required this.initCropper,
     required this.crop,
@@ -24,7 +24,7 @@ class CropperDialog extends StatefulWidget {
     required this.cropperContainerHeight,
     required this.translations,
     this.themeData,
-  }) : super(key: key);
+  });
 
   @override
   State<CropperDialog> createState() => _CropperDialogState();
@@ -139,8 +139,9 @@ class _CropperDialogState extends State<CropperDialog> {
         ),
       );
     } else {
-      return ButtonBar(
-        buttonPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+      return OverflowBar(
+        alignment: MainAxisAlignment.end,
+        spacing: 8.0,
         children: [
           TextButton(
             onPressed: () {
@@ -164,11 +165,13 @@ class _CropperDialogState extends State<CropperDialog> {
     });
     try {
       final result = await widget.crop();
+      if (!mounted) return;
       Navigator.of(context).pop(result);
       return;
     } catch (e) {
       debugPrint(e.toString());
     }
+    if (!mounted) return;
     setState(() {
       _processing = false;
     });

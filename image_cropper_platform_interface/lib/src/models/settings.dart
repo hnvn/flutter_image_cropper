@@ -118,8 +118,8 @@ class CropAspectRatio {
   bool operator ==(other) =>
       identical(this, other) ||
       other is CropAspectRatio &&
-          this.ratioX == other.ratioX &&
-          this.ratioY == other.ratioY;
+          ratioX == other.ratioX &&
+          ratioY == other.ratioY;
 }
 
 ///
@@ -198,7 +198,7 @@ class AndroidUiSettings extends PlatformUiSettings {
   /// (`!lockAspectRatio`) is preserved for backward compatibility.
   ///
   /// Allows the iOS-equivalent "ratio locked, but corners draggable" UX
-  /// on Android — local fork addition; see vendor/image_cropper/README.md.
+  /// on Android.
   final bool? freeStyleCropEnabled;
 
   /// When `true`, uses [CmUCropActivity] so the crop frame can shrink by
@@ -256,28 +256,28 @@ class AndroidUiSettings extends PlatformUiSettings {
 
   @override
   Map<String, dynamic> toMap() => {
-        'android.toolbar_title': this.toolbarTitle,
-        'android.toolbar_color': int32(this.toolbarColor?.toARGB32()),
-        'android.status_bar_light': this.statusBarLight,
-        'android.nav_bar_light': this.navBarLight,
-        'android.toolbar_widget_color': int32(this.toolbarWidgetColor?.toARGB32()),
-        'android.background_color': int32(this.backgroundColor?.toARGB32()),
+        'android.toolbar_title': toolbarTitle,
+        'android.toolbar_color': int32(toolbarColor?.toARGB32()),
+        'android.status_bar_light': statusBarLight,
+        'android.nav_bar_light': navBarLight,
+        'android.toolbar_widget_color': int32(toolbarWidgetColor?.toARGB32()),
+        'android.background_color': int32(backgroundColor?.toARGB32()),
         'android.active_controls_widget_color':
-            int32(this.activeControlsWidgetColor?.toARGB32()),
-        'android.dimmed_layer_color': int32(this.dimmedLayerColor?.toARGB32()),
-        'android.crop_frame_color': int32(this.cropFrameColor?.toARGB32()),
-        'android.crop_grid_color': int32(this.cropGridColor?.toARGB32()),
-        'android.crop_frame_stroke_width': this.cropFrameStrokeWidth,
-        'android.crop_grid_row_count': this.cropGridRowCount,
-        'android.crop_grid_column_count': this.cropGridColumnCount,
-        'android.crop_grid_stroke_width': this.cropGridStrokeWidth,
-        'android.show_crop_grid': this.showCropGrid,
-        'android.lock_aspect_ratio': this.lockAspectRatio,
-        'android.free_style_crop_enabled': this.freeStyleCropEnabled,
-        'android.free_style_crop_shrink_only': this.freeStyleCropShrinkOnly,
-        'android.hide_bottom_controls': this.hideBottomControls,
-        'android.init_aspect_ratio': this.initAspectRatio?.name,
-        'android.crop_style': this.cropStyle.name,
+            int32(activeControlsWidgetColor?.toARGB32()),
+        'android.dimmed_layer_color': int32(dimmedLayerColor?.toARGB32()),
+        'android.crop_frame_color': int32(cropFrameColor?.toARGB32()),
+        'android.crop_grid_color': int32(cropGridColor?.toARGB32()),
+        'android.crop_frame_stroke_width': cropFrameStrokeWidth,
+        'android.crop_grid_row_count': cropGridRowCount,
+        'android.crop_grid_column_count': cropGridColumnCount,
+        'android.crop_grid_stroke_width': cropGridStrokeWidth,
+        'android.show_crop_grid': showCropGrid,
+        'android.lock_aspect_ratio': lockAspectRatio,
+        'android.free_style_crop_enabled': freeStyleCropEnabled,
+        'android.free_style_crop_shrink_only': freeStyleCropShrinkOnly,
+        'android.hide_bottom_controls': hideBottomControls,
+        'android.init_aspect_ratio': initAspectRatio?.name,
+        'android.crop_style': cropStyle.name,
         'android.aspect_ratio_presets': aspectRatioPresets
             .map<Map<String, dynamic>>((item) => {
                   'name': item.name,
@@ -420,29 +420,27 @@ class IOSUiSettings extends PlatformUiSettings {
 
   @override
   Map<String, dynamic> toMap() => {
-        'ios.minimum_aspect_ratio': this.minimumAspectRatio,
-        'ios.rect_x': this.rectX,
-        'ios.rect_y': this.rectY,
-        'ios.rect_width': this.rectWidth,
-        'ios.rect_height': this.rectHeight,
-        'ios.show_activity_sheet_on_done': this.showActivitySheetOnDone,
-        'ios.show_cancel_confirmation_dialog':
-            this.showCancelConfirmationDialog,
-        'ios.rotate_clockwise_button_hidden': this.rotateClockwiseButtonHidden,
-        'ios.embed_in_navigation_controller': this.embedInNavigationController,
-        'ios.hides_navigation_bar': this.hidesNavigationBar,
-        'ios.rotate_button_hidden': this.rotateButtonsHidden,
-        'ios.reset_button_hidden': this.resetButtonHidden,
-        'ios.aspect_ratio_picker_button_hidden':
-            this.aspectRatioPickerButtonHidden,
-        'ios.reset_aspect_ratio_enabled': this.resetAspectRatioEnabled,
+        'ios.minimum_aspect_ratio': minimumAspectRatio,
+        'ios.rect_x': rectX,
+        'ios.rect_y': rectY,
+        'ios.rect_width': rectWidth,
+        'ios.rect_height': rectHeight,
+        'ios.show_activity_sheet_on_done': showActivitySheetOnDone,
+        'ios.show_cancel_confirmation_dialog': showCancelConfirmationDialog,
+        'ios.rotate_clockwise_button_hidden': rotateClockwiseButtonHidden,
+        'ios.embed_in_navigation_controller': embedInNavigationController,
+        'ios.hides_navigation_bar': hidesNavigationBar,
+        'ios.rotate_button_hidden': rotateButtonsHidden,
+        'ios.reset_button_hidden': resetButtonHidden,
+        'ios.aspect_ratio_picker_button_hidden': aspectRatioPickerButtonHidden,
+        'ios.reset_aspect_ratio_enabled': resetAspectRatioEnabled,
         'ios.aspect_ratio_lock_dimension_swap_enabled':
-            this.aspectRatioLockDimensionSwapEnabled,
-        'ios.aspect_ratio_lock_enabled': this.aspectRatioLockEnabled,
-        'ios.title': this.title,
-        'ios.done_button_title': this.doneButtonTitle,
-        'ios.cancel_button_title': this.cancelButtonTitle,
-        'ios.crop_style': this.cropStyle.name,
+            aspectRatioLockDimensionSwapEnabled,
+        'ios.aspect_ratio_lock_enabled': aspectRatioLockEnabled,
+        'ios.title': title,
+        'ios.done_button_title': doneButtonTitle,
+        'ios.cancel_button_title': cancelButtonTitle,
+        'ios.crop_style': cropStyle.name,
         'ios.aspect_ratio_presets': aspectRatioPresets
             .map<Map<String, dynamic>>((item) => {
                   'name': item.name,
@@ -508,7 +506,17 @@ class WebUiSettings extends PlatformUiSettings {
   /// while a value of 1, 2, or 3 will restrict the crop box to the size of the canvas.
   /// viewMode of 2 or 3 will additionally restrict the canvas to the container.
   /// There is no difference between 2 and 3 when the proportions of the canvas and the container are the same.
+  @Deprecated(
+      "This property is misspelled and will be removed in a future release. Please use 'viewMode' instead.")
   final WebViewMode? viewwMode;
+
+  /// Define the view mode of the cropper. See [viewwMode] for the full
+  /// description of the available options.
+  final WebViewMode? viewMode;
+
+  /// The effective view mode, preferring [viewMode] and falling back to the
+  /// deprecated [viewwMode] for backward compatibility.
+  WebViewMode? get effectiveViewMode => viewMode ?? viewwMode;
 
   /// Define the dragging mode of the cropper.
   ///
@@ -684,7 +692,10 @@ class WebUiSettings extends PlatformUiSettings {
     this.customDialogBuilder,
     this.customRouteBuilder,
     this.size,
+    @Deprecated(
+        "This property is misspelled and will be removed in a future release. Please use 'viewMode' instead.")
     this.viewwMode,
+    this.viewMode,
     this.dragMode,
     this.initialAspectRatio,
     // this.aspectRatio,

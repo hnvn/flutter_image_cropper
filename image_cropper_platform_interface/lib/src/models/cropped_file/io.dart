@@ -13,9 +13,7 @@ import './base.dart';
 /// A CroppedFile backed by a dart:io File.
 class CroppedFile extends CroppedFileBase {
   /// Construct a PickedFile object backed by a dart:io File.
-  CroppedFile(String path)
-      : _file = File(path),
-        super(path);
+  CroppedFile(super.path) : _file = File(path);
 
   final File _file;
 

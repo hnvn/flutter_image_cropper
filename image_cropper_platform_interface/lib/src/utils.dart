@@ -14,8 +14,9 @@
 /// codes.
 ///
 int? int32(int? i) {
-  if (i == null)
+  if (i == null) {
     return i;
-  else
+  } else {
     return (i & 0x7fffffff) - (i & 0x80000000);
+  }
 }

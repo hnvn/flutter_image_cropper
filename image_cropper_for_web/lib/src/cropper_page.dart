@@ -16,7 +16,7 @@ class CropperPage extends StatefulWidget {
   final WebThemeData? themeData;
 
   const CropperPage({
-    Key? key,
+    super.key,
     required this.cropper,
     required this.initCropper,
     required this.crop,
@@ -26,7 +26,7 @@ class CropperPage extends StatefulWidget {
     required this.cropperContainerHeight,
     required this.translations,
     this.themeData,
-  }) : super(key: key);
+  });
 
   @override
   State<CropperPage> createState() => _CropperPageState();
@@ -116,11 +116,13 @@ class _CropperPageState extends State<CropperPage> {
     });
     try {
       final result = await widget.crop();
+      if (!mounted) return;
       Navigator.of(context).pop(result);
       return;
     } catch (e) {
       debugPrint(e.toString());
     }
+    if (!mounted) return;
     setState(() {
       _processing = false;
     });

@@ -1,0 +1,3 @@
+# Local Swift Package Manager build artifacts (incl. a full TOCropViewController
+# checkout). These are regenerated on build and must never be published.
+ios/**/.build/

@@ -1,4 +1,4 @@
-library image_cropper_for_web;
+library;
 
 import 'dart:async';
 import 'dart:js_interop';
@@ -91,8 +91,9 @@ class ImageCropperPlugin extends ImageCropperPlatform {
     final options = CropperOptions(
       dragMode:
           webSettings.dragMode != null ? webSettings.dragMode!.value : 'crop',
-      viewMode:
-          webSettings.viewwMode != null ? webSettings.viewwMode!.value : 0,
+      viewMode: webSettings.effectiveViewMode != null
+          ? webSettings.effectiveViewMode!.value
+          : 0,
       initialAspectRatio: webSettings.initialAspectRatio,
       aspectRatio:
           aspectRatio != null ? aspectRatio.ratioX / aspectRatio.ratioY : null,

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 
 import androidx.preference.PreferenceManager;
@@ -182,9 +181,9 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
         Integer cropGridStrokeWidth = call.argument("android.crop_grid_stroke_width");
         Boolean showCropGrid = call.argument("android.show_crop_grid");
         Boolean lockAspectRatio = call.argument("android.lock_aspect_ratio");
-        // Local fork addition: lets callers turn freestyle resize on/off
-        // independently of lockAspectRatio so we can match TOCropView's
-        // "ratio locked, corners draggable" UX. See vendor/image_cropper/README.md.
+        // Lets callers turn freestyle resize on/off independently of
+        // lockAspectRatio so Android can match TOCropViewController's
+        // "ratio locked, corners draggable" UX on iOS.
         Boolean freeStyleCropEnabled = call.argument("android.free_style_crop_enabled");
         Boolean hideBottomControls = call.argument("android.hide_bottom_controls");
 
@@ -249,13 +248,6 @@ public class ImageCropperDelegate implements PluginRegistry.ActivityResultListen
 
     private void clearMethodCallAndResult() {
         pendingResult = null;
-    }
-
-    private int darkenColor(int color) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv);
-        hsv[2] *= 0.8f;
-        return Color.HSVToColor(hsv);
     }
 
     private AspectRatio parseAspectRatio(Map<?, ?> preset) {

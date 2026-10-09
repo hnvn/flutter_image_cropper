@@ -9,6 +9,7 @@
 /// Android or iOS platform, so it shows different UI look and feel between
 /// those platforms.
 ///
+library;
 
 export 'package:image_cropper_platform_interface/image_cropper_platform_interface.dart'
     show
