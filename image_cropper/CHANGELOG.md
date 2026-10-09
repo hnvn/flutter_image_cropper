@@ -3,6 +3,7 @@
 - Android: add `freeStyleCropEnabled` to `AndroidUiSettings` so callers can opt into uCrop's draggable corner handles independently of `lockAspectRatio`. Lets Android match iOS' "locked aspect ratio + resizable corners" UX. Defaults to `null`, preserving the previous `!lockAspectRatio` behaviour.
 - Android: add `freeStyleCropShrinkOnly` and `CmUCropActivity` so the crop frame can shrink but not expand past its initial size (iOS parity).
 - iOS: upgrade `TOCropViewController` to v3.2.0
+- Android: migrate `build.gradle` to the property-style DSL (`compileSdk`, `minSdk`, `testInstrumentationRunner`, `namespace`) and replace the removed `lintOptions` block with `lint`, so consumers no longer need `android.newDsl=false` under AGP 9 (#622).
 
 ## 12.2.1
 
