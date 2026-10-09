@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  analyze-and-test:
+    name: ${{ matrix.package }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - image_cropper_platform_interface
+          - image_cropper_for_web
+          - image_cropper
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Print Flutter version
+        run: flutter --version
+
+      # The published pubspecs use hosted versions of the sibling packages.
+      # For CI we link the local packages together via pubspec_overrides.yaml
+      # (https://dart.dev/tools/pub/dependencies#dependency-overrides) so that
+      # unreleased local changes are analyzed and tested against each other.
+      - name: Link local packages
+        working-directory: ${{ matrix.package }}
+        # `flutter pub get` also resolves the nested example app, which pulls the
+        # sibling packages transitively, so overrides are written for both.
+        run: |
+          case "${{ matrix.package }}" in
+            image_cropper_for_web)
+              {
+                echo "dependency_overrides:"
+                echo "  image_cropper_platform_interface:"
+                echo "    path: ../image_cropper_platform_interface"
+              } > pubspec_overrides.yaml
+              {
+                echo "dependency_overrides:"
+                echo "  image_cropper_platform_interface:"
+                echo "    path: ../../image_cropper_platform_interface"
+                echo "  image_cropper_for_web:"
+                echo "    path: ../../image_cropper_for_web"
+              } > example/pubspec_overrides.yaml
+              ;;
+            image_cropper)
+              {
+                echo "dependency_overrides:"
+                echo "  image_cropper_platform_interface:"
+                echo "    path: ../image_cropper_platform_interface"
+                echo "  image_cropper_for_web:"
+                echo "    path: ../image_cropper_for_web"
+              } > pubspec_overrides.yaml
+              {
+                echo "dependency_overrides:"
+                echo "  image_cropper_platform_interface:"
+                echo "    path: ../../image_cropper_platform_interface"
+                echo "  image_cropper_for_web:"
+                echo "    path: ../../image_cropper_for_web"
+              } > example/pubspec_overrides.yaml
+              ;;
+          esac
+          find . -maxdepth 2 -name pubspec_overrides.yaml -exec sh -c 'echo "--- $1 ---"; cat "$1"' _ {} \;
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.package }}
+        run: flutter pub get
+
+      - name: Analyze
+        working-directory: ${{ matrix.package }}
+        # Library code must be warning/error clean. Info-level lints (e.g. in the
+        # bundled example app) are reported but do not fail the build.
+        run: flutter analyze --no-fatal-infos
+
+      - name: Run tests
+        working-directory: ${{ matrix.package }}
+        run: |
+          if [ -d test ]; then
+            flutter test
+          else
+            echo "No test/ directory in ${{ matrix.package }}, skipping."
+          fi

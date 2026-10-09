@@ -1,6 +1,7 @@
 # Image Cropper
 
 [![pub package](https://img.shields.io/pub/v/image_cropper.svg)](https://pub.dartlang.org/packages/image_cropper)
+[![CI](https://github.com/hnvn/flutter_image_cropper/actions/workflows/ci.yml/badge.svg)](https://github.com/hnvn/flutter_image_cropper/actions/workflows/ci.yml)
 
 
 A Flutter plugin for Android, iOS and Web supports cropping images. This plugin is based on three different native libraries so it comes with different UI between these platforms.
