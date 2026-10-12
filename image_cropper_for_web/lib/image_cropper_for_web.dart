@@ -6,7 +6,7 @@ import 'dart:js_interop';
 import 'package:web/web.dart' as web;
 import 'dart:ui_web' as ui;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:image_cropper_for_web/src/cropper_dialog.dart';
 import 'package:image_cropper_for_web/src/cropper_page.dart';
