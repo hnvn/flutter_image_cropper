@@ -50,6 +50,7 @@ class _CropperDialogState extends State<CropperDialog> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
         ),
+        padding: const EdgeInsets.all(16.0),
         child: IntrinsicHeight(
           child: Column(
             mainAxisSize: MainAxisSize.min,

@@ -1,3 +1,7 @@
+## 8.0.1
+
+* fix padding issue on the cropper dialog
+
 ## 8.0.0
 
 * update to the latest `image_cropper_platform_interface`
