@@ -284,13 +284,15 @@ class _HomePageState extends State<HomePage> {
         sourcePath: _pickedFile!.path,
         compressFormat: ImageCompressFormat.jpg,
         compressQuality: 100,
+        aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: 'Cropper',
             toolbarColor: Colors.deepOrange,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.square,
-            lockAspectRatio: false,
+            lockAspectRatio: true,
+            freeStyleCropEnabled: true,
             aspectRatioPresets: [
               CropAspectRatioPreset.original,
               CropAspectRatioPreset.square,
