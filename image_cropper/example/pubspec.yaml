@@ -10,7 +10,7 @@ description: Demonstrates how to use the flutter_image_cropper plugin.
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.5.4 <4.0.0'
+  sdk: ^3.11.0
 
 dependencies:
   flutter:
