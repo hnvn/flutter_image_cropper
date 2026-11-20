@@ -5,6 +5,7 @@
 - Dart SDK constraint raised to `^3.11.0`
 
 - iOS: add `FlutterFramework` Swift Package Manager dependency required by Flutter 3.41+
+- Example: upgrade Android Gradle to 9.5.0, AGP to 9.3.1, and Kotlin to 2.4.20 (Flutter's current minimums)
 
 ## 13.0.0
 
